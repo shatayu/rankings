@@ -60,7 +60,9 @@ export function shortestPath(graph, source, target) {
         }
 
         teamsCurrentIsBetterThan.forEach(team => {
-            parent[team] = current;
+            if (parent[team] == null) {
+                parent[team] = current;
+            }
             visited[team] = true;
             queue.push(team);
         })
