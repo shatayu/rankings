@@ -1,0 +1,29 @@
+.container {
+    background-color: #111111;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    font-size: 28px;
+}
+
+.justification {
+    min-height: 32px;
+}
+
+.element {
+    margin: 10px;
+    transition-duration: 200ms;
+    color: #BBBBBB;
+}
+
+.selectedElement {
+    color: white;
+}
+
+.element:hover {
+    color: white;
+}

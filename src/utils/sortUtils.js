@@ -1,4 +1,4 @@
-import Constants from './Constants';
+import Constants from '../Constants';
 
 export function iterativeMergeSort(arr, comparisonGraph) {
     /*
@@ -61,10 +61,14 @@ export function iterativeMergeSort(arr, comparisonGraph) {
     };
 }
 
-function canCompare(a, b, comparisonGraph) {
+export function canCompare(a, b, comparisonGraph) {
     return comparisonGraph[a][b] !== Constants.NOT_COMPARED;
 }
 
-function isWorseThan(a, b, comparisonGraph) {
+export function isWorseThan(a, b, comparisonGraph) {
     return comparisonGraph[a][b] === Constants.WORSE;
+}
+
+export function isBetterThan(a, b, comparisonGraph) {
+    return comparisonGraph[a][b] === Constants.BETTER;
 }
