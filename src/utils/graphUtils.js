@@ -54,15 +54,13 @@ export function shortestPath(graph, source, target) {
         // gather children
         let teamsCurrentIsBetterThan = [];
         for (const team in graph[current]) {
-            if (isBetterThan(current, team, graph)) {
+            if (!visited[team] && isBetterThan(current, team, graph)) {
                 teamsCurrentIsBetterThan.push(team);
             }
         }
 
         teamsCurrentIsBetterThan.forEach(team => {
-            if (parent[team] == null) {
-                parent[team] = current;
-            }
+            parent[team] = current;
             visited[team] = true;
             queue.push(team);
         })

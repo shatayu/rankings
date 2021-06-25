@@ -29,9 +29,9 @@ const teamNames = shuffle([
                         'Seahawks',
                         'Bears',
                         'Saints',
-                        'Buccaneers',
-                        'Football Team',
-                        'Packers'
+                        // 'Buccaneers',
+                        // 'Football Team',
+                        // 'Packers'
 
                         // 'a',
                         // 'b',

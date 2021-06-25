@@ -10,10 +10,10 @@ export default function Results({results, graph}) {
         let temp = selections.slice();
 
         if (!temp.includes(value)) {
-            temp.push(value);
-            if (temp.length > 2) {
-                temp.shift();
+            if (temp.length > 1) {
+                temp.pop();
             }
+            temp.push(value);
             setSelections(temp);
             
             if (temp.length === 2) {
@@ -24,13 +24,9 @@ export default function Results({results, graph}) {
                 const worseTermIndex = Math.max(firstTermIndex, secondTermIndex);
                 
                 const path = shortestPath(graph, results[betterTermIndex], results[worseTermIndex]);
-                console.log(path);
         
                 if (path.length > 1) {
                     const pathString = path.reduce((term, currentValue) => term + ' > ' + currentValue);
-                    console.log('pathString');
-                    console.log(pathString);
-                    
                     setPathBetweenSelections(pathString);
                 }
             }
