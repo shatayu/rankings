@@ -18,17 +18,17 @@ const teamNames = shuffle([
                         //    'Luka Doncic',
                         //    'Jayson Tatum'
 
-                        'Browns',
-                        'Steelers',
-                        'Colts',
-                        'Bills',
-                        'Ravens',
-                        'Titans',
-                        'Chiefs',
-                        'Rams',
-                        'Seahawks',
-                        'Bears',
-                        'Saints',
+                        // 'Browns',
+                        // 'Steelers',
+                        // 'Colts',
+                        // 'Bills',
+                        // 'Ravens',
+                        // 'Titans',
+                        // 'Chiefs',
+                        // 'Rams',
+                        // 'Seahawks',
+                        // 'Bears',
+                        // 'Saints',
                         // 'Buccaneers',
                         // 'Football Team',
                         // 'Packers'
@@ -46,6 +46,15 @@ const teamNames = shuffle([
                         // 'faker',
                         // 'frat boy andy',
                         // 'trump',
+
+                        'turk',
+                        'grama',
+                        'drineas',
+                        'gustavo',
+                        'melanie',
+                        'atallah',
+                        'park',
+                        'ninghui li',
 
                         // ahri akali irelia miss fortune nidalee samira seraphine sona riven xayah
                             // 'ahri',
@@ -78,7 +87,7 @@ function shuffle(array) {
     return array;
   }
 
-function Ranker() {
+export default function Ranker() {
     let [graph, setGraph] = useState(generateEmptyGraph(teamNames));
     let [responses, setResponses] = useState(generateEmptyGraph(teamNames));
     let [currentQuestion, setCurrentQuestion] = useState(null);
@@ -113,6 +122,7 @@ function Ranker() {
         setQuestionNumber(questionNumber + 1);
     }, [graph, questionNumber, responses])
 
+    // ask questions
     useEffect(() => {
         let {array, nextQuestion} = iterativeMergeSort(teamNames, graph);
         
@@ -129,7 +139,7 @@ function Ranker() {
 
     // https://stackoverflow.com/questions/12346054/number-of-comparisons-in-merge-sort
     const n = teamNames.length;
-    const maxNumberOfQuestions = Math.ceil(n * Math.log2(n) - 2 ** Math.log2(n) + 1)
+    const maxNumberOfQuestions = n * Math.ceil(Math.log2(n)) - 2 ** Math.ceil(Math.log2(n)) + 1
 
     return <div>{currentQuestion}
             {doneRanking ? null : <span style={{
@@ -142,5 +152,3 @@ function Ranker() {
                 fontSize: 20
             }}>{questionNumber} out of up to {maxNumberOfQuestions} </span>}</div>;
 }
-
-export default Ranker;
