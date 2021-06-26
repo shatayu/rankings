@@ -47,14 +47,20 @@ const teamNames = shuffle([
                         // 'frat boy andy',
                         // 'trump',
 
-                        'turk',
-                        'grama',
-                        'drineas',
-                        'gustavo',
-                        'melanie',
-                        'atallah',
-                        'park',
-                        'ninghui li',
+                        // 'turk',
+                        // 'grama',
+                        // 'drineas',
+                        // 'gustavo',
+                        // 'melanie',
+                        // 'atallah',
+                        // 'park',
+                        // 'ninghui li',
+
+                        'test',
+                        
+                        // 'chicago',
+                        // 'google tech games',
+                        // ''
 
                         // ahri akali irelia miss fortune nidalee samira seraphine sona riven xayah
                             // 'ahri',
