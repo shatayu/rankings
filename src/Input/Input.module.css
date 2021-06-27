@@ -30,6 +30,8 @@
     border-width: 0px;
     border-bottom: 5px solid #BBBBBB;
     color: #BBBBBB;
+
+    transition-duration: 200ms;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -58,6 +60,8 @@
     color: #BBBBBB;
     font-size: min(35px, 3vh);
     padding: 6px 30px;
+
+    transition-duration: 200ms;
 }
 
 @media (hover: hover) and (pointer: fine) {
