@@ -12,11 +12,13 @@
 .justification {
     min-height: 32px;
     font-size: 20px;
+    text-align: center;
 }
 
 .fillerJustification {
     color: #999999;
     font-size: 20px;
+    text-align: center;
 }
 
 .element {
