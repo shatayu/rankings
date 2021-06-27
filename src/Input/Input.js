@@ -16,7 +16,7 @@ export default function Input({onFinalizeEntries}) {
     const onSubmit = useCallback((e, value) => {
         e.preventDefault();
         value = value.replace(' ', '');
-        if (!entries.includes(value)) {
+        if (!entries.includes(value) && value.length > 0) {
             setEntries([...entries, value]);
             setValue('');
         }
