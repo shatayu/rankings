@@ -4,7 +4,7 @@ import styles from './Results.module.css';
 
 export default function Results({results, graph}) {
     const [selections, setSelections] = useState([]);
-    const [pathBetweenSelections, setPathBetweenSelections] = useState('');
+    const [pathBetweenSelections, setPathBetweenSelections] = useState([]);
 
     const onSelection = useCallback(value => {
         let temp = selections.slice();
@@ -26,24 +26,44 @@ export default function Results({results, graph}) {
                 const path = shortestPath(graph, results[betterTermIndex], results[worseTermIndex]);
         
                 if (path.length > 1) {
-                    const pathString = path.reduce((term, currentValue) => term + ' > ' + currentValue);
-                    setPathBetweenSelections(pathString);
+                    // const pathString = path.reduce((term, currentValue) => term + ' > ' + currentValue);
+                    // setPathBetweenSelections(pathString);
+
+                    let pathArray = []
+                    for (let i = 0; i < path.length - 1; ++i) {
+                        const current = path[i];
+                        const next = path[i + 1];
+
+                        const pathString = (String(i + 1) + '. You said ' + current + ' is better than ' + next + '\n');
+
+                        const pathEntry = <div key={i}>{pathString}</div>
+                        pathArray.push(pathEntry);
+                    }
+
+                    setPathBetweenSelections(pathArray);
                 }
             }
         } else {
-            const otherTerm = temp[0] === value ? temp[1] : temp[0];
-            setSelections([otherTerm]);
-            setPathBetweenSelections('');
+            if (temp.length === 2) {
+                const otherTerm = temp[0] === value ? temp[1] : temp[0];
+                setSelections([otherTerm]);
+                setPathBetweenSelections([]);
+            } else {
+                setSelections([]);
+                setPathBetweenSelections([]);
+            }
         }
         
 
     }, [graph, results, selections]);
 
+    const fillerExplanation = <span className={styles.fillerJustification}>Click any pair of terms to learn why one's higher than the other</span>
+
     return (
-    <div className={styles.container}>
-        <div style={{textAlign: "center"}}>{results.map((term, i) => <ResultElement value={term} key={i} onSelection={onSelection} isSelected={selections.includes(term)}/>)}</div>
-        <div className={styles.justification}>{pathBetweenSelections.length > 0 ? pathBetweenSelections : null}</div>
-    </div>
+        <div className={styles.container}>
+            <div style={{textAlign: "center"}}>{results.map((term, i) => <ResultElement value={term} key={i} onSelection={onSelection} isSelected={selections.includes(term)}/>)}</div>
+            <div className={styles.justification}>{pathBetweenSelections.length > 0 ? pathBetweenSelections : fillerExplanation}</div>
+        </div>
     )
 }
 
