@@ -7,7 +7,7 @@ import {computeTransitiveClosure, generateEmptyGraph} from '../utils/graphUtils'
 import styles from './Ranker.module.css';
 
 export default function Ranker({entries, onFinish}) {
-    console.log(entries);
+    let [questionsAsked, setQuestionsAsked] = useState([]);
     let [graph, setGraph] = useState(generateEmptyGraph(entries));
     let [responses, setResponses] = useState(generateEmptyGraph(entries));
     let [currentQuestion, setCurrentQuestion] = useState(null);
@@ -43,8 +43,9 @@ export default function Ranker({entries, onFinish}) {
     const onSelection = useCallback((better, worse) => {
         updateResponseGraph(better, worse);
         updateTransitiveClosureGraph(better, worse);
+        setQuestionsAsked([...questionsAsked, [better, worse]]);
         setQuestionNumber(questionNumber + 1);
-    }, [questionNumber, updateResponseGraph, updateTransitiveClosureGraph]);
+    }, [questionNumber, questionsAsked, updateResponseGraph, updateTransitiveClosureGraph]);
 
     // ask questions
     useEffect(() => {
@@ -53,13 +54,10 @@ export default function Ranker({entries, onFinish}) {
         if (nextQuestion != null) {
             setCurrentQuestion(<Pair a={nextQuestion[0]} b={nextQuestion[1]} onSelection={onSelection} />)
         } else {
-            // setCurrentQuestion(
-            //     <Results graph={responses} results={array} />
-            // );
             setDoneRanking(true);
-            onFinish(responses, array);
+            onFinish(responses, array, questionsAsked);
         }
-    }, [graph, questionNumber, onSelection, responses, entries, onFinish]);
+    }, [graph, questionNumber, onSelection, responses, entries, onFinish, questionsAsked]);
 
     return (
         <>

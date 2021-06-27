@@ -1,20 +1,23 @@
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import styles from './Input.module.css';
 
 export default function Input({onFinalizeEntries}) {
+
     const [value, setValue] = useState('');
     const [entries, setEntries] = useState([]);
     const [hasUserFinalizedRankings, setHasUserFinalizedRankings] = useState(false);
 
-    if (hasUserFinalizedRankings) {
+    useEffect(() => {
+        if (hasUserFinalizedRankings) {
         onFinalizeEntries(entries);
-    }
+        }
+    }, [entries, hasUserFinalizedRankings, onFinalizeEntries])
 
-    const onSubmit = (e, value) => {
+    const onSubmit = useCallback((e, value) => {
         e.preventDefault();
         setEntries([...entries, value]);
         setValue('');
-    }
+    }, [entries]);
 
     return (
         <div className={styles.container}>
@@ -25,14 +28,9 @@ export default function Input({onFinalizeEntries}) {
                         type="text"
                         value={value}
                         className={styles.textbox}
+                        placeholder="Enter item here"
                         onChange={(event) => {
                             setValue(event.target.value)
-                        }}
-
-                        onKeyDown={(event) => {
-                            if (event.key === 'Enter') {
-                            console.log('enter');
-                            }
                         }}
                     />
                     </label>
@@ -40,7 +38,7 @@ export default function Input({onFinalizeEntries}) {
             </div>
             <div className={styles.buttonContainer}>
                 <div className={value.length > 0 ? styles.button : styles.disabledButton} onClick={e => onSubmit(e, value)}>Add to List</div>
-                <div className={entries.length > 1 || value.length > 0 ? styles.button : styles.disabledButton} onClick={e => {
+                <div className={entries.length > 1 || (value.length > 0 && entries.length > 0) ? styles.button : styles.disabledButton} onClick={e => {
                     if (value.length > 0) {
                         onSubmit(e, value);
                         setHasUserFinalizedRankings(true);

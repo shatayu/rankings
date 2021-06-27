@@ -2,7 +2,7 @@ import {useState, useCallback} from 'react';
 import {shortestPath} from '../utils/graphUtils';
 import styles from './Results.module.css';
 
-export default function Results({results, graph}) {
+export default function Results({results, graph, questionsAsked}) {
     const [selections, setSelections] = useState([]);
     const [pathBetweenSelections, setPathBetweenSelections] = useState([]);
 
@@ -34,7 +34,17 @@ export default function Results({results, graph}) {
                         const current = path[i];
                         const next = path[i + 1];
 
-                        const pathString = (String(i + 1) + '. You said ' + current + ' is better than ' + next + '\n');
+                        let questionNumber = -1;
+                        questionsAsked.forEach((question, index) => {
+                            if (
+                                (question[0] === current && question[1] === next) ||
+                                (question[0] === next && question[1] === current)
+                            ) {
+                                questionNumber = index;
+                            }
+                        });
+
+                        const pathString = ('At Q' + String(questionNumber + 1) + ', you said ' + current + ' is better than ' + next);
 
                         const pathEntry = <div key={i}>{pathString}</div>
                         pathArray.push(pathEntry);
@@ -55,7 +65,7 @@ export default function Results({results, graph}) {
         }
         
 
-    }, [graph, results, selections]);
+    }, [graph, questionsAsked, results, selections]);
 
     const fillerExplanation = <span className={styles.fillerJustification}>Click any pair of terms to learn why one's higher than the other</span>
 
