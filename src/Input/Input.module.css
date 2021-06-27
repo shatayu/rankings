@@ -47,25 +47,40 @@
     color: white;
 }
 
-.submitButtonContainer {
+.buttonContainer {
     height: 15vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.submitButton {
+.disabledButton {
+    width: min(120px, 20vw);
+    border: 5px solid #999999;
+    border-radius: 15px;
+    color: #999999;
+    font-size: min(35px, 2vh);
+    padding: 12px 30px;
+    text-align: center;
+
+    margin: 0px 10px;
+}
+
+.button {
+    width: min(120px, 20vw);
     border: 5px solid #BBBBBB;
     border-radius: 15px;
     color: #BBBBBB;
-    font-size: min(35px, 3vh);
-    padding: 6px 30px;
+    font-size: min(35px, 2vh);
+    padding: 12px 30px;
+    text-align: center;
 
     transition-duration: 200ms;
+    margin: 0px 10px;
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .submitButton:hover {
+    .button:hover {
         border: 5px solid white;
         color: white;
     }
@@ -93,4 +108,30 @@
 
     -ms-word-break: break-all;
     word-break: break-word;
+
+    flex-direction: row;
+}
+
+.entry:hover {
+    color: white;
+}
+
+.svgIcon {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    margin-left: 20px;
+}
+
+  
+.svgIcon path,
+.svgIcon polygon,
+
+.svgIcon circle {
+    stroke: #333333;
+    stroke-width: 1.25px;
+}
+
+.svgIcon:hover {
+    color: white;
 }
