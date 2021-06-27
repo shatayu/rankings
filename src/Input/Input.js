@@ -15,8 +15,11 @@ export default function Input({onFinalizeEntries}) {
 
     const onSubmit = useCallback((e, value) => {
         e.preventDefault();
-        setEntries([...entries, value]);
-        setValue('');
+        value = value.replace(' ', '');
+        if (!entries.includes(value)) {
+            setEntries([...entries, value]);
+            setValue('');
+        }
     }, [entries]);
 
     return (
@@ -37,13 +40,15 @@ export default function Input({onFinalizeEntries}) {
                 </form>
             </div>
             <div className={styles.buttonContainer}>
-                <div className={value.length > 0 ? styles.button : styles.disabledButton} onClick={e => onSubmit(e, value)}>Add to List</div>
+                <div className={value.length > 0 && !entries.includes(value.replace(' ', '')) ? styles.button : styles.disabledButton} onClick={e => onSubmit(e, value)}>Add to List</div>
                 <div className={entries.length > 1 || (value.length > 0 && entries.length > 0) ? styles.button : styles.disabledButton} onClick={e => {
-                    if (value.length > 0) {
-                        onSubmit(e, value);
-                        setHasUserFinalizedRankings(true);
-                    } else if (entries.length > 1) {
-                        setHasUserFinalizedRankings(true);
+                    if (!entries.includes(value.replace(' ', ''))) {
+                        if (value.length > 0) {
+                            onSubmit(e, value);
+                            setHasUserFinalizedRankings(true);
+                        } else if (entries.length > 1) {
+                            setHasUserFinalizedRankings(true);
+                        }
                     }
                 }}>Start Ranking</div>
             </div>

@@ -45,7 +45,10 @@
     box-sizing: border-box;         /* Opera/IE 8+ */
 
     text-align: center;
+
+    overflow: auto;
 }
+
 @media (hover: hover) and (pointer: fine) {
     .element:hover {
         border-color: white;

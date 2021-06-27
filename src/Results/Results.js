@@ -44,7 +44,7 @@ export default function Results({results, graph, questionsAsked}) {
                             }
                         });
 
-                        const pathString = ('At Q' + String(questionNumber + 1) + ', you said ' + current + ' is better than ' + next);
+                        const pathString = ('(Q' + String(questionNumber + 1) + ') You said ' + current + ' is better than ' + next);
 
                         const pathEntry = <div key={i}>{pathString}</div>
                         pathArray.push(pathEntry);
