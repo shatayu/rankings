@@ -27,7 +27,7 @@ export function iterativeMergeSort(arr, comparisonGraph) {
 
             while (left < leftLimit && right < rightLimit) {
                 if (canCompare(sorted[left], sorted[right], comparisonGraph)) {
-                    if (isWorseThan(sorted[left], sorted[right], comparisonGraph)) {
+                    if (isBetterThan(sorted[left], sorted[right], comparisonGraph)) {
                         buffer[i++] = sorted[left++];
                     } else {
                         buffer[i++] = sorted[right++];

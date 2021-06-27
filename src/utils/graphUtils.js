@@ -21,12 +21,12 @@ export function computeTransitiveClosure(graph, list) {
     return closure;
 }
 
-export function generateEmptyGraph(names) {
+export function generateEmptyGraph(entries) {
     let temp = {}
-    names.forEach(p1 => {
+    entries.forEach(p1 => {
         temp[p1] = {};
 
-        names.forEach(p2 => {
+        entries.forEach(p2 => {
             temp[p1][p2] = Constants.NOT_COMPARED;
         })
     })
