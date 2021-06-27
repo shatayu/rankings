@@ -23,6 +23,8 @@
     color: white;
 }
 
-.element:hover {
-    color: white;
+@media (hover: hover) and (pointer: fine) {
+    .element:hover {
+        color: white;
+    }
 }

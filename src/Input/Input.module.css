@@ -32,9 +32,10 @@
     color: #BBBBBB;
 }
 
-
-.textbox:hover {
-    border-bottom: 5px solid white;
+@media (hover: hover) and (pointer: fine) {
+    .textbox:hover {
+        border-bottom: 5px solid white;
+    }
 }
 
 .textbox:focus {
@@ -59,12 +60,11 @@
     padding: 6px 30px;
 }
 
-.submitButton:hover {
-    border: 5px solid white;
-    border-radius: 15px;
-    color: white;
-    font-size: 35px;
-    padding: 10px 30px;
+@media (hover: hover) and (pointer: fine) {
+    .submitButton:hover {
+        border: 5px solid white;
+        color: white;
+    }
 }
 
 .entryContainer {
