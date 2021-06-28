@@ -1,0 +1,18 @@
+4 big things:
+
+API gateway: https://us-west-1.console.aws.amazon.com/apigateway/main/develop/integrations/attach?api=3ocshrauf1&integration=7f6v0yp&region=us-west-1&routes=f99ky81
+lambda function: https://us-west-1.console.aws.amazon.com/lambda/home?region=us-west-1#/functions/rankings-function?tab=code
+lambda layer: https://us-west-1.console.aws.amazon.com/lambda/home?region=us-west-1#/layers/ranker/versions/4
+dynamo DB: https://us-west-1.console.aws.amazon.com/dynamodb/home?region=us-west-1#tables:selected=rankings;tab=items
+
+to make a new API route:
+* add functionality and route name in lambda function
+* add corresponding route in API gateway
+
+to install a new node_module for the lambda function:
+* go to the aws_lambda/nodejs/ folder
+* yarn add package
+* go to the aws_lambda and zip up the nodejs folder (make nodejs.zip)
+* go to the lambda layer and upload a new version
+* in the lambda function put:
+    * const MODULE_NAME = require("/opt/nodejs/node_modules/MODULE_NAME");
