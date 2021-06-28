@@ -10,29 +10,9 @@ export default function Input({onFinalizeEntries}) {
 
     // test API calls out
     useEffect(() => {
-        // curl -v -X "PUT" -H "Content-Type: application/json" -d "{\"id\": \"abcdef234\", \"price\": 12345, \"name\": \"myitem\"}" https://3ocshrauf1.execute-api.us-west-1.amazonaws.com/items
-
         const url = 'https://3ocshrauf1.execute-api.us-west-1.amazonaws.com/items';
 
-        const headers = {
-            'Content-Type': 'application/json'
-        };
-
-        const body = JSON.stringify({
-            id: 'test',
-            price: 99999,
-            name: 'testItem'
-        });
-
-        console.log(body);
-
-        const options = {
-            url,
-            headers,
-            body
-        };
-
-        axios.put(url, options, (response) => {
+        axios.get(url).then(response => {
             console.log(response);
         });
     }, []);
