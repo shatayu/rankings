@@ -1,0 +1,29 @@
+    // test API calls out
+    useEffect(() => {
+        async function putNewList() {
+            // console.log(window.location.href);
+            // const url = 'https://3ocshrauf1.execute-api.us-west-1.amazonaws.com/lists';
+            
+            // const body = {
+            //     question: 'MWAHAHAHAHA EVIL',
+            //     list: ['g', 'i', 'h']
+            // };
+            // // console.log(result.body);
+
+            // const awaitResult = await axios.put(url, body);
+            // console.log(awaitResult);
+
+            // const newID = awaitResult.data.split(" ")[2];
+            // console.log(newID);
+
+            // const getURI = 'https://3ocshrauf1.execute-api.us-west-1.amazonaws.com/lists/' + newID;
+            // const awaitGetResult = await axios.get(getURI);
+            // console.log('get result');
+            // console.log(awaitGetResult.data);
+        }
+
+        putNewList();
+
+        // const url = 'https://3ocshrauf1.execute-api.us-west-1.amazonaws.com/lists/test';
+        // axios.get(url).then(response => console.log(response));
+    }, []);
