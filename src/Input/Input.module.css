@@ -18,12 +18,18 @@
     justify-content: flex-end;
     align-items: center;
     flex-shrink: 0;
+
+    /* this needs to be 15px more than the margin-bottom for buttonContainer since entries have 15px margin above them
+     * but textboxes don't
+     */
+
+    margin-bottom: 10px;
 }
 
 .textbox {
     height: 60px;
     width: 60vw;
-    font-size: 30px;
+    font-size: 28px;
     text-align: center;
     background-color: #111111;
     outline: none;
@@ -52,55 +58,51 @@
     align-items: stretch;
     flex-wrap: wrap;
     justify-content: center;
-}
 
-.disabledButton {
-    width: min(120px, 20vw);
-    border: 5px solid #999999;
-    border-radius: 15px;
-    color: #999999;
-    font-size: 20px;
-    padding: 12px 30px;
-    text-align: center;
-    margin: 20px 10px;
-
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 38px;
-
-    transition-duration: 200ms;
+    /* need to make margin-bottom 15px less than margin-top since entries have 15px margin above them */
+    margin-bottom: 20px;
 }
 
 .button {
-    width: min(120px, 20vw);
-    border: 5px solid #BBBBBB;
+    width: 40px;
     border-radius: 15px;
-    color: #BBBBBB;
     font-size: 20px;
-    padding: 12px 30px;
     text-align: center;
-    margin: 20px 10px;
+    margin: 20px calc(2vw + 10px);
 
 
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 38px;
+    height: 40px;
 
     transition-duration: 200ms;
 }
 
+.disabledButton {
+    border: 5px solid #999999;
+    color: #999999;
+}
+
+.enabledButton {
+    border: 5px solid #BBBBBB;
+    color: #BBBBBB;
+}
+
+svg {
+    fill: currentColor;
+    stroke: currentColor;
+}
+
 @media (hover: hover) and (pointer: fine) {
-    .button:hover {
+    .enabledButton:hover {
         border: 5px solid white;
         color: white;
     }
 }
 
 .entryContainer {
-    min-height: 50vh;
+    min-height: calc(50vh - 30px); /* 50vh - (margin-bottom for textbox container + margin-bottom for button container) */
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -109,7 +111,6 @@
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
-    padding: 0px 5vw;
 }
 
 .entry {
