@@ -26,9 +26,6 @@ export default function Results({results, graph, questionsAsked}) {
                 const path = shortestPath(graph, results[betterTermIndex], results[worseTermIndex]);
         
                 if (path.length > 1) {
-                    // const pathString = path.reduce((term, currentValue) => term + ' > ' + currentValue);
-                    // setPathBetweenSelections(pathString);
-
                     let pathArray = []
                     for (let i = 0; i < path.length - 1; ++i) {
                         const current = path[i];
