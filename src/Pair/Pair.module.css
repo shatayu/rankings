@@ -37,16 +37,19 @@
     flex-wrap: wrap;
     margin: 20px;
     transition-duration: 200ms;
-    font-size: 28px;
+    font-size: min(3vh,10vw);
     padding: 10px;
-
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */
-
+    
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;  
+    box-sizing: border-box;         
+    
     text-align: center;
+    overflow-wrap: break-word;
+    word-break: break-word;
 
-    overflow: auto;
+    overflow: scroll;
+
 }
 
 @media (hover: hover) and (pointer: fine) {

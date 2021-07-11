@@ -128,8 +128,10 @@ svg {
     flex-wrap: nowrap;
 
     overflow-wrap: break-word;
+    word-break: break-word;
 
     transform: translateX(30px);
+    
     
 }
 
