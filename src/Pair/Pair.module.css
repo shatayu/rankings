@@ -48,7 +48,7 @@
     overflow-wrap: break-word;
     word-break: break-word;
 
-    overflow: scroll;
+    overflow: auto;
 
 }
 
