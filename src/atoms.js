@@ -1,6 +1,13 @@
 import {atomFamily} from 'recoil';
 
-export const userState = atomFamily(
+export const InputState = atomFamily(
+    {
+        key: 'entryMakingTextboxContent',
+        default: ''
+    }
+)
+
+export const EntryState = atomFamily(
     {
         key: 'entriesList',
         default: [1, 2, 3]
@@ -12,3 +19,4 @@ export const userState = atomFamily(
         }
     }
 );
+
