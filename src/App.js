@@ -2,6 +2,7 @@ import Ranker from './Ranker/Ranker';
 import Input from './Input/Input';
 import Results from './Results/Results';
 import {useState} from 'react'
+import {RecoilRoot} from 'recoil';
 
 function App() {
   const [entries, setEntries] = useState([]);
@@ -24,9 +25,13 @@ function App() {
     <Results key={2} graph={responsesGraph} results={results} questionsAsked={questionsAsked}/>
   ]
 
-  return <div style={{backgroundColor: '#111111'}}>
-    {pages[currentPage]}
-  </div>
+  return (
+    <RecoilRoot>
+      <div style={{backgroundColor: '#111111'}}>
+        {pages[currentPage]}
+      </div>
+    </RecoilRoot>
+  );
 }
 
 export default App;
