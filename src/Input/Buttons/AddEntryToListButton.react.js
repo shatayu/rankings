@@ -1,15 +1,15 @@
-import Button from './Button';
+import GenericButton from './GenericButton';
 import { useRecoilState } from 'recoil';
-import { ReactComponent as Plus } from '../assets/plus.svg';
-import { EntryState, InputState } from '../atoms';
-import { canEntryBeAddedToEntriesList } from './inputUtils';
+import { ReactComponent as Plus } from '../../assets/plus.svg';
+import { EntryState, InputState } from '../../atoms';
+import { canEntryBeAddedToEntriesList } from '../../utils/inputUtils';
 
 export default function AddEntryToListButton() {
     const [entriesList, setEntriesList] = useRecoilState(EntryState('entriesList'));
     const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(InputState('entryInputTextboxContent'));
 
     return (
-        <Button
+        <GenericButton
             icon={<Plus />}
             isEnabled={canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)}
             onClick={() => {

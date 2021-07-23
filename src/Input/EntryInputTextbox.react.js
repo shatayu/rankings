@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useRecoilState } from "recoil"
 import { EntryState, InputState } from "../atoms"
 import styles from './Input.module.css';
-import { canEntryBeAddedToEntriesList } from './inputUtils';
+import { canEntryBeAddedToEntriesList } from '../utils/inputUtils';
 
 export default function EntryInputTextbox() {
     const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(InputState('entryInputTextboxContent'));
