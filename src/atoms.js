@@ -2,7 +2,7 @@ import {atomFamily} from 'recoil';
 
 export const InputState = atomFamily(
     {
-        key: 'entryMakingTextboxContent',
+        key: 'entryInputTextboxContent',
         default: ''
     }
 )
@@ -10,7 +10,7 @@ export const InputState = atomFamily(
 export const EntryState = atomFamily(
     {
         key: 'entriesList',
-        default: [1, 2, 3]
+        default: ['a', 'b', 'c']
     },
     {
         key: 'responsesGraph',

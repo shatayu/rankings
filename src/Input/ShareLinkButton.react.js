@@ -1,6 +1,6 @@
 import Button from './Button';
 import { useRecoilValue } from 'recoil';
-import { ReactComponent as Share } from '../assets/share.svg';
+import { ReactComponent as Share } from '../assets/link.svg';
 import { EntryState } from '../atoms';
 import axios from 'axios';
 import copy from 'copy-to-clipboard';
