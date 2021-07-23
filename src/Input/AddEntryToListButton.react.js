@@ -13,6 +13,7 @@ export default function AddEntryToListButton() {
             isEnabled={canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)}
             onClick={() => {
                 if (canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)) {
+                    // TODO: refactor this into using a method from the textbox component
                     setEntriesList([...entriesList, entryInputTextboxContent]);
                     setEntryInputTextboxContent('');
                 }
