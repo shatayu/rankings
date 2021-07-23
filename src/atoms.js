@@ -14,9 +14,7 @@ export const EntryState = atomFamily(
     },
     {
         key: 'responsesGraph',
-        default: {
-            tomato: 'tasty'
-        }
+        default: null
     }
 );
 

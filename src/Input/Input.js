@@ -8,6 +8,17 @@ import {useRecoilState, useRecoilValue} from 'recoil';
 import DeleteAllEntriesButton from './DeleteAllEntriesButton.react';
 import ShareLinkButton from './ShareLinkButton.react';
 import AddEntryToListButton from './AddEntryToListButton.react';
+import StartRankingButton from './StartRankingButton.react';
+
+/*
+ * once the user clicks "Start Ranking"
+ * - generate responsesGraph
+ * - advance to Rankings page
+ * 
+ * What this looks like in code:
+ * - generate responsesGraph
+ * - on the app page "if responsesGraph != null && userPage == 2 then advance to next page"
+ */ 
 
 export default function Input({onFinalizeEntries}) {
     const [value, setValue] = useState('');
@@ -71,16 +82,7 @@ export default function Input({onFinalizeEntries}) {
                 <DeleteAllEntriesButton />
                 <ShareLinkButton />
                 <AddEntryToListButton />
-                <div className={entriesList.length > 1 || (value.length > 0 && entriesList.length > 0) ? styles.button + ' ' + styles.enabledButton : styles.button + ' ' + styles.disabledButton} onClick={e => {
-                    if (!entriesList.map(term => term.replace(' ', '')).includes(value.replace(' ', ''))) {
-                        if (value.length > 0) {
-                            onSubmit(e, value);
-                            setHasUserFinalizedRankings(true);
-                        } else if (entriesList.length > 1) {
-                            setHasUserFinalizedRankings(true);
-                        }
-                    }
-                }}><svg width="24" height="24" viewBox="0 0 24 24"><path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/></svg></div>
+                <StartRankingButton />
             </div>
             <div className={styles.entryContainer}>
                 {entriesList.map((value, i) => <InputElement key={i} value={value} onRemove={() => {
