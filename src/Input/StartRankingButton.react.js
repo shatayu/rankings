@@ -3,6 +3,8 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ReactComponent as Arrow } from '../assets/arrow.svg';
 import { EntryState, InputState } from '../atoms';
 import { generateEmptyGraph } from '../utils/graphUtils';
+import { canEntryBeAddedToEntriesList } from './inputUtils';
+
 
 export default function StartRankingButton() {
     const [entriesList, setEntriesList] = useRecoilState(EntryState('entriesList'));
@@ -28,12 +30,4 @@ export default function StartRankingButton() {
 
 function canStartRanking(entry, entriesList) {
     return entriesList.length > 1 || (canEntryBeAddedToEntriesList(entry, entriesList) && entriesList.length > 0);
-}
-
-function canEntryBeAddedToEntriesList(entry, entriesList) {
-    const spaceLessEntry = entry.replace(' ', '')
-    const doesEntryExist = !entriesList.map(term => term.replace(' ', ''))
-            .includes(spaceLessEntry);
-    
-    return spaceLessEntry.length > 0 && !doesEntryExist;
 }

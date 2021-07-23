@@ -2,6 +2,7 @@ import Button from './Button';
 import { useRecoilState } from 'recoil';
 import { ReactComponent as Plus } from '../assets/plus.svg';
 import { EntryState, InputState } from '../atoms';
+import { canEntryBeAddedToEntriesList } from './inputUtils';
 
 export default function AddEntryToListButton() {
     const [entriesList, setEntriesList] = useRecoilState(EntryState('entriesList'));
@@ -20,12 +21,4 @@ export default function AddEntryToListButton() {
             }}
         />
     )
-}
-
-function canEntryBeAddedToEntriesList(entry, entriesList) {
-    const spaceLessEntry = entry.replace(' ', '')
-    const doesEntryExist = !entriesList.map(term => term.replace(' ', ''))
-            .includes(spaceLessEntry);
-    
-    return spaceLessEntry.length > 0 && !doesEntryExist;
 }

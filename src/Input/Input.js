@@ -9,6 +9,7 @@ import DeleteAllEntriesButton from './DeleteAllEntriesButton.react';
 import ShareLinkButton from './ShareLinkButton.react';
 import AddEntryToListButton from './AddEntryToListButton.react';
 import StartRankingButton from './StartRankingButton.react';
+import EntryInputTextbox from './EntryInputTextbox.react';
 
 /*
  * once the user clicks "Start Ranking"
@@ -24,9 +25,6 @@ export default function Input({onFinalizeEntries}) {
     const [value, setValue] = useState('');
     const [entriesList, setEntriesList] = useRecoilState(EntryState('entriesList'));
     const [hasUserFinalizedRankings, setHasUserFinalizedRankings] = useState(false);
-
-    const v = useRecoilValue(EntryState('entriesList'));
-    console.log(v);
 
     // if user came from shared link then fill in list
     useEffect(() => {
@@ -52,19 +50,19 @@ export default function Input({onFinalizeEntries}) {
     }, [entriesList, hasUserFinalizedRankings, onFinalizeEntries])
 
     // add term to entry
-    const onSubmit = useCallback((e, value) => {  
-        e.preventDefault();
-        const spaceLessValue = value.replace(' ', '');
-        if (!entriesList.map(term => term.replace(' ', '')).includes(spaceLessValue) && spaceLessValue.length > 0) {
-            setEntriesList([...entriesList, value]);
-            setValue('');
-        }
-    }, [entriesList, setEntriesList]);
+    // const onSubmit = useCallback((e, value) => {  
+    //     e.preventDefault();
+    //     const spaceLessValue = value.replace(' ', '');
+    //     if (!entriesList.map(term => term.replace(' ', '')).includes(spaceLessValue) && spaceLessValue.length > 0) {
+    //         setEntriesList([...entriesList, value]);
+    //         setValue('');
+    //     }
+    // }, [entriesList, setEntriesList]);
 
     return (
         <div className={styles.container}>
             <div className={styles.textboxContainer}>
-                <form onSubmit={e => onSubmit(e, value)}>
+                {/* <form onSubmit={e => onSubmit(e, value)}>
                     <label>
                     <input
                         type="text"
@@ -76,7 +74,8 @@ export default function Input({onFinalizeEntries}) {
                         }}
                     />
                     </label>
-                </form>
+                </form> */}
+                <EntryInputTextbox />
             </div>
             <div className={styles.buttonContainer}>
                 <DeleteAllEntriesButton />
