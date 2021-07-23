@@ -1,10 +1,10 @@
 import { useState, useCallback, useEffect } from 'react';
+import Button from './Button';
 import styles from './Input.module.css';
 import axios from 'axios';
 import copy from 'copy-to-clipboard';
 
 export default function Input({onFinalizeEntries}) {
-
     const [value, setValue] = useState('');
     const [entries, setEntries] = useState([]);
     const [hasUserFinalizedRankings, setHasUserFinalizedRankings] = useState(false);
@@ -25,13 +25,15 @@ export default function Input({onFinalizeEntries}) {
         putNewList();
     }, []);
 
+    // on user submit
     useEffect(() => {
         if (hasUserFinalizedRankings) {
             onFinalizeEntries(entries);
         }
     }, [entries, hasUserFinalizedRankings, onFinalizeEntries])
 
-    const onSubmit = useCallback((e, value) => {
+    // add term to entry
+    const onSubmit = useCallback((e, value) => {  
         e.preventDefault();
         const spaceLessValue = value.replace(' ', '');
         if (!entries.map(term => term.replace(' ', '')).includes(spaceLessValue) && spaceLessValue.length > 0) {
@@ -58,13 +60,7 @@ export default function Input({onFinalizeEntries}) {
                 </form>
             </div>
             <div className={styles.buttonContainer}>
-            <div className={entries.length > 0 ? styles.button + ' ' + styles.enabledButton : styles.button + ' ' + styles.disabledButton} onClick={
-                () => {
-                    setEntries([]);
-                }
-            }>
-                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M9 19c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5-17v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712zm-3 4v16h-14v-16h-2v18h18v-18h-2z"/></svg>
-            </div>
+            <Button isEnabled={true} icon={null} onClick={() => {}}/>g
             <div className={entries.length > 1 ? styles.button + ' ' + styles.enabledButton : styles.button + ' ' + styles.disabledButton} onClick={async () => {
                     // send URL up to DB
                     const url = 'https://3ocshrauf1.execute-api.us-west-1.amazonaws.com/lists';
