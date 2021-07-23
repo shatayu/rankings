@@ -1,10 +1,8 @@
-import { useState, useCallback, useEffect } from 'react';
-import Button from './Button';
+import { useState, useEffect } from 'react';
 import styles from './Input.module.css';
 import axios from 'axios';
-import copy from 'copy-to-clipboard';
 import {EntryState} from '../atoms';
-import {useRecoilState, useRecoilValue} from 'recoil';
+import {useRecoilState} from 'recoil';
 import DeleteAllEntriesButton from './DeleteAllEntriesButton.react';
 import ShareLinkButton from './ShareLinkButton.react';
 import AddEntryToListButton from './AddEntryToListButton.react';
@@ -22,7 +20,6 @@ import EntryInputTextbox from './EntryInputTextbox.react';
  */ 
 
 export default function Input({onFinalizeEntries}) {
-    const [value, setValue] = useState('');
     const [entriesList, setEntriesList] = useRecoilState(EntryState('entriesList'));
     const [hasUserFinalizedRankings, setHasUserFinalizedRankings] = useState(false);
 
@@ -49,32 +46,9 @@ export default function Input({onFinalizeEntries}) {
         }
     }, [entriesList, hasUserFinalizedRankings, onFinalizeEntries])
 
-    // add term to entry
-    // const onSubmit = useCallback((e, value) => {  
-    //     e.preventDefault();
-    //     const spaceLessValue = value.replace(' ', '');
-    //     if (!entriesList.map(term => term.replace(' ', '')).includes(spaceLessValue) && spaceLessValue.length > 0) {
-    //         setEntriesList([...entriesList, value]);
-    //         setValue('');
-    //     }
-    // }, [entriesList, setEntriesList]);
-
     return (
         <div className={styles.container}>
             <div className={styles.textboxContainer}>
-                {/* <form onSubmit={e => onSubmit(e, value)}>
-                    <label>
-                    <input
-                        type="text"
-                        value={value}
-                        className={styles.textbox}
-                        placeholder="Enter item here"
-                        onChange={(event) => {
-                            setValue(event.target.value)
-                        }}
-                    />
-                    </label>
-                </form> */}
                 <EntryInputTextbox />
             </div>
             <div className={styles.buttonContainer}>
