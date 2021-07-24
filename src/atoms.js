@@ -18,3 +18,14 @@ export const EntryState = atomFamily(
     }
 );
 
+export const RankingsState = atomFamily(
+    {
+        key: 'responsesGraph',
+        default: null
+    },
+    {
+        key: 'questionsAsked',
+        default: []
+    },
+)
+
