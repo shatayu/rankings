@@ -1,9 +1,9 @@
 import styles from './Input.module.css';
 import { useRecoilState } from 'recoil';
-import { EntryState } from '../atoms';
+import { EntriesListAtom } from '../atoms';
 
 export default function AddedEntriesList() {
-    const [entriesList, setEntriesList] = useRecoilState(EntryState('entriesList'));
+    const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
 
     return (
         <div className={styles.entryContainer}>

@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
 import { useRecoilState } from "recoil"
-import { EntryState, InputState } from "../atoms"
+import { EntriesListAtom, EntryInputTextboxAtom } from "../atoms"
 import styles from './Input.module.css';
 import { canEntryBeAddedToEntriesList } from '../utils/inputUtils';
 
 export default function EntryInputTextbox() {
-    const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(InputState('entryInputTextboxContent'));
-    const [entriesList, setEntriesList] = useRecoilState(EntryState('entriesList'));
+    const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(EntryInputTextboxAtom);
+    const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
 
     // add term to entry
     const onSubmit = useCallback((e, value) => {  

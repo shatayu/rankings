@@ -1,12 +1,12 @@
 import GenericButton from './GenericButton';
 import { useRecoilValue } from 'recoil';
 import { ReactComponent as Share } from '../../assets/link.svg';
-import { EntryState } from '../../atoms';
+import { EntriesListAtom, EntryState, InputState } from '../../atoms';
 import axios from 'axios';
 import copy from 'copy-to-clipboard';
 
 export default function ShareLinkButton() {
-    const entriesList = useRecoilValue(EntryState('entriesList'));
+    const entriesList = useRecoilValue(EntriesListAtom);
     return (
         <GenericButton
             icon={<Share />}

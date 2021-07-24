@@ -1,12 +1,12 @@
 import GenericButton from './GenericButton';
 import { useRecoilState } from 'recoil';
 import { ReactComponent as Plus } from '../../assets/plus.svg';
-import { EntryState, InputState } from '../../atoms';
+import { EntriesListAtom, EntryInputTextboxAtom } from '../../atoms';
 import { canEntryBeAddedToEntriesList } from '../../utils/inputUtils';
 
 export default function AddEntryToListButton() {
-    const [entriesList, setEntriesList] = useRecoilState(EntryState('entriesList'));
-    const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(InputState('entryInputTextboxContent'));
+    const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
+    const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(EntryInputTextboxAtom);
 
     return (
         <GenericButton

@@ -1,10 +1,10 @@
 import GenericButton from './GenericButton';
 import { ReactComponent as Trash } from '../../assets/trash.svg'
 import { useRecoilState } from 'recoil';
-import { EntryState } from '../../atoms';
+import { EntriesListAtom, EntryState, InputState } from '../../atoms';
 
 export default function DeleteAllEntriesButton() {
-    const [entriesList, setEntriesList] = useRecoilState(EntryState('entriesList'));
+    const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
     return (
         <GenericButton
             icon={<Trash />}

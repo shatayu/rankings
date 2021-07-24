@@ -1,31 +1,17 @@
-import {atomFamily} from 'recoil';
+import {atom} from 'recoil';
 
-export const InputState = atomFamily(
-    {
-        key: 'entryInputTextboxContent',
-        default: ''
-    }
-)
+export const EntryInputTextboxAtom = atom({
+    key: 'EntryInputTextboxAtom',
+    default: ''
+});
 
-export const EntryState = atomFamily(
-    {
-        key: 'entriesList',
-        default: ['a', 'b', 'c']
-    },
-    {
-        key: 'responsesGraph',
-        default: null
-    }
-);
+export const EntriesListAtom = atom({
+    key: 'EntriesListAtom',
+    default: []
+});
 
-export const RankingsState = atomFamily(
-    {
-        key: 'responsesGraph',
-        default: null
-    },
-    {
-        key: 'questionsAsked',
-        default: []
-    },
-)
+export const ResponsesGraphAtom = atom({
+    key: 'ResponsesGraphAtom',
+    default: null
+});
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './Input.module.css';
 import axios from 'axios';
-import {EntryState} from '../atoms';
+import {EntryState, InputState, EntriesListAtom} from '../atoms';
 import {useRecoilState} from 'recoil';
 import DeleteAllEntriesButton from './Buttons/DeleteAllEntriesButton.react';
 import ShareLinkButton from './Buttons/ShareLinkButton.react';
@@ -21,7 +21,7 @@ import AddedEntriesList from './AddedEntriesList.react';
  */ 
 
 export default function Input({onFinalizeEntries}) {
-    const [entriesList, setEntriesList] = useRecoilState(EntryState('entriesList'));
+    const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
     const [hasUserFinalizedRankings, setHasUserFinalizedRankings] = useState(false);
 
     // if user came from shared link then fill in list

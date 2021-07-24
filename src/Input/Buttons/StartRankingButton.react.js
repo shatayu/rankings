@@ -1,15 +1,15 @@
 import GenericButton from './GenericButton';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ReactComponent as Arrow } from '../../assets/arrow.svg';
-import { EntryState, InputState } from '../../atoms';
+import { EntriesListAtom, EntryInputTextboxAtom, ResponsesGraphAtom } from '../../atoms';
 import { generateEmptyGraph } from '../../utils/graphUtils';
 import { canEntryBeAddedToEntriesList } from '../../utils/inputUtils';
 
 
 export default function StartRankingButton() {
-    const [entriesList, setEntriesList] = useRecoilState(EntryState('entriesList'));
-    const setResponsesGraph = useSetRecoilState(EntryState('responsesGraph'));
-    const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(InputState('entryInputTextboxContent'));
+    const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
+    const setResponsesGraph = useSetRecoilState(ResponsesGraphAtom);
+    const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(EntryInputTextboxAtom);
 
     return (
         <GenericButton
