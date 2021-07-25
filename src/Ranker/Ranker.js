@@ -65,11 +65,11 @@ function createNewResponsesGraph(responsesGraph, better, worse) {
         ...responsesGraph,
         [`${better}`]: {
             ...responsesGraph[`${better}`],
-            [`${worse}`]: Constants.WORSE
+            [`${worse}`]: Constants.BETTER
         },
         [`${worse}`]: {
             ...responsesGraph[`${worse}`],
-            [`${better}`]: Constants.BETTER
+            [`${better}`]: Constants.WORSE
         }
     };
 }

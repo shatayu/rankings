@@ -79,3 +79,44 @@ export function shortestPath(graph, source, target) {
     return path;
 }
 
+export function getPathString(selections, results, responsesGraph, questionsAsked) {
+    selections.sort((a, b) => results.indexOf(a) - results.indexOf(b));
+    const path = shortestPath(responsesGraph, selections[0], selections[1]);
+
+    if (path.length > 1) {
+        let pathArray = []
+        for (let i = 0; i < path.length - 1; ++i) {
+            const current = path[i];
+            const next = path[i + 1];
+            const questionNumber = getQuestionNumber(questionsAsked, current, next);
+            
+            const pathString = ('(Q' + String(questionNumber) + ') You said ' + current + ' is better than ' + next);
+
+            const pathEntry = <div key={pathString}>{pathString}</div>
+            pathArray.push(pathEntry);
+        }
+
+        return pathArray;
+    } else {
+        return [];
+    }
+}
+
+function getQuestionNumber(questionsAsked, current, next) {
+    let questionIndex = -1;
+    questionsAsked.forEach((question, index) => {
+        if (
+            (question[0] === current && question[1] === next) ||
+            (question[0] === next && question[1] === current)
+        ) {
+            questionIndex = index;
+        }
+    });
+
+    if (questionIndex === -1) {
+        throw new Error('Question not found');
+    }
+
+    return questionIndex + 1;
+}
+

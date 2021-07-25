@@ -1,58 +1,33 @@
 import {useState, useCallback} from 'react';
-import {shortestPath} from '../utils/graphUtils';
+import {getPathString} from '../utils/graphUtils';
+import { UserSortedRankingsAtom, ResponsesGraphAtom, UserQuestionsAskedAtom } from '../atoms';
 import styles from './Results.module.css';
+import { useRecoilValue } from 'recoil';
 
-export default function Results({results, graph, questionsAsked}) {
+export default function Results() {
+    const results = useRecoilValue(UserSortedRankingsAtom);
+    const graph = useRecoilValue(ResponsesGraphAtom);
+    const questionsAsked = useRecoilValue(UserQuestionsAskedAtom);
+
     const [selections, setSelections] = useState([]);
     const [pathBetweenSelections, setPathBetweenSelections] = useState([]);
 
     const onSelection = useCallback(value => {
-        let temp = selections.slice();
+        let tempSelections = selections.slice();
 
-        if (!temp.includes(value)) {
-            if (temp.length > 1) {
-                temp.pop();
+        if (!tempSelections.includes(value)) {
+            if (tempSelections.length > 1) {
+                tempSelections.pop();
             }
-            temp.push(value);
-            setSelections(temp);
+            tempSelections.push(value);
+            setSelections(tempSelections);
             
-            if (temp.length === 2) {
-                const firstTermIndex = results.indexOf(temp[0]);
-                const secondTermIndex = results.indexOf(temp[1]);
-        
-                const betterTermIndex = Math.min(firstTermIndex, secondTermIndex);
-                const worseTermIndex = Math.max(firstTermIndex, secondTermIndex);
-                
-                const path = shortestPath(graph, results[betterTermIndex], results[worseTermIndex]);
-        
-                if (path.length > 1) {
-                    let pathArray = []
-                    for (let i = 0; i < path.length - 1; ++i) {
-                        const current = path[i];
-                        const next = path[i + 1];
-
-                        let questionNumber = -1;
-                        questionsAsked.forEach((question, index) => {
-                            if (
-                                (question[0] === current && question[1] === next) ||
-                                (question[0] === next && question[1] === current)
-                            ) {
-                                questionNumber = index;
-                            }
-                        });
-
-                        const pathString = ('(Q' + String(questionNumber + 1) + ') You said ' + current + ' is better than ' + next);
-
-                        const pathEntry = <div key={i}>{pathString}</div>
-                        pathArray.push(pathEntry);
-                    }
-
-                    setPathBetweenSelections(pathArray);
-                }
+            if (tempSelections.length === 2) {
+                setPathBetweenSelections(getPathString(tempSelections, results, graph, questionsAsked));
             }
         } else {
-            if (temp.length === 2) {
-                const otherTerm = temp[0] === value ? temp[1] : temp[0];
+            if (tempSelections.length === 2) {
+                const otherTerm = tempSelections[0] === value ? tempSelections[1] : tempSelections[0];
                 setSelections([otherTerm]);
                 setPathBetweenSelections([]);
             } else {
