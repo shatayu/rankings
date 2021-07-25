@@ -10,7 +10,7 @@ import AddedEntriesList from './AddedEntriesList.react';
 export default function Input({onFinalizeEntries}) {
     return (
         <div className={styles.container}>
-            <Toaster 
+            <Toaster
                 toastOptions={{
                     // Define default options
                     duration: 5000,
