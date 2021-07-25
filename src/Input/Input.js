@@ -10,16 +10,6 @@ import StartRankingButton from './Buttons/StartRankingButton.react';
 import EntryInputTextbox from './EntryInputTextbox.react';
 import AddedEntriesList from './AddedEntriesList.react';
 
-/*
- * once the user clicks "Start Ranking"
- * - generate responsesGraph
- * - advance to Rankings page
- * 
- * What this looks like in code:
- * - generate responsesGraph
- * - on the app page "if responsesGraph != null && userPage == 2 then advance to next page"
- */ 
-
 export default function Input({onFinalizeEntries}) {
     const setEntriesList = useSetRecoilState(EntriesListAtom);
 
