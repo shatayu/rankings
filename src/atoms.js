@@ -15,3 +15,17 @@ export const ResponsesGraphAtom = atom({
     default: null
 });
 
+export const PageNumberAtom = atom({
+    key: 'PageNumberAtom',
+    default: 0
+});
+
+export const UserQuestionsAskedAtom = atom({
+    key: 'UserQuestionsAsked',
+    default: []
+});
+
+export const UserSortedRankingsAtom = atom({
+    key: 'UserSortedRankings',
+    default: []
+});

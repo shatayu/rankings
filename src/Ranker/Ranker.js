@@ -1,63 +1,54 @@
 import { useState, useEffect, useCallback } from 'react';
+import { EntriesListAtom, ResponsesGraphAtom, UserSortedRankingsAtom, UserQuestionsAskedAtom, PageNumberAtom } from '../atoms';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { iterativeMergeSort } from '../utils/sortUtils';
 import React from 'react';
 import Constants from '../Constants';
 import Pair from '../Pair/Pair';
-import {computeTransitiveClosure, generateEmptyGraph} from '../utils/graphUtils';
 import styles from './Ranker.module.css';
+import PageNumbers from '../PageNumbers';
 
-export default function Ranker({entries, onFinish}) {
-    let [questionsAsked, setQuestionsAsked] = useState([]);
-    let [graph, setGraph] = useState(generateEmptyGraph(entries));
-    let [responses, setResponses] = useState(generateEmptyGraph(entries));
+export default function Ranker() {
+    const [responsesGraph, setResponsesGraph] = useRecoilState(ResponsesGraphAtom);
+    const [userQuestionsAsked, setUserQuestionsAsked] = useRecoilState(UserQuestionsAskedAtom);
+
+    const setUserSortedRankings = useSetRecoilState(UserSortedRankingsAtom);
+    const setPageNumber = useSetRecoilState(PageNumberAtom);
+
+    const entries = useRecoilValue(EntriesListAtom);
+
     let [currentQuestion, setCurrentQuestion] = useState(null);
     let [questionNumber, setQuestionNumber] = useState(1);
     let [doneRanking, setDoneRanking] = useState(false);
 
     // get response graph callback
     const updateResponseGraph = useCallback((better, worse) => {
-        let tempResponses = {
-            ...responses
-        }
-
-        tempResponses[better][worse] = Constants.BETTER;
-        tempResponses[worse][better] = Constants.WORSE;
-
-        setResponses(responses);
-    }, [responses]);
-
-    // get transitive closure graph callback
-    const updateTransitiveClosureGraph = useCallback((better, worse) => {
-        let tempGraph = {
-            ...graph
-        }
-
-        tempGraph[better][worse] = Constants.BETTER;
-        tempGraph[worse][better] = Constants.WORSE;
-
-        tempGraph = computeTransitiveClosure(tempGraph, entries);
-        setGraph(tempGraph);
-    }, [entries, graph]);
+        setResponsesGraph(createNewResponsesGraph(responsesGraph, better, worse));
+    }, [responsesGraph, setResponsesGraph]);
 
     // get update callback
     const onSelection = useCallback((better, worse) => {
         updateResponseGraph(better, worse);
-        updateTransitiveClosureGraph(better, worse);
-        setQuestionsAsked([...questionsAsked, [better, worse]]);
+        setUserQuestionsAsked([...userQuestionsAsked, [better, worse]]);
         setQuestionNumber(questionNumber + 1);
-    }, [questionNumber, questionsAsked, updateResponseGraph, updateTransitiveClosureGraph]);
+    }, [questionNumber, setUserQuestionsAsked, updateResponseGraph, userQuestionsAsked]);
 
     // ask questions
     useEffect(() => {
-        let {array, nextQuestion} = iterativeMergeSort(entries, graph);
+        let {array, nextQuestion} = iterativeMergeSort(entries, responsesGraph);
         
         if (nextQuestion != null) {
             setCurrentQuestion(<Pair a={nextQuestion[0]} b={nextQuestion[1]} onSelection={onSelection} />)
         } else {
             setDoneRanking(true);
-            onFinish(responses, array, questionsAsked);
+            setUserSortedRankings(array);  
+            setPageNumber(PageNumbers.RESULTS);          
         }
-    }, [graph, questionNumber, onSelection, responses, entries, onFinish, questionsAsked]);
+    }, [responsesGraph, questionNumber, onSelection, entries, userQuestionsAsked, setUserSortedRankings, setPageNumber]);
+
+    if (responsesGraph == null) {
+        return null;
+    }
 
     return (
         <>
@@ -67,6 +58,20 @@ export default function Ranker({entries, onFinish}) {
             </div>
         </>
     );
+}
+
+function createNewResponsesGraph(responsesGraph, better, worse) {
+    return {
+        ...responsesGraph,
+        [`${better}`]: {
+            ...responsesGraph[`${better}`],
+            [`${worse}`]: Constants.WORSE
+        },
+        [`${worse}`]: {
+            ...responsesGraph[`${worse}`],
+            [`${better}`]: Constants.BETTER
+        }
+    };
 }
 
 function ProgressIndicator({questionNumber, n, doneRanking}) {

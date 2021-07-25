@@ -1,15 +1,17 @@
 import GenericButton from './GenericButton';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ReactComponent as Arrow } from '../../assets/arrow.svg';
-import { EntriesListAtom, EntryInputTextboxAtom, ResponsesGraphAtom } from '../../atoms';
+import { EntriesListAtom, EntryInputTextboxAtom, ResponsesGraphAtom, PageNumberAtom } from '../../atoms';
 import { generateEmptyGraph } from '../../utils/graphUtils';
 import { canEntryBeAddedToEntriesList } from '../../utils/inputUtils';
+import PageNumber from '../../PageNumbers';
 
 
 export default function StartRankingButton() {
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
-    const setResponsesGraph = useSetRecoilState(ResponsesGraphAtom);
     const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(EntryInputTextboxAtom);
+    const setResponsesGraph = useSetRecoilState(ResponsesGraphAtom);
+    const setPageNumber = useSetRecoilState(PageNumberAtom);
 
     return (
         <GenericButton
@@ -20,9 +22,10 @@ export default function StartRankingButton() {
                     // TODO: refactor this into using a method from the textbox component
                     setEntriesList([...entriesList, entryInputTextboxContent]);
                     setEntryInputTextboxContent('');
-
-                    setResponsesGraph(generateEmptyGraph(entriesList));
                 }
+
+                setResponsesGraph(generateEmptyGraph(entriesList));
+                setPageNumber(PageNumber.RANKER);
             }}
         />
     )

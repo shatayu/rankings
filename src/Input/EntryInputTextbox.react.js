@@ -12,7 +12,6 @@ export default function EntryInputTextbox() {
     const onSubmit = useCallback((e, value) => {  
         e.preventDefault();
         if (canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)) {
-            console.log('adding ' + entryInputTextboxContent + ' to list');
             setEntriesList([...entriesList, value]);
             setEntryInputTextboxContent('');
         }
