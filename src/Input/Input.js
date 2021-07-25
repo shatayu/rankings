@@ -15,8 +15,8 @@ export default function Input({onFinalizeEntries}) {
                     // Define default options
                     duration: 5000,
                     style: {
-                    background: 'white',
-                    color: '#111111',
+                        background: 'white',
+                        color: '#111111',
                     },
                 }}
             />
