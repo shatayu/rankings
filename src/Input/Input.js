@@ -13,7 +13,7 @@ export default function Input({onFinalizeEntries}) {
             <Toaster
                 toastOptions={{
                     // Define default options
-                    duration: 5000,
+                    duration: 3000,
                     style: {
                         background: 'white',
                         color: '#111111',
