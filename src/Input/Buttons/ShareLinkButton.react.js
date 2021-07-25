@@ -1,4 +1,5 @@
 import GenericButton from './GenericButton';
+import toast from 'react-hot-toast';
 import { useRecoilValue } from 'recoil';
 import { ReactComponent as Share } from '../../assets/link.svg';
 import { EntriesListAtom } from '../../atoms';
@@ -24,8 +25,7 @@ export default function ShareLinkButton() {
 
                 const baseURL = window.location.href.substr(0, window.location.href.lastIndexOf('/')) + '/';
                 copy(baseURL + result.data.new_id);
-
-                // add UI
+                toast('Copied to clipboard.');    
             }}
         />
     );
