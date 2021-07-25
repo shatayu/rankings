@@ -15,6 +15,7 @@ export default function AddedEntriesList() {
             const listID = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
 
             if (listID.length > 0) {
+                setShowLoader(true);
                 const getURI = 'https://3ocshrauf1.execute-api.us-west-1.amazonaws.com/lists/' + listID;
                 const result = await axios.get(getURI);
                 const list = result.data?.Item?.list ?? [];
@@ -23,7 +24,6 @@ export default function AddedEntriesList() {
             }
         }
 
-        setShowLoader(true);
         putNewList();
     }, [setEntriesList]);
 
