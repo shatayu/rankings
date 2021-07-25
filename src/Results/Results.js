@@ -43,7 +43,10 @@ export default function Results() {
 
     return (
         <div className={styles.container}>
-            <div style={{textAlign: "center"}}>{results.map((term, i) => <ResultElement value={term} key={i} onSelection={onSelection} isSelected={selections.includes(term)}/>)}</div>
+            <div style={{textAlign: "center"}}>
+                {results.map((term, i) => 
+                    <ResultElement value={term} key={term} onSelection={onSelection} isSelected={selections.includes(term)} />)}
+            </div>
             <div className={styles.justification}>{pathBetweenSelections.length > 0 ? pathBetweenSelections : fillerExplanation}</div>
         </div>
     )
