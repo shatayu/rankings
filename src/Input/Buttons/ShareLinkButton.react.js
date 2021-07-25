@@ -1,7 +1,7 @@
 import GenericButton from './GenericButton';
 import { useRecoilValue } from 'recoil';
 import { ReactComponent as Share } from '../../assets/link.svg';
-import { EntriesListAtom, EntryState, InputState } from '../../atoms';
+import { EntriesListAtom } from '../../atoms';
 import axios from 'axios';
 import copy from 'copy-to-clipboard';
 

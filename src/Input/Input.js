@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import styles from './Input.module.css';
 import axios from 'axios';
 import {EntriesListAtom} from '../atoms';
