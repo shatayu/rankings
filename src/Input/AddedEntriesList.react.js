@@ -34,7 +34,7 @@ export default function AddedEntriesList() {
                     type='Puff'
                     color="#BBBBBB"
                     height={100}
-                    width={100} 
+                    width={100}
                 /> :
                 entriesList.map((value, i) => <InputElement key={value} value={value} onRemove={() => {
                     setEntriesList(entriesList.filter(entry => entry !== value));
