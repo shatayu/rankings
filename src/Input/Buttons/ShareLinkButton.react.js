@@ -13,7 +13,7 @@ export default function ShareLinkButton() {
     const {toasts} = useToasterStore();
     return (
         <GenericButton
-            icon={<Share />}
+            icon={<Share className={styles.buttonIcon} />}
             text='COPY LINK'
             isEnabled={entriesList.length > 1 && toasts.length === 0}
             onClick={async () => {

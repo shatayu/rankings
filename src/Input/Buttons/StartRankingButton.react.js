@@ -5,7 +5,7 @@ import { EntriesListAtom, EntryInputTextboxAtom, ResponsesGraphAtom, PageNumberA
 import { generateEmptyGraph } from '../../utils/graphUtils';
 import { canEntryBeAddedToEntriesList } from '../../utils/inputUtils';
 import PageNumber from '../../PageNumbers';
-
+import styles from '../Input.module.css';
 
 export default function StartRankingButton() {
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
@@ -15,7 +15,7 @@ export default function StartRankingButton() {
 
     return (
         <GenericButton
-            icon={<Arrow />}
+            icon={<Arrow className={styles.buttonIcon} />}
             text={getCounterString(entriesList)}
             isEnabled={canStartRanking(entryInputTextboxContent, entriesList)}
             onClick={() => {

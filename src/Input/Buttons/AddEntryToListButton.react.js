@@ -3,6 +3,7 @@ import { useRecoilState } from 'recoil';
 import { ReactComponent as Plus } from '../../assets/plus.svg';
 import { EntriesListAtom, EntryInputTextboxAtom } from '../../atoms';
 import { canEntryBeAddedToEntriesList } from '../../utils/inputUtils';
+import styles from '../Input.module.css';
 
 export default function AddEntryToListButton() {
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
@@ -10,7 +11,7 @@ export default function AddEntryToListButton() {
 
     return (
         <GenericButton
-            icon={<Plus/>}
+            icon={<Plus className={styles.buttonIcon} />}
             text='ADD ITEM'
             isEnabled={canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)}
             onClick={() => {
