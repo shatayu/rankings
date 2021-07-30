@@ -16,6 +16,7 @@ export default function StartRankingButton() {
     return (
         <GenericButton
             icon={<Arrow />}
+            text='START RANKING'
             isEnabled={canStartRanking(entryInputTextboxContent, entriesList)}
             onClick={() => {
                 if (canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)) {

@@ -1,13 +1,22 @@
 import styles from '../Input.module.css';
 
-export default function GenericButton({icon, isEnabled, onClick}) {
+export default function GenericButton({icon, text, isEnabled, onClick}) {
     return (
-        <div className={styles.button + ' ' + (isEnabled ?  styles.enabledButton : styles.disabledButton)} onClick={() => {
-            if (isEnabled) {
-                onClick();
-            }
-        }}>
-            {icon}
+        <div className={
+            styles.buttonIconAndTextContainer + ' ' + (isEnabled ? 
+                styles.enabledButtonIconAndTextContainer :
+                styles.disabledButtonIconAndTextContainer
+            )}
+            onClick={() => {
+                if (isEnabled) {
+                    onClick();
+                }
+            }}
+            >
+            <div className={styles.buttonIconContainer + ' ' + (isEnabled ?  styles.enabledButton : styles.disabledButton)}>
+                {icon}
+            </div>
+            <div className={styles.buttonText}>{text}</div>
         </div>
     )
 }

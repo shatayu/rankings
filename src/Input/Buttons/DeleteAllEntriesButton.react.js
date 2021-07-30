@@ -8,6 +8,7 @@ export default function DeleteAllEntriesButton() {
     return (
         <GenericButton
             icon={<Trash />}
+            text='CLEAR ALL'
             isEnabled={entriesList.length > 0}
             onClick={() => setEntriesList([])}
         />
