@@ -12,11 +12,12 @@ export default function StartRankingButton() {
     const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(EntryInputTextboxAtom);
     const setResponsesGraph = useSetRecoilState(ResponsesGraphAtom);
     const setPageNumber = useSetRecoilState(PageNumberAtom);
+    const numEntries = entriesList.length;
 
     return (
         <GenericButton
             icon={<Arrow />}
-            text='START RANKING'
+            text={entriesList.length < 2 ? `CAN'T RANK ${numEntries} ITEM${numEntries === 0 ? 'S' : ''}` : `RANK ${numEntries} ITEMS`}
             isEnabled={canStartRanking(entryInputTextboxContent, entriesList)}
             onClick={() => {
                 if (canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)) {

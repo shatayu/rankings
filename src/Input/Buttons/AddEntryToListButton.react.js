@@ -10,8 +10,8 @@ export default function AddEntryToListButton() {
 
     return (
         <GenericButton
-            icon={<Plus />}
-            text='ADD ENTRY'
+            icon={<Plus/>}
+            text='ADD ITEM'
             isEnabled={canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)}
             onClick={() => {
                 if (canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)) {
