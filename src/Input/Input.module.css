@@ -162,7 +162,6 @@ svg {
 }
 
 .entryContainer {
-    min-height: calc(50vh - 30px); /* 50vh - (margin-bottom for textbox container + margin-bottom for button container) */
     display: flex;
     flex-direction: row;
     justify-content: center;
