@@ -2,7 +2,7 @@ import GenericButton from './GenericButton';
 import { useRecoilState } from 'recoil';
 import { ReactComponent as Plus } from '../../assets/plus.svg';
 import { EntriesListAtom, EntryInputTextboxAtom } from '../../atoms';
-import { canEntryBeAddedToEntriesList } from '../../utils/inputUtils';
+import { canEntryBeAddedToEntriesList, addEntryToEntriesList } from '../../utils/inputUtils';
 import styles from '../Input.module.css';
 
 export default function AddEntryToListButton() {
@@ -17,7 +17,7 @@ export default function AddEntryToListButton() {
             onClick={() => {
                 if (canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)) {
                     // TODO: refactor this into using a method from the textbox component
-                    setEntriesList([...entriesList, entryInputTextboxContent]);
+                    addEntryToEntriesList(entryInputTextboxContent, entriesList, setEntriesList);
                     setEntryInputTextboxContent('');
                 }
             }}

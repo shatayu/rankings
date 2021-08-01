@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useRecoilState } from "recoil"
 import { EntriesListAtom, EntryInputTextboxAtom } from "../atoms"
 import styles from './Input.module.css';
-import { canEntryBeAddedToEntriesList } from '../utils/inputUtils';
+import { canEntryBeAddedToEntriesList, addEntryToEntriesList } from '../utils/inputUtils';
 
 export default function EntryInputTextbox() {
     const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(EntryInputTextboxAtom);
@@ -12,7 +12,7 @@ export default function EntryInputTextbox() {
     const onSubmit = useCallback((e, value) => {  
         e.preventDefault();
         if (canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)) {
-            setEntriesList([...entriesList, value]);
+            addEntryToEntriesList(value, entriesList, setEntriesList);
             setEntryInputTextboxContent('');
         }
     }, [entriesList, entryInputTextboxContent, setEntriesList, setEntryInputTextboxContent]);
