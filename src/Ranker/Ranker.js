@@ -7,6 +7,9 @@ import Constants from '../Constants';
 import Pair from '../Pair/Pair';
 import styles from './Ranker.module.css';
 import PageNumbers from '../PageNumbers';
+import { ReactComponent as PreviousQuestionArrow } from '../assets/previous_question_arrow.svg';
+import { ReactComponent as NextQuestionArrow } from '../assets/next_question_arrow.svg';
+
 
 export default function Ranker() {
     const [responsesGraph, setResponsesGraph] = useRecoilState(ResponsesGraphAtom);
@@ -82,5 +85,22 @@ function ProgressIndicator({questionNumber, n, doneRanking}) {
     // https://stackoverflow.com/questions/12346054/number-of-comparisons-in-merge-sort
     const log = Math.ceil(Math.log2(n));
     const maxNumberOfQuestions = n * log - 2 ** log + 1;
-    return <div className={styles.progressIndicator}>{questionNumber} out of up to {maxNumberOfQuestions}</div>
+
+    const arrowProps = {
+        color: '#BBBBBB',
+        width: 18,
+        height: 18,
+        marginTop: 10
+    }
+    return (
+        <div style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center'
+        }}>
+            <PreviousQuestionArrow {...arrowProps} />
+            <span className={styles.progressIndicator}>{questionNumber} out of up to {maxNumberOfQuestions}</span>
+            <NextQuestionArrow {...arrowProps} />
+        </div>
+    );
 }
