@@ -57,7 +57,16 @@ export default function Ranker() {
         <>
             <div className={styles.container}>
                 {currentQuestion}
-                <ProgressIndicator questionNumber={questionNumber} n={entries.length} doneRanking={doneRanking}/>
+                <ProgressIndicator
+                    questionNumber={questionNumber}
+                    setQuestionNumber={setQuestionNumber}
+                    setCurrentQuestion={setCurrentQuestion}
+                    userQuestionsAsked={userQuestionsAsked}
+                    setUserQuestionsAsked={setUserQuestionsAsked}
+                    responsesGraph={responsesGraph}
+                    setResponsesGraph={setResponsesGraph}
+                    n={entries.length}
+                    doneRanking={doneRanking}/>
             </div>
         </>
     );
@@ -77,7 +86,17 @@ function createNewResponsesGraph(responsesGraph, better, worse) {
     };
 }
 
-function ProgressIndicator({questionNumber, n, doneRanking}) {
+function ProgressIndicator({
+        questionNumber,
+        setQuestionNumber,
+        setCurrentQuestion,
+        userQuestionsAsked,
+        setUserQuestionsAsked,
+        responsesGraph,
+        setResponsesGraph,
+        n,
+        doneRanking
+    }) {
     if (doneRanking) {
         return null;
     }
@@ -87,20 +106,42 @@ function ProgressIndicator({questionNumber, n, doneRanking}) {
     const maxNumberOfQuestions = n * log - 2 ** log + 1;
 
     const arrowProps = {
-        color: '#BBBBBB',
         width: 18,
         height: 18,
-        marginTop: 10
+        margintop: 10
     }
+
     return (
         <div style={{
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center'
         }}>
-            <PreviousQuestionArrow {...arrowProps} />
+            <PreviousQuestionArrow {...arrowProps} color={questionNumber > 1 ? '#BBBBBB' : '#999999'} onClick={() => {
+                if (questionNumber > 1) {
+                    const previousQuestion = userQuestionsAsked[questionNumber - 2];
+                    const a = previousQuestion[0];
+                    const b = previousQuestion[1];
+                    setCurrentQuestion(previousQuestion);
+                    setQuestionNumber(questionNumber - 1);
+
+                    // modify this behavior to support the forward button
+                    setUserQuestionsAsked(userQuestionsAsked.slice(0, questionNumber - 2));
+                    setResponsesGraph({
+                        ...responsesGraph,
+                        [`${a}`]: {
+                            ...responsesGraph[`${a}`],
+                            [`${b}`]: Constants.NOT_COMPARED
+                        },
+                        [`${b}`]: {
+                            ...responsesGraph[`${b}`],
+                            [`${a}`]: Constants.NOT_COMPARED
+                        }
+                    });
+                }
+            }}/>
             <span className={styles.progressIndicator}>{questionNumber} out of up to {maxNumberOfQuestions}</span>
-            <NextQuestionArrow {...arrowProps} />
+            <NextQuestionArrow {...arrowProps} color={questionNumber < maxNumberOfQuestions - 2 ? '#BBBBBB' : '#999999'} />
         </div>
     );
 }
