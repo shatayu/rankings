@@ -51,6 +51,11 @@
     overflow: auto;
 }
 
+.highlightedElement {
+    border-color: white;
+    color: white;
+}
+
 @media (hover: hover) and (pointer: fine) {
     .element:hover {
         border-color: white;

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { EntriesListAtom, ResponsesGraphAtom, UserSortedRankingsAtom, UserQuestionsAskedAtom, PageNumberAtom } from '../atoms';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { iterativeMergeSort } from '../utils/sortUtils';
+import { getQuestionNumber } from '../utils/graphUtils';
 import React from 'react';
 import Constants from '../Constants';
 import Pair from '../Pair/Pair';
@@ -32,7 +33,15 @@ export default function Ranker() {
     // get update callback
     const onSelection = useCallback((better, worse) => {
         updateResponseGraph(better, worse);
-        setUserQuestionsAsked([...userQuestionsAsked, [better, worse]]);
+        if (questionNumber === userQuestionsAsked.length + 1) {
+            console.log([...userQuestionsAsked, [better, worse]]);
+            setUserQuestionsAsked([...userQuestionsAsked, [better, worse]]);
+        } else {
+            let copy = userQuestionsAsked.slice();
+            copy[questionNumber - 1] = [better, worse];
+            console.log(copy);
+            setUserQuestionsAsked(copy);
+        }
         setQuestionNumber(questionNumber + 1);
     }, [questionNumber, setUserQuestionsAsked, updateResponseGraph, userQuestionsAsked]);
 
@@ -41,7 +50,9 @@ export default function Ranker() {
         let {array, nextQuestion} = iterativeMergeSort(entries, responsesGraph);
         
         if (nextQuestion != null) {
-            setCurrentQuestion(<Pair a={nextQuestion[0]} b={nextQuestion[1]} onSelection={onSelection} />)
+            const askedQuestionNumber = getQuestionNumber(userQuestionsAsked, nextQuestion[0], nextQuestion[1]);
+            const better = askedQuestionNumber !== -1 ? userQuestionsAsked[askedQuestionNumber - 1][0] : null;
+            setCurrentQuestion(<Pair a={nextQuestion[0]} b={nextQuestion[1]} onSelection={onSelection} highlightedTerm={better}/>)
         } else {
             setDoneRanking(true);
             setUserSortedRankings(array);  
@@ -65,6 +76,8 @@ export default function Ranker() {
                     setUserQuestionsAsked={setUserQuestionsAsked}
                     responsesGraph={responsesGraph}
                     setResponsesGraph={setResponsesGraph}
+                    entries={entries}
+                    onForwardClick={onSelection}
                     n={entries.length}
                     doneRanking={doneRanking}/>
             </div>
@@ -94,6 +107,8 @@ function ProgressIndicator({
         setUserQuestionsAsked,
         responsesGraph,
         setResponsesGraph,
+        onForwardClick,
+        entries,
         n,
         doneRanking
     }) {
@@ -110,6 +125,9 @@ function ProgressIndicator({
         height: 18,
         margintop: 10
     }
+    let {nextQuestion} = iterativeMergeSort(entries, responsesGraph);
+    const nextQuestionNumber = nextQuestion != null ? getQuestionNumber(userQuestionsAsked, nextQuestion[0], nextQuestion[1]) : -1;
+    const shouldForwardBeEnabled = nextQuestion != null && nextQuestionNumber !== -1;
 
     return (
         <div style={{
@@ -125,8 +143,6 @@ function ProgressIndicator({
                     setCurrentQuestion(previousQuestion);
                     setQuestionNumber(questionNumber - 1);
 
-                    // modify this behavior to support the forward button
-                    setUserQuestionsAsked(userQuestionsAsked.slice(0, questionNumber - 2));
                     setResponsesGraph({
                         ...responsesGraph,
                         [`${a}`]: {
@@ -141,7 +157,13 @@ function ProgressIndicator({
                 }
             }}/>
             <span className={styles.progressIndicator}>{questionNumber} out of up to {maxNumberOfQuestions}</span>
-            <NextQuestionArrow {...arrowProps} color={questionNumber < maxNumberOfQuestions - 2 ? '#BBBBBB' : '#999999'} />
+            <NextQuestionArrow {...arrowProps} color={shouldForwardBeEnabled? '#BBBBBB' : '#999999'} onClick={() => {
+                // if the next question is nonnull and has been asked before then select the previously selected answer and move to next
+                if (shouldForwardBeEnabled) {
+                    const [better, worse] = userQuestionsAsked[nextQuestionNumber - 1];
+                    onForwardClick(better, worse);
+                }
+            }}/>
         </div>
     );
 }

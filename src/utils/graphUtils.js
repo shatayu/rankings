@@ -102,19 +102,19 @@ export function getPathString(selections, results, responsesGraph, questionsAske
     }
 }
 
-function getQuestionNumber(questionsAsked, current, next) {
+export function getQuestionNumber(questionsAsked, a, b) {
     let questionIndex = -1;
     questionsAsked.forEach((question, index) => {
         if (
-            (question[0] === current && question[1] === next) ||
-            (question[0] === next && question[1] === current)
+            (question[0] === a && question[1] === b) ||
+            (question[0] === b && question[1] === a)
         ) {
             questionIndex = index;
         }
     });
 
     if (questionIndex === -1) {
-        throw new Error('Question not found');
+        return -1;
     }
 
     return questionIndex + 1;
