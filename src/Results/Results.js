@@ -8,7 +8,6 @@ export default function Results() {
     const results = useRecoilValue(UserSortedRankingsAtom);
     const graph = useRecoilValue(ResponsesGraphAtom);
     const questionsAsked = useRecoilValue(UserQuestionsAskedAtom);
-    console.log(questionsAsked);
 
     const [selections, setSelections] = useState([]);
     const [pathBetweenSelections, setPathBetweenSelections] = useState([]);

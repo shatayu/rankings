@@ -34,12 +34,10 @@ export default function Ranker() {
     const onSelection = useCallback((better, worse) => {
         updateResponseGraph(better, worse);
         if (questionNumber === userQuestionsAsked.length + 1) {
-            console.log([...userQuestionsAsked, [better, worse]]);
             setUserQuestionsAsked([...userQuestionsAsked, [better, worse]]);
         } else {
             let copy = userQuestionsAsked.slice();
             copy[questionNumber - 1] = [better, worse];
-            console.log(copy);
             setUserQuestionsAsked(copy);
         }
         setQuestionNumber(questionNumber + 1);
