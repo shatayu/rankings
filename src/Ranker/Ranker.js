@@ -77,7 +77,8 @@ export default function Ranker() {
                     entries={entries}
                     onForwardClick={onSelection}
                     n={entries.length}
-                    doneRanking={doneRanking}/>
+                    doneRanking={doneRanking}
+                />
             </div>
         </>
     );
