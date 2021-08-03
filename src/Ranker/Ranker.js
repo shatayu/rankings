@@ -139,9 +139,6 @@ function ProgressIndicator({
                     const previousQuestion = userQuestionsAsked[questionNumber - 2];
                     const a = previousQuestion[0];
                     const b = previousQuestion[1];
-                    setCurrentQuestion(previousQuestion);
-                    setQuestionNumber(questionNumber - 1);
-
                     setResponsesGraph({
                         ...responsesGraph,
                         [`${a}`]: {
@@ -153,6 +150,8 @@ function ProgressIndicator({
                             [`${a}`]: Constants.NOT_COMPARED
                         }
                     });
+                    setCurrentQuestion(previousQuestion);
+                    setQuestionNumber(questionNumber - 1);
                 }
             }}/>
             <span className={styles.progressIndicator}>{questionNumber} out of up to {maxNumberOfQuestions}</span>
