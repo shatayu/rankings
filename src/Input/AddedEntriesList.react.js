@@ -12,7 +12,8 @@ export default function AddedEntriesList() {
     // if user came from shared link then fill in list
     useEffect(() => {
         async function putNewList() {
-            const listID = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+            const pathname = window.location.pathname;
+            const listID = pathname.substr(1, pathname.length - 2);
 
             if (listID.length > 0) {
                 setShowLoader(true);

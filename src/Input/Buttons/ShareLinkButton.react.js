@@ -39,8 +39,8 @@ export default function ShareLinkButton() {
                 });
 
                 const result = await promise;
-                const baseURL = window.location.href.substr(0, window.location.href.lastIndexOf('/')) + '/';
-                copy(baseURL + result.data.new_id);
+                const baseURL = window.location.host;
+                copy(baseURL + '/' + result.data.new_id + '/');
             }}
             isDeleteButton={false}
         />
