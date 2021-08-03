@@ -19,7 +19,7 @@
 }
 
 .fillerJustification {
-    color: #999999;
+    color: #444444;
     font-size: 20px;
     text-align: center;
 }
@@ -33,11 +33,11 @@
 }
 
 .selectedElement {
-    color: white;
+    color: #12DB80;
 }
 
 @media (hover: hover) and (pointer: fine) {
     .element:hover {
-        color: white;
+        color: #12DB80;
     }
 }

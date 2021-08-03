@@ -134,7 +134,7 @@ function ProgressIndicator({
             flexDirection: 'row',
             alignItems: 'center'
         }}>
-            <PreviousQuestionArrow {...arrowProps} color={questionNumber > 1 ? '#BBBBBB' : '#999999'} onClick={() => {
+            <PreviousQuestionArrow {...arrowProps} color={questionNumber > 1 ? '#BBBBBB' : '#444444'} onClick={() => {
                 if (questionNumber > 1) {
                     const previousQuestion = userQuestionsAsked[questionNumber - 2];
                     const a = previousQuestion[0];
@@ -155,7 +155,7 @@ function ProgressIndicator({
                 }
             }}/>
             <span className={styles.progressIndicator}>{questionNumber} out of up to {maxNumberOfQuestions}</span>
-            <NextQuestionArrow {...arrowProps} color={shouldForwardBeEnabled? '#BBBBBB' : '#999999'} onClick={() => {
+            <NextQuestionArrow {...arrowProps} color={shouldForwardBeEnabled? '#BBBBBB' : '#444444'} onClick={() => {
                 // if the next question is nonnull and has been asked before then select the previously selected answer and move to next
                 if (shouldForwardBeEnabled) {
                     const [better, worse] = userQuestionsAsked[nextQuestionNumber - 1];

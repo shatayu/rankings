@@ -21,6 +21,7 @@ export default function AddEntryToListButton() {
                     setEntryInputTextboxContent('');
                 }
             }}
+            isDeleteButton={false}
         />
     )
 }

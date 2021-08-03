@@ -12,6 +12,8 @@ export default function DeleteAllEntriesButton() {
             text='CLEAR ALL'
             isEnabled={entriesList.length > 0}
             onClick={() => setEntriesList([])}
+            isDeleteButton={true}
+
         />
     );
 }

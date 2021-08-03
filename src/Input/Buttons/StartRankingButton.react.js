@@ -28,6 +28,7 @@ export default function StartRankingButton() {
                 setResponsesGraph(generateEmptyGraph(entriesList));
                 setPageNumber(PageNumber.RANKER);
             }}
+            isDeleteButton={false}
         />
     )
 }

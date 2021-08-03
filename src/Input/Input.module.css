@@ -42,15 +42,15 @@
 
 @media (hover: hover) and (pointer: fine) {
     .textbox:hover {
-        border-bottom: 5px solid white;
+        border-bottom: 5px solid #12DB80;
     }
 }
 
 .textbox:focus {
     outline: none;
     border-width: 0px;
-    border-bottom: 5px solid white;
-    color: white;
+    border-bottom: 5px solid #12DB80;
+    color: #12DB80;
 }
 
 .buttonContainer {
@@ -77,7 +77,7 @@
 }
 
 .disabledButtonIconAndTextContainer {
-    color: #999999
+    color: #444444
 }
 
 .enabledButtonIconAndTextContainer {
@@ -110,7 +110,7 @@
 }
 
 .disabledButton {
-    border: 2px solid #999999;
+    border: 2px solid #444444;
 }
 
 .enabledButton {
@@ -119,11 +119,20 @@
 
 @media (hover: hover) and (pointer: fine) {
     .enabledButtonIconAndTextContainer:hover {
-        color: white;
+        color: #12DB80;
     }
 
     .enabledButtonIconAndTextContainer:hover .enabledButton {
-        border: 2px solid white;
+        border: 2px solid #12DB80;
+    }
+
+    .enabledDeleteButtonIconAndTextContainer:hover {
+        color: #C41449;
+        ;
+    }
+
+    .enabledDeleteButtonIconAndTextContainer:hover .enabledButton {
+        border: 2px solid #C41449;
     }
 }
 
@@ -151,7 +160,7 @@ svg {
 .toastSuccessComponentSVG {
     height: 18px;
     width: 18px;
-    color: #999999;
+    color: #444444;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -193,7 +202,7 @@ svg {
 }
 
 .entry:hover {
-    color: white;
+    color: #12DB80;
 }
 
 .svgDeleteIcon {
@@ -210,14 +219,10 @@ svg {
 .svgDeleteIcon polygon,
 
 .svgDeleteIcon circle {
-    stroke: #333333;
+    stroke: #444444;
     stroke-width: 1.25px;
     min-height: 20px;
     max-height: 20px;
     min-width: 20px;
     max-width: 20px;
-}
-
-.svgDeleteIcon:hover {
-    color: white;
 }
