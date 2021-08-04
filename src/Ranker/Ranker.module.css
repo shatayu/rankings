@@ -11,6 +11,11 @@
     padding: 20px;
 }
 
+.title {
+    color: #BBBBBB;
+    font-size: 28px;
+}
+
 .progressIndicator {
     margin: 0px 5px;
     color: #BBBBBB;

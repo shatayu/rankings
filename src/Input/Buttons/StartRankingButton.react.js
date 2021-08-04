@@ -1,7 +1,7 @@
 import GenericButton from './GenericButton';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ReactComponent as Arrow } from '../../assets/arrow.svg';
-import { EntriesListAtom, EntryInputTextboxAtom, ResponsesGraphAtom, PageNumberAtom } from '../../atoms';
+import { EntriesListAtom, EntryInputTextboxAtom, ResponsesGraphAtom, PageNumberAtom, TitleAtom } from '../../atoms';
 import { generateEmptyGraph } from '../../utils/graphUtils';
 import { canEntryBeAddedToEntriesList, addEntryToEntriesList } from '../../utils/inputUtils';
 import PageNumber from '../../PageNumbers';
@@ -10,6 +10,7 @@ import styles from '../Input.module.css';
 export default function StartRankingButton() {
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
     const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(EntryInputTextboxAtom);
+    const [title, setTitle] = useRecoilState(TitleAtom);
     const setResponsesGraph = useSetRecoilState(ResponsesGraphAtom);
     const setPageNumber = useSetRecoilState(PageNumberAtom);
 
@@ -23,6 +24,10 @@ export default function StartRankingButton() {
                     // TODO: refactor this into using a method from the textbox component
                     addEntryToEntriesList(entryInputTextboxContent, entriesList, setEntriesList);
                     setEntryInputTextboxContent('');
+                }
+
+                if (title.length === 0) {
+                    setTitle(`My Top ${entriesList.length}`);
                 }
 
                 setResponsesGraph(generateEmptyGraph(entriesList));

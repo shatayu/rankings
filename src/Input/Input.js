@@ -6,6 +6,7 @@ import AddEntryToListButton from './Buttons/AddEntryToListButton.react';
 import StartRankingButton from './Buttons/StartRankingButton.react';
 import EntryInputTextbox from './EntryInputTextbox.react';
 import AddedEntriesList from './AddedEntriesList.react';
+import TitleTextbox from './TitleTextbox.react';
 
 export default function Input({onFinalizeEntries}) {
     return (
@@ -27,6 +28,7 @@ export default function Input({onFinalizeEntries}) {
                     },
                 }}
             />
+            <TitleTextbox />
             <div className={styles.textboxContainer}>
                 <EntryInputTextbox />
             </div>

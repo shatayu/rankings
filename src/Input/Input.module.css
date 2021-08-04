@@ -8,10 +8,24 @@
     align-items: center;
 }
 
+.title {
+    height: 60px;
+    width: 60vw;
+    margin-top: 10vh;
+    font-size: 60px;
+    text-align: center;
+    background-color: #111111;
+    outline: none;
+    border-width: 0px;
+    color: #BBBBBB;
+
+    transition-duration: 200ms;
+}
+
 .textboxContainer {
     width: 100%;
-    min-height: 35vh;
-    height: 35vh;
+    min-height: calc(35vh - 60px - 10vh);
+    height: calc(35vh - 60px - 10vh);
     align-self: flex-start;
     display: flex;
     flex-direction: column;

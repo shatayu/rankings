@@ -1,6 +1,6 @@
 import {useState, useCallback} from 'react';
 import {getPathString} from '../utils/graphUtils';
-import { UserSortedRankingsAtom, ResponsesGraphAtom, UserQuestionsAskedAtom } from '../atoms';
+import { UserSortedRankingsAtom, ResponsesGraphAtom, UserQuestionsAskedAtom, TitleAtom } from '../atoms';
 import styles from './Results.module.css';
 import { useRecoilValue } from 'recoil';
 import CopyResultsButton from './Buttons/CopyResultsButton.react';
@@ -12,6 +12,7 @@ export default function Results() {
     const results = useRecoilValue(UserSortedRankingsAtom);
     const graph = useRecoilValue(ResponsesGraphAtom);
     const questionsAsked = useRecoilValue(UserQuestionsAskedAtom);
+    const title = useRecoilValue(TitleAtom);
 
     const [selections, setSelections] = useState([]);
     const [pathBetweenSelections, setPathBetweenSelections] = useState([]);
@@ -65,6 +66,7 @@ export default function Results() {
                     },
                 }}
             />
+            <div className={styles.title}>{title}</div>
             <div className={styles.resultsList}>
                 {results.map((term, i) => 
                     <ResultElement key={term} value={term} index={i} onSelection={onSelection} isSelected={selections.includes(term)} />)}

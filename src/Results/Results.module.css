@@ -10,6 +10,11 @@
     font-size: 28px;
 }
 
+.title {
+    margin-bottom: 20px;
+    font-size: 40px;
+}
+
 .resultsList {
     margin-bottom: 20px;
 }

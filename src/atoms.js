@@ -1,5 +1,10 @@
 import {atom} from 'recoil';
 
+export const TitleAtom = atom({
+    key: 'TitleAtom',
+    default: ''
+})
+
 export const EntryInputTextboxAtom = atom({
     key: 'EntryInputTextboxAtom',
     default: ''

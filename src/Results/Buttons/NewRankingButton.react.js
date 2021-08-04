@@ -1,7 +1,7 @@
 import GenericButton from '../../Input/Buttons/GenericButton';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { ReactComponent as NewRanking } from '../../assets/new_ranking.svg';
-import { UserSortedRankingsAtom, UserQuestionsAskedAtom, ResponsesGraphAtom, EntriesListAtom, PageNumberAtom, EntryInputTextboxAtom } from '../../atoms';
+import { UserSortedRankingsAtom, UserQuestionsAskedAtom, ResponsesGraphAtom, EntriesListAtom, PageNumberAtom, EntryInputTextboxAtom, TitleAtom } from '../../atoms';
 import { generateEmptyGraph } from '../../utils/graphUtils.js';
 import styles from '../../Input/Input.module.css';
 import { useEffect } from 'react';
@@ -13,12 +13,14 @@ export default function RedoRankingsButton() {
     const resetPageNumber = useResetRecoilState(PageNumberAtom);
     const resetEntriesList = useResetRecoilState(EntriesListAtom);
     const resetEntryInputTextboxAtom = useResetRecoilState(EntryInputTextboxAtom);
+    const resetTitleAtom = useResetRecoilState(TitleAtom);
 
     const userSortedRankings = useRecoilValue(UserSortedRankingsAtom);
     const userQuestionsAsked = useRecoilValue(UserQuestionsAskedAtom);
     const responsesGraph = useRecoilValue(ResponsesGraphAtom);
     const entriesList = useRecoilValue(EntriesListAtom);
     const entryInputTextboxContents = useRecoilValue(EntryInputTextboxAtom);
+    const title = useRecoilValue(TitleAtom);
 
     const emptyGraph = generateEmptyGraph(entriesList);
 
@@ -28,17 +30,20 @@ export default function RedoRankingsButton() {
             userQuestionsAsked.length === 0 &&
             responsesGraph == null &&
             entriesList.length === 0 &&
-            entryInputTextboxContents.length === 0
+            entryInputTextboxContents.length === 0 &&
+            title.length === 0
         ) {
             resetPageNumber();
         }
-    }, [emptyGraph,
+    }, [
+        emptyGraph,
         responsesGraph,
         resetPageNumber,
         userQuestionsAsked.length,
         userSortedRankings.length,
         entriesList.length,
-        entryInputTextboxContents.length
+        entryInputTextboxContents.length,
+        title.length
     ]);
 
     return (
@@ -52,6 +57,7 @@ export default function RedoRankingsButton() {
                 resetResponsesGraph();
                 resetEntriesList();
                 resetEntryInputTextboxAtom();
+                resetTitleAtom();
             }}
             isDeleteButton={false}
         />

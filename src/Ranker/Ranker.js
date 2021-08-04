@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { EntriesListAtom, ResponsesGraphAtom, UserSortedRankingsAtom, UserQuestionsAskedAtom, PageNumberAtom } from '../atoms';
+import { EntriesListAtom, ResponsesGraphAtom, UserSortedRankingsAtom, UserQuestionsAskedAtom, PageNumberAtom, TitleAtom } from '../atoms';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { iterativeMergeSort } from '../utils/sortUtils';
 import { getQuestionNumber } from '../utils/graphUtils';
@@ -11,6 +11,7 @@ import PageNumbers from '../PageNumbers';
 import ProgressIndicator from './ProgressIndicator.react';
 
 export default function Ranker() {
+    const title = useRecoilValue(TitleAtom);
     const [responsesGraph, setResponsesGraph] = useRecoilState(ResponsesGraphAtom);
     const [userQuestionsAsked, setUserQuestionsAsked] = useRecoilState(UserQuestionsAskedAtom);
 
@@ -63,6 +64,7 @@ export default function Ranker() {
     return (
         <>
             <div className={styles.container}>
+                <div className={styles.title}>{title}</div>
                 {currentQuestion}
                 <ProgressIndicator
                     questionNumber={questionNumber}
