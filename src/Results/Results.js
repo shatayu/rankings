@@ -3,6 +3,8 @@ import {getPathString} from '../utils/graphUtils';
 import { UserSortedRankingsAtom, ResponsesGraphAtom, UserQuestionsAskedAtom } from '../atoms';
 import styles from './Results.module.css';
 import { useRecoilValue } from 'recoil';
+import CopyResultsButton from './Buttons/CopyResultsButton.react';
+import { Toaster } from 'react-hot-toast';
 
 export default function Results() {
     const results = useRecoilValue(UserSortedRankingsAtom);
@@ -43,11 +45,30 @@ export default function Results() {
 
     return (
         <div className={styles.container}>
-            <div style={{textAlign: "center"}}>
+            <Toaster
+                toastOptions={{
+                    // Define default options
+                    duration: 3000,
+                    style: {
+                        background: 'white',
+                        color: '#111111',
+                        minWidth: 205,
+                        fontSize: 16
+                    },
+                    success: {
+                        iconTheme: {
+                            primary: '#111111',
+                            secondary: 'white',
+                        },
+                    },
+                }}
+            />
+            <div className={styles.resultsList}>
                 {results.map((term, i) => 
                     <ResultElement value={term} key={term} onSelection={onSelection} isSelected={selections.includes(term)} />)}
             </div>
             <div className={styles.justification}>{pathBetweenSelections.length > 0 ? pathBetweenSelections : fillerExplanation}</div>
+            <CopyResultsButton />
         </div>
     )
 }
