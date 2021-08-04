@@ -23,15 +23,11 @@ export default function RedoRankingsButton() {
     const emptyGraph = generateEmptyGraph(entriesList);
 
     useEffect(() => {
-        console.log(userSortedRankings.length === 0 &&
-            userQuestionsAsked.length === 0);
-            console.log(JSON.stringify(responsesGraph) === JSON.stringify(emptyGraph));
         if (
             userSortedRankings.length === 0 &&
             userQuestionsAsked.length === 0 &&
             JSON.stringify(responsesGraph) === JSON.stringify(emptyGraph)
         ) {
-            console.log('triggered');
             setPageNumber(PageNumbers.RANKER);
         }
     }, [emptyGraph, responsesGraph, setPageNumber, userQuestionsAsked.length, userSortedRankings.length])

@@ -5,7 +5,8 @@ import styles from './Results.module.css';
 import { useRecoilValue } from 'recoil';
 import CopyResultsButton from './Buttons/CopyResultsButton.react';
 import { Toaster } from 'react-hot-toast';
-import RedoRankingsButton from './Buttons/RedoRankingsButton.react';
+import RedoRankingButton from './Buttons/RedoRankingButton.react';
+import NewRankingButton from './Buttons/NewRankingButton.react';
 
 export default function Results() {
     const results = useRecoilValue(UserSortedRankingsAtom);
@@ -71,7 +72,8 @@ export default function Results() {
             <div className={styles.justification}>{pathBetweenSelections.length > 0 ? pathBetweenSelections : fillerExplanation}</div>
             <div className={styles.buttonRow}>
                 <CopyResultsButton />
-                <RedoRankingsButton />
+                <RedoRankingButton />
+                <NewRankingButton />
             </div>
         </div>
     )
