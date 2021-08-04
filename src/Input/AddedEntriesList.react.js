@@ -2,39 +2,21 @@ import styles from './Input.module.css';
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { EntriesListAtom } from '../atoms';
-import axios from 'axios';
 import Loader from 'react-loader-spinner';
+import { isSharedLink } from '../utils/APIUtils';
 
 export default function AddedEntriesList() {
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
     const [showLoader, setShowLoader] = useState(false);
 
-    /*
-     * 1. create a helper isFromSharedLink()
-     * 2. if (isFromSharedLink() && entriesList.length === 0) setShowLoader(true)
-     * 3. add useEffect s.t. if (entriesList.length > 0) setShowLoader(false)
-     * 4. move the actual API calling functionality to a renderless component
-     * 5. renderless component should fill in title atom and entriesList atom
-     */ 
-
     // if user came from shared link then fill in list
     useEffect(() => {
-        async function putNewList() {
-            const pathname = window.location.pathname;
-            const listID = pathname.substr(1, pathname.length - 2);
-
-            if (listID.length > 0) {
-                setShowLoader(true);
-                const getURI = 'https://3ocshrauf1.execute-api.us-west-1.amazonaws.com/lists/' + listID;
-                const result = await axios.get(getURI);
-                const list = result.data?.Item?.list ?? [];
-                setEntriesList(list);
-                setShowLoader(false);
-            }
+        if (isSharedLink() && entriesList.length === 0) {
+            setShowLoader(true);
+        } else {
+            setShowLoader(false);
         }
-
-        putNewList();
-    }, [setEntriesList]);
+    }, [entriesList.length, setEntriesList]);
 
     return (
         <div className={styles.entryContainer}>

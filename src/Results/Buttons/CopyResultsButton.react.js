@@ -26,7 +26,7 @@ export default function CopyResultsButton() {
                 const url = 'https://3ocshrauf1.execute-api.us-west-1.amazonaws.com/lists';
         
                 const body = {
-                    question: '',
+                    title,
                     list: userSortedRankings
                 };
 

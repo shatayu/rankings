@@ -2,7 +2,7 @@ import GenericButton from './GenericButton';
 import toast from 'react-hot-toast';
 import { useRecoilValue } from 'recoil';
 import { ReactComponent as Share } from '../../assets/link.svg';
-import { EntriesListAtom } from '../../atoms';
+import { EntriesListAtom, TitleAtom } from '../../atoms';
 import axios from 'axios';
 import copy from 'copy-to-clipboard';
 import { useToasterStore } from 'react-hot-toast';
@@ -10,6 +10,7 @@ import styles from '../Input.module.css';
 
 export default function ShareLinkButton() {
     const entriesList = useRecoilValue(EntriesListAtom);
+    const title = useRecoilValue(TitleAtom);
     const {toasts} = useToasterStore();
     return (
         <GenericButton
@@ -21,7 +22,7 @@ export default function ShareLinkButton() {
                 const url = 'https://3ocshrauf1.execute-api.us-west-1.amazonaws.com/lists';
         
                 const body = {
-                    question: '',
+                    title,
                     list: entriesList
                 };
 
@@ -40,7 +41,7 @@ export default function ShareLinkButton() {
 
                 const result = await promise;
                 const baseURL = window.location.host;
-                copy('https://' + baseURL + '/' + result.data.new_id + '/');
+                copy(`${baseURL.includes('localhost') ? '' : 'https://'}` + baseURL + '/' + result.data.new_id + '/');
             }}
             isDeleteButton={false}
         />

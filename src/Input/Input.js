@@ -7,8 +7,10 @@ import StartRankingButton from './Buttons/StartRankingButton.react';
 import EntryInputTextbox from './EntryInputTextbox.react';
 import AddedEntriesList from './AddedEntriesList.react';
 import TitleTextbox from './TitleTextbox.react';
+import { useUpdateListInfoAtoms } from '../utils/APIUtils';
 
 export default function Input({onFinalizeEntries}) {
+    useUpdateListInfoAtoms();
     return (
         <div className={styles.container}>
             <Toaster
