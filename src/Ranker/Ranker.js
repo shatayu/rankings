@@ -11,9 +11,10 @@ import PageNumbers from '../PageNumbers';
 import ProgressIndicator from './ProgressIndicator.react';
 
 export default function Ranker() {
-    const title = useRecoilValue(TitleAtom);
     const [responsesGraph, setResponsesGraph] = useRecoilState(ResponsesGraphAtom);
     const [userQuestionsAsked, setUserQuestionsAsked] = useRecoilState(UserQuestionsAskedAtom);
+
+    const title = useRecoilValue(TitleAtom);
 
     const setUserSortedRankings = useSetRecoilState(UserSortedRankingsAtom);
     const setPageNumber = useSetRecoilState(PageNumberAtom);
