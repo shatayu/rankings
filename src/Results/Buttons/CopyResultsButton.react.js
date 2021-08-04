@@ -2,7 +2,7 @@ import GenericButton from '../../Input/Buttons/GenericButton';
 import toast from 'react-hot-toast';
 import { useRecoilValue } from 'recoil';
 import { ReactComponent as Copy } from '../../assets/copy.svg';
-import { UserSortedRankingsAtom } from '../../atoms';
+import { UserSortedRankingsAtom, TitleAtom } from '../../atoms';
 import axios from 'axios';
 import copy from 'copy-to-clipboard';
 import { useToasterStore } from 'react-hot-toast';
@@ -10,6 +10,7 @@ import styles from '../../Input/Input.module.css';
 
 export default function CopyResultsButton() {
     const userSortedRankings = useRecoilValue(UserSortedRankingsAtom);
+    const title = useRecoilValue(TitleAtom);
     
     const rankingsString = userSortedRankings.length > 0 ? userSortedRankings
         .map((value, index) => String(index + 1) + '. ' + value)
@@ -44,7 +45,7 @@ export default function CopyResultsButton() {
 
                 const result = await promise;
                 const baseURL = window.location.host;
-                copy(rankingsString + '\n\nLink: https://' + baseURL + '/' + result.data.new_id + '/');
+                copy(title + ':\n\n' + rankingsString + '\n\nLink: https://' + baseURL + '/' + result.data.new_id + '/');
             }}
             isDeleteButton={false}
         />
