@@ -9,6 +9,14 @@ export default function AddedEntriesList() {
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
     const [showLoader, setShowLoader] = useState(false);
 
+    /*
+     * 1. create a helper isFromSharedLink()
+     * 2. if (isFromSharedLink() && entriesList.length === 0) setShowLoader(true)
+     * 3. add useEffect s.t. if (entriesList.length > 0) setShowLoader(false)
+     * 4. move the actual API calling functionality to a renderless component
+     * 5. renderless component should fill in title atom and entriesList atom
+     */ 
+
     // if user came from shared link then fill in list
     useEffect(() => {
         async function putNewList() {
