@@ -52,13 +52,13 @@
 }
 
 .highlightedElement {
-    border-color: #12DB80;
-    color: #12DB80;
+    border-color: #08BA6A;
+    color: #08BA6A;
 }
 
 @media (hover: hover) and (pointer: fine) {
     .element:hover {
-        border-color: #12DB80;
-        color: #12DB80;
+        border-color: #08BA6A;
+        color: #08BA6A;
     }
 }

@@ -54,11 +54,11 @@
 }
 
 .selectedElement {
-    color: #12DB80;
+    color: #08BA6A;
 }
 
 @media (hover: hover) and (pointer: fine) {
     .element:hover {
-        color: #12DB80;
+        color: #08BA6A;
     }
 }
