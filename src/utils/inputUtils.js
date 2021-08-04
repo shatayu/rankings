@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 
 export function useGetDefaultTitle() {
     const entriesList = useRecoilValue(EntriesListAtom);
-    return entriesList.length === 0 ? `Enter Title Here` : `My Top ${entriesList.length}`;
+    return entriesList.length === 0 ? `Enter Title` : `My Top ${entriesList.length}`;
 }
 
 export function canEntryBeAddedToEntriesList(entry, entriesList) {
