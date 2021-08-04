@@ -3,7 +3,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ReactComponent as Arrow } from '../../assets/arrow.svg';
 import { EntriesListAtom, EntryInputTextboxAtom, ResponsesGraphAtom, PageNumberAtom, TitleAtom } from '../../atoms';
 import { generateEmptyGraph } from '../../utils/graphUtils';
-import { canEntryBeAddedToEntriesList, addEntryToEntriesList } from '../../utils/inputUtils';
+import { canEntryBeAddedToEntriesList, addEntryToEntriesList, useGetDefaultTitle } from '../../utils/inputUtils';
 import PageNumber from '../../PageNumbers';
 import styles from '../Input.module.css';
 
@@ -13,6 +13,7 @@ export default function StartRankingButton() {
     const [title, setTitle] = useRecoilState(TitleAtom);
     const setResponsesGraph = useSetRecoilState(ResponsesGraphAtom);
     const setPageNumber = useSetRecoilState(PageNumberAtom);
+    const defaultTitle = useGetDefaultTitle();
 
     return (
         <GenericButton
@@ -26,12 +27,12 @@ export default function StartRankingButton() {
                     setEntryInputTextboxContent('');
                 }
 
-                if (title.length === 0) {
-                    setTitle(`My Top ${entriesList.length}`);
-                }
-
                 setResponsesGraph(generateEmptyGraph(entriesList));
                 setPageNumber(PageNumber.RANKER);
+
+                if (title.length === 0) {
+                    setTitle(defaultTitle)
+                }
             }}
             isDeleteButton={false}
         />

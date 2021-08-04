@@ -1,3 +1,11 @@
+import { EntriesListAtom } from '../atoms';
+import { useRecoilValue } from 'recoil';
+
+export function useGetDefaultTitle() {
+    const entriesList = useRecoilValue(EntriesListAtom);
+    return `My Top ${entriesList.length}`;
+}
+
 export function canEntryBeAddedToEntriesList(entry, entriesList) {
     const spaceLessEntry = entry.replace(' ', '');
     const isEntryUnique = !entriesList.map(term => term.replace(' ', ''))

@@ -1,11 +1,11 @@
-import { useRecoilState, useRecoilValue } from "recoil"
-import { EntriesListAtom, TitleAtom } from "../atoms"
+import { useRecoilState } from "recoil"
+import { TitleAtom } from "../atoms"
 import styles from './Input.module.css';
+import { useGetDefaultTitle } from "../utils/inputUtils";
 
 export default function TitleTextbox() {
     const [title, setTitle] = useRecoilState(TitleAtom);
-    const entriesList = useRecoilValue(EntriesListAtom);
-    const defaultTitle = `My Top ${entriesList.length}`;
+    const defaultTitle = useGetDefaultTitle();
     
     return (
         <input
