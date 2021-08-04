@@ -14,9 +14,7 @@ export default function TitleTextbox() {
             className={styles.title}
             placeholder={defaultTitle}
             onChange={(event) => {
-                if (event.target.value.length > 0) {
-                    setTitle(event.target.value);
-                }
+                setTitle(event.target.value);
             }}
         />
     );
