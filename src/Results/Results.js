@@ -67,7 +67,7 @@ export default function Results() {
             />
             <div className={styles.resultsList}>
                 {results.map((term, i) => 
-                    <ResultElement value={term} key={term} onSelection={onSelection} isSelected={selections.includes(term)} />)}
+                    <ResultElement key={term} value={term} index={i} onSelection={onSelection} isSelected={selections.includes(term)} />)}
             </div>
             <div className={styles.justification}>{pathBetweenSelections.length > 0 ? pathBetweenSelections : fillerExplanation}</div>
             <div className={styles.buttonRow}>
@@ -79,7 +79,12 @@ export default function Results() {
     )
 }
 
-function ResultElement({value, onSelection, isSelected}) {
+function ResultElement({value, index, onSelection, isSelected}) {
     const colorClasses = isSelected ? styles.element + ' ' + styles.selectedElement : styles.element;
-    return <div className={colorClasses} onClick={() => onSelection(value)}>{value}</div>
+    return (
+        <div className={colorClasses} onClick={() => onSelection(value)}>
+            <span className={styles.resultNumber}>{`${index + 1}. `}</span>
+            {value}
+        </div>
+    );
 }

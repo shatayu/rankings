@@ -8,12 +8,14 @@
     flex-direction: column;
     color: white;
     font-size: 28px;
-    transition: height 1s ease-in-out;
 }
 
 .resultsList {
-    text-align: center;
-    transition: height 1s ease-in-out;
+    margin-bottom: 20px;
+}
+
+.resultNumber {
+    color: #444444;
 }
 
 .justification {
@@ -22,19 +24,16 @@
     text-align: center;
     overflow-wrap: break-word;
     word-break: break-word;
-    transition: height 1s ease-in-out;
 }
 
 .fillerJustification {
     color: #444444;
     font-size: 20px;
     text-align: center;
-    transition: height 1s ease-in-out;
 }
 
 .element {
     margin: 10px;
-    transition-duration: 200ms;
     color: #BBBBBB;
     overflow-wrap: break-word;
     word-break: break-word;

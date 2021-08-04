@@ -40,7 +40,7 @@ export default function ShareLinkButton() {
 
                 const result = await promise;
                 const baseURL = window.location.host;
-                copy(baseURL + '/' + result.data.new_id + '/');
+                copy('https://' + baseURL + '/' + result.data.new_id + '/');
             }}
             isDeleteButton={false}
         />

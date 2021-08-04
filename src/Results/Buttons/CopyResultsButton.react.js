@@ -44,7 +44,7 @@ export default function CopyResultsButton() {
 
                 const result = await promise;
                 const baseURL = window.location.host;
-                copy(rankingsString + '\n\nLink: ' + baseURL + '/' + result.data.new_id + '/');
+                copy(rankingsString + '\n\nLink: https://' + baseURL + '/' + result.data.new_id + '/');
             }}
             isDeleteButton={false}
         />
