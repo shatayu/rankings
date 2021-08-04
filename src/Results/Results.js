@@ -5,6 +5,7 @@ import styles from './Results.module.css';
 import { useRecoilValue } from 'recoil';
 import CopyResultsButton from './Buttons/CopyResultsButton.react';
 import { Toaster } from 'react-hot-toast';
+import RedoRankingsButton from './Buttons/RedoRankingsButton.react';
 
 export default function Results() {
     const results = useRecoilValue(UserSortedRankingsAtom);
@@ -68,7 +69,10 @@ export default function Results() {
                     <ResultElement value={term} key={term} onSelection={onSelection} isSelected={selections.includes(term)} />)}
             </div>
             <div className={styles.justification}>{pathBetweenSelections.length > 0 ? pathBetweenSelections : fillerExplanation}</div>
-            <CopyResultsButton />
+            <div className={styles.buttonRow}>
+                <CopyResultsButton />
+                <RedoRankingsButton />
+            </div>
         </div>
     )
 }

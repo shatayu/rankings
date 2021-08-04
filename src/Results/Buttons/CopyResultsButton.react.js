@@ -11,9 +11,9 @@ import styles from '../../Input/Input.module.css';
 export default function CopyResultsButton() {
     const userSortedRankings = useRecoilValue(UserSortedRankingsAtom);
     
-    const rankingsString = userSortedRankings
+    const rankingsString = userSortedRankings.length > 0 ? userSortedRankings
         .map((value, index) => String(index + 1) + '. ' + value)
-        .reduce((accumulator, current, index) => accumulator + '\n' + current);
+        .reduce((accumulator, current, index) => accumulator + '\n' + current) : '';
     const {toasts} = useToasterStore();
     return (
         <GenericButton
