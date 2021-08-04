@@ -104,8 +104,7 @@
     border-radius: 15px;
     font-size: 20px;
     text-align: center;
-    /* margin: 20px calc(2vw + 10px); */
-    margin: 20px calc(0.5vw + 10px);
+    margin: 20px calc(2vw + 10px);
 
     display: flex;
     justify-content: center;
@@ -193,12 +192,16 @@ svg {
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
+    margin-top: 40px;
 }
 
 .entry {
     font-size: 25px;
     color: #BBBBBB;
-    margin: 15px 50px;
+    margin-top: 15px;
+    margin-left: 50px;
+    margin-bottom: 15px;
+    margin-right: 50px;
 
     max-width: calc(100vw - 100px);
     text-align: center;
