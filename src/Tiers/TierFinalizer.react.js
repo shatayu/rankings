@@ -1,20 +1,22 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { useState } from 'react';
-// import { useRecoilState } from "recoil";
-// import { TierListAtom } from "../atoms";
+import { useRecoilState } from "recoil";
+import { TierListAtom } from "../atoms";
+import { useCallback } from 'react';
 
 
 export default function TierFinalizer() {
-  const [state, setState] = useState({ quotes1: ['a', 'b', 'c', 'd'], quotes2: ['e', 'f', 'g', 'h'] });
-//   const [tierListState, setTierListState] = useRecoilState(TierListAtom);
+  const [tierList, setTierList] = useRecoilState(TierListAtom);
 
-  const reorder = (list, startIndex, endIndex) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
+    const reorder = (list, startIndex, endIndex) => {
+        console.log(list);
+        console.log(startIndex)
+        console.log(endIndex);
+        const result = Array.from(list);
+        const [removed] = result.splice(startIndex, 1);
+        result.splice(endIndex, 0, removed);
 
-    return result;
-};
+        return result;
+    };
 
     const move = (source, destination, droppableSource, droppableDestination) => {
         const sourceClone = Array.from(source);
@@ -23,20 +25,23 @@ export default function TierFinalizer() {
 
         destClone.splice(droppableDestination.index, 0, removed);
 
-        const result = {};
-        result.sourceDrop = sourceClone;
-        result.destDrop = destClone;
+        const result = [
+            {
+                index: listIDToIndex(droppableSource.droppableId),
+                list: sourceClone
+            },
+            {
+                index: listIDToIndex(droppableDestination.droppableId),
+                list: destClone
+            }
+        ];
 
         return result;
     };
 
-    function getList(listID) {
-        if (listID === 'list1') {
-            return state.quotes1;
-        } else {
-            return state.quotes2;
-        }
-    }
+    const getList = useCallback((listID) => {
+        return tierList[listIDToIndex(listID)];
+    }, [tierList]);
 
   function onDragEnd(result) {
     const { source, destination } = result;
@@ -54,28 +59,12 @@ export default function TierFinalizer() {
                 source.index,
                 destination.index
             );
+            
+            const index = listIDToIndex(source.droppableId);
+            let newTiers = tierList.slice();
+            newTiers[index] = items;
 
-            console.log(items);
-            console.log(source.droppableId)
-
-            if (source.droppableId === 'list1') {
-                const newState = {
-                    ...state,
-                    quotes1: items,
-                };
-                console.log(newState);
-
-                console.log('1');
-                setState(newState);
-            } else {
-                const newState = {
-                    ...state,
-                    quotes2: items
-                };
-                console.log(newState);
-                console.log('2');
-                setState(newState);
-            }
+            setTierList(newTiers);
         } else {
             const result = move(
                 getList(source.droppableId),
@@ -83,61 +72,45 @@ export default function TierFinalizer() {
                 source,
                 destination
             );
-            
-            console.log('3');
-            if (source.droppableId === 'list1') {
-                setState({
-                    quotes1: result.sourceDrop,
-                    quotes2: result.destDrop
-                });
-            } else {
-                setState({
-                    quotes1: result.destDrop,
-                    quotes2: result.sourceDrop
-                });
-            }
 
+            let newTiers = tierList.slice();
+            result.forEach(item => {
+                newTiers[item.index] = item.list;
+            });
+
+            setTierList(newTiers);
         }
   }
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="list1">
-        {provided => (
-            <ul style={{color: 'white'}} {...provided.droppableProps} ref={provided.innerRef}>
-               {state.quotes1.map((item, index) => {
-                   return (
-                    <Draggable key={item} draggableId={item} index={index}>
-                        {(provided) => (
-                            <li key={item} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                {item}
-                            </li>
-                        )}
-                    </Draggable>
-                   );
-               })}
-                {provided.placeholder}
-            </ul>
-        )}
-      </Droppable>
-      <Droppable droppableId="list2">
-        {provided => (
-            <ul style={{color: 'white'}} {...provided.droppableProps} ref={provided.innerRef}>
-               {state.quotes2.map((item, index) => {
-                   return (
-                    <Draggable key={item} draggableId={item} index={index}>
-                        {(provided) => (
-                            <li key={item} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                {item}
-                            </li>
-                        )}
-                    </Draggable>
-                   );
-               })}
-                {provided.placeholder}
-            </ul>
-        )}
-      </Droppable>
+        {tierList.map((tier, index) => (
+            <Droppable key={index} droppableId={`tier${index}`}>
+                {provided => (
+                    <>
+                    <div style={{color: 'white'}}>{`Tier ${index + 1}`}</div>
+                    <ul style={{color: 'white'}} {...provided.droppableProps} ref={provided.innerRef}>
+                        {tier.map((item, index) => {
+                            return (
+                                <Draggable key={item} draggableId={item} index={index}>
+                                    {(provided) => (
+                                        <li key={item} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                            {item}
+                                        </li>
+                                    )}
+                                </Draggable>
+                            );
+                        })}
+                        {provided.placeholder}
+                    </ul>
+                    </>
+                )}
+            </Droppable>
+        ))}
     </DragDropContext>
   );
+}
+
+function listIDToIndex(listID) {
+    return parseInt(listID.replace('tier', ''));
 }
