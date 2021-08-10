@@ -1,0 +1,45 @@
+.container {
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    font-size: 32px;
+    color: white;
+}
+
+.skip {
+    color: #999999;
+}
+
+.continue {
+    color: #999999;
+}
+
+.unselectedTermsList {
+    font-size: 24px;
+}
+
+.term {
+    transition-duration: 200ms;
+}
+
+.unselectedTerm {
+    color: #BBBBBB;
+}
+
+.selectedTerm {
+    color:#08BA6A;
+}
+
+
+
+@media (hover: hover) and (pointer: fine) {
+    .unselectedTerm:hover {
+        color:#08BA6A;
+    }
+}

@@ -12,7 +12,7 @@ export const EntryInputTextboxAtom = atom({
 
 export const EntriesListAtom = atom({
     key: 'EntriesListAtom',
-    default: []
+    default: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 });
 
 export const ResponsesGraphAtom = atom({
@@ -22,8 +22,17 @@ export const ResponsesGraphAtom = atom({
 
 export const PageNumberAtom = atom({
     key: 'PageNumberAtom',
-    default: 0
+    default: 2
 });
+
+export const TierListAtom = atom({
+    key: 'TierListAtom',
+    default: [
+        ['a', 'b', 'c'],
+        ['d', 'e', 'f'],
+        ['g', 'h']
+    ]
+})
 
 export const UserQuestionsAskedAtom = atom({
     key: 'UserQuestionsAsked',

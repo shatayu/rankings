@@ -10,9 +10,10 @@ import styles from '../Input.module.css';
 export default function StartRankingButton() {
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
     const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(EntryInputTextboxAtom);
+    const [pageNumber, setPageNumber] = useRecoilState(PageNumberAtom);
     const [title, setTitle] = useRecoilState(TitleAtom);
+
     const setResponsesGraph = useSetRecoilState(ResponsesGraphAtom);
-    const setPageNumber = useSetRecoilState(PageNumberAtom);
     const defaultTitle = useGetDefaultTitle();
 
     return (
@@ -28,7 +29,7 @@ export default function StartRankingButton() {
                 }
 
                 setResponsesGraph(generateEmptyGraph(entriesList));
-                setPageNumber(PageNumber.RANKER);
+                setPageNumber(pageNumber + 1);
 
                 if (title.length === 0) {
                     setTitle(defaultTitle)
