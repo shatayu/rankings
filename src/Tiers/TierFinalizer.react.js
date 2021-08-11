@@ -110,7 +110,8 @@ export default function TierFinalizer() {
                                                     <Draggable key={item} draggableId={item} index={index}>
                                                         {(provided) => (
                                                             <div className={styles.listItem} key={item} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                                <DragHandle className={styles.dragHandleIcon} />{item}
+                                                                <DragHandle className={styles.dragHandleIcon} />
+                                                                <span>{item}</span>
                                                             </div>
                                                         )}
                                                     </Draggable>
