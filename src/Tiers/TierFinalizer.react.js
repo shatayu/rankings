@@ -52,8 +52,6 @@ export default function TierFinalizer() {
         }
 
         if (source.droppableId === destination.droppableId) {
-            console.log(source.droppableId);
-            console.log(destination.droppableId);
             const items = reorder(
                 getList(source.droppableId),
                 source.index,

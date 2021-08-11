@@ -11,7 +11,6 @@ export default function EntryInputTextbox() {
     // add term to entry
     const onSubmit = useCallback((e, value) => {  
         e.preventDefault();
-        console.log(value);
         if (value === 'nflteams') {
             const NFLTeams = getNFLTeams().sort();
             setEntriesList(NFLTeams);

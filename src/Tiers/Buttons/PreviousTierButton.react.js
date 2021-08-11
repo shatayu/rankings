@@ -6,7 +6,6 @@ import { PageNumberAtom } from "../../atoms";
 import PageNumbers from "../../PageNumbers";
 
 export default function PreviousTierButton({tierListState, setTierListState}) {
-    console.log(tierListState);
     const setPageNumber = useSetRecoilState(PageNumberAtom);
     return (
         <GenericButton
