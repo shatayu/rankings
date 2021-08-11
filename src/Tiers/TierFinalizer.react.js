@@ -20,6 +20,8 @@ export default function TierFinalizer() {
     };
 
     const move = (source, destination, droppableSource, droppableDestination) => {
+        console.log(destination);
+        console.log(droppableDestination);
         const sourceClone = Array.from(source);
         const destClone = Array.from(destination);
         const [removed] = sourceClone.splice(droppableSource.index, 1);
@@ -105,18 +107,17 @@ export default function TierFinalizer() {
                                     <div className={styles.oneTierContainer + ' ' + (snapshot.isDraggingOver ? styles.oneTierContainerDraggedOver : '')} {...provided.droppableProps} ref={provided.innerRef}>
                                         <div className={styles.header}>{`Tier ${index + 1}`}</div>
                                         <div className={styles.listContainer}>
-                                            {tier.map((item, index) => {
-                                                return (
+                                            {tier.map((item, index) => (
                                                     <Draggable key={item} draggableId={item} index={index}>
                                                         {(provided) => (
                                                             <div className={styles.listItem} key={item} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                                 <DragHandle className={styles.dragHandleIcon} />
-                                                                <span>{item}</span>
+                                                                <span className={styles.listItemText}>{item}</span>
                                                             </div>
                                                         )}
                                                     </Draggable>
-                                                );
-                                            })}
+                                                )
+                                            )}
                                             {provided.placeholder}
                                         </div>
                                     </div>
@@ -128,33 +129,6 @@ export default function TierFinalizer() {
             </div>
             <div className={styles.startRankingButtonContainer}>
                 <StartRankingButton localTierList={localTierList}/>
-                {/* <div className={styles.startRankingButton} onClick={() => {
-                    setRecoilTierList(localTierList);
-
-                    const responsesGraphCopy = JSON.parse(JSON.stringify(responsesGraph));
-
-                    // everything in tier i is better than everything in tier i + 1... i + n
-                    for (let i = 0; i < localTierList.length; ++i) {
-                        for (let j = 0; j < localTierList[i].length; ++j) {
-                            const better = localTierList[i][j];
-
-                            for (let k = i + 1; k < localTierList.length; ++k) {
-                                for (let l = 0; l < localTierList[k].length; ++l) {
-                                    const worse = localTierList[k][l];
-
-                                    responsesGraphCopy[better][worse] = Constants.BETTER_BY_TIER;
-                                    responsesGraphCopy[worse][better] = Constants.WORSE_BY_TIER;
-                                }
-                            }
-                        }
-                    }
-
-                    setResponsesGraph(responsesGraphCopy);
-                    
-                    setPageNumber(pageNumber + 1);
-                }}
-                
-            >Start ranking</div> */}
             </div>
         </div>
     </div>
