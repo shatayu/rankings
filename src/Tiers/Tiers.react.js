@@ -43,7 +43,10 @@ export default function Tiers() {
 
     const buttonRow =  (
         <div className={styles.buttonContainer}>
-        <PreviousTierButton />
+        <PreviousTierButton {...{
+            tierListState,
+            setTierListState
+        }}/>
         <SelectAllButton {...{
             unselectedTerms,
             allTermsSelected,
@@ -55,7 +58,6 @@ export default function Tiers() {
             tierListState,
             setTierListState
         }} />
-        {/* <NextTierButton allTermsSelected={allTermsSelected} tierListState={tierListState} setTierListState={setTierListState} /> */}
         <NextTierButton {...{
             allTermsSelected,
             tierListState,

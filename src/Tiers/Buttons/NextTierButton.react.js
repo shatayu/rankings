@@ -19,8 +19,13 @@ export default function NextTierButton({allTermsSelected, tierListState, setTier
                     setFinalTierList(tierListState.tierList);
                     setPageNumber(pageNumber + 1);
                 } else {
+                    let newTierList = tierListState.tierList;
+                    if (newTierList[tierListState.currentTier + 1] == null) {
+                        newTierList.push([]);
+                    }
+
                     setTierListState({
-                        tierList: [...tierListState.tierList, []],
+                        tierList: newTierList,
                         currentTier: tierListState.currentTier + 1
                     });
                 }
