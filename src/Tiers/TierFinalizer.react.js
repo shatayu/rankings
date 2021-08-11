@@ -1,16 +1,12 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { TierListAtom, PageNumberAtom, ResponsesGraphAtom } from "../atoms";
+import { useRecoilValue } from "recoil";
+import { TierListAtom } from "../atoms";
 import { useState, useCallback } from 'react';
 import styles from './TierFinalizer.module.css';
-import Constants from '../Constants';
-import { generateEmptyGraph } from '../utils/graphUtils';
-
+import StartRankingButton from "./Buttons/StartRankingButton.react";
 
 export default function TierFinalizer() {
-    const [recoilTierList, setRecoilTierList] = useRecoilState(TierListAtom);
-    const [pageNumber, setPageNumber] = useRecoilState(PageNumberAtom);
-    const setResponsesGraph = useSetRecoilState(ResponsesGraphAtom);
+    const recoilTierList = useRecoilValue(TierListAtom);
 
     const [localTierList, setLocalTierList] = useState(recoilTierList);
 
@@ -120,10 +116,11 @@ export default function TierFinalizer() {
                 </div>
             </div>
             <div className={styles.startRankingButtonContainer}>
-                <div className={styles.startRankingButton} onClick={() => {
+                <StartRankingButton localTierList={localTierList}/>
+                {/* <div className={styles.startRankingButton} onClick={() => {
                     setRecoilTierList(localTierList);
 
-                    const responsesGraphCopy = JSON.parse(JSON.stringify(generateEmptyGraph(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'])));
+                    const responsesGraphCopy = JSON.parse(JSON.stringify(responsesGraph));
 
                     // everything in tier i is better than everything in tier i + 1... i + n
                     for (let i = 0; i < localTierList.length; ++i) {
@@ -146,7 +143,7 @@ export default function TierFinalizer() {
                     setPageNumber(pageNumber + 1);
                 }}
                 
-                >Start ranking</div>
+            >Start ranking</div> */}
             </div>
         </div>
     </div>

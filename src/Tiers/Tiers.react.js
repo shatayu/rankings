@@ -13,16 +13,17 @@
  */
 
 import { useState } from 'react';
-import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
-import { EntriesListAtom, TierListAtom, PageNumberAtom } from "../atoms";
+import { useRecoilValue } from "recoil";
+import { EntriesListAtom } from "../atoms";
+import NextTierButton from './Buttons/NextTierButton.react';
+import PreviousTierButton from './Buttons/PreviousTierButton.react';
+import SkipToRankingButton from './Buttons/SkipToRankingButton.react';
+import SelectAllButton from './Buttons/SelectAllButton.react';
 
 import styles from './Tiers.module.css';
 
 export default function Tiers() {
     const entriesList = useRecoilValue(EntriesListAtom);
-    const [pageNumber, setPageNumber] = useRecoilState(PageNumberAtom);
-
-    const setFinalTierList = useSetRecoilState(TierListAtom);
 
     const [tierListState, setTierListState] = useState({
         tierList: [[]],
@@ -40,13 +41,33 @@ export default function Tiers() {
 
     const allTermsSelected = [].concat.apply([], tierList).length === entriesList.length;
 
+    const buttonRow =  (
+        <div className={styles.buttonContainer}>
+        <PreviousTierButton />
+        <SelectAllButton {...{
+            unselectedTerms,
+            allTermsSelected,
+            tierListState,
+            setTierListState
+        }} />
+        <SkipToRankingButton {...{
+            unselectedTerms,
+            tierListState,
+            setTierListState
+        }} />
+        {/* <NextTierButton allTermsSelected={allTermsSelected} tierListState={tierListState} setTierListState={setTierListState} /> */}
+        <NextTierButton {...{
+            allTermsSelected,
+            tierListState,
+            setTierListState
+        }}/>
+        </div>
+    );
+    
     return (
         <div className={styles.container}>
             <div className={styles.header}>Which of these belong in Tier {currentTier + 1}?</div>
-            <div className={styles.skip} onClick={() => {
-                // start ranking
-            }}>{currentTier === 0 ? "All of these, let's rank!" : `Put everything in Tier ${currentTier + 1} and start ranking!`}</div>
-
+           {buttonRow}
             <ul className={styles.unselectedTermsList}>
                 {unselectedTerms.map(term =>
                     <li
@@ -59,6 +80,7 @@ export default function Tiers() {
                             const term = e.target.textContent;
 
                             if (tierList[currentTier].includes(term)) {
+                                // remove term from list
                                 const index = tierList[currentTier].indexOf(term);
 
                                 let copy = tierList.slice();
@@ -67,7 +89,8 @@ export default function Tiers() {
                                     ...tierListState,
                                     tierList: copy
                                 });
-                            } else {                            
+                            } else {          
+                                // add term to list                  
                                 let copy = tierList.slice();
                                 copy[currentTier].push(term);
                                 setTierListState({
@@ -81,7 +104,7 @@ export default function Tiers() {
                     </li>
                 )}
             </ul>
-            <div
+            {/* <div
                 className={styles.continue}
                 onClick={() => {
                     if (allTermsSelected) {
@@ -97,7 +120,8 @@ export default function Tiers() {
                 }}
             >
                 {allTermsSelected ? 'Finalize tiers' : 'Pick Next Tier'}
-            </div>
+            </div> */}
+            {document.body.scrollHeight > window.innerHeight ? <div className={styles.bottomButtonRow}>{buttonRow}</div> : null}
         </div>
     );
 }

@@ -3,7 +3,7 @@ import PageNumbers from './PageNumbers';
 
 export const TitleAtom = atom({
     key: 'TitleAtom',
-    default: 'pepe'
+    default: ''
 })
 
 export const EntryInputTextboxAtom = atom({
@@ -13,7 +13,7 @@ export const EntryInputTextboxAtom = atom({
 
 export const EntriesListAtom = atom({
     key: 'EntriesListAtom',
-    default: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+    default: []
 });
 
 export const ResponsesGraphAtom = atom({
@@ -23,16 +23,12 @@ export const ResponsesGraphAtom = atom({
 
 export const PageNumberAtom = atom({
     key: 'PageNumberAtom',
-    default: PageNumbers.TIER_FINALIZER
+    default: PageNumbers.INPUT
 });
 
 export const TierListAtom = atom({
     key: 'TierListAtom',
-    default: [
-        ['a', 'b', 'c'],
-        ['d', 'e', 'f'],
-        ['g', 'h']
-    ]
+    default: []
 })
 
 export const UserQuestionsAskedAtom = atom({

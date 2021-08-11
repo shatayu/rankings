@@ -11,9 +11,20 @@ export default function EntryInputTextbox() {
     // add term to entry
     const onSubmit = useCallback((e, value) => {  
         e.preventDefault();
-        if (canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)) {
-            addEntryToEntriesList(value, entriesList, setEntriesList);
+        console.log(value);
+        if (value === 'nflteams') {
+            const NFLTeams = getNFLTeams().sort();
+            setEntriesList(NFLTeams);
             setEntryInputTextboxContent('');
+        } else if (value === 'colors') {
+            const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'black', 'gray', 'white'].sort();
+            setEntriesList(colors);
+            setEntryInputTextboxContent('');
+        } else {
+            if (canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)) {
+                addEntryToEntriesList(value, entriesList, setEntriesList);
+                setEntryInputTextboxContent('');
+            }
         }
     }, [entriesList, entryInputTextboxContent, setEntriesList, setEntryInputTextboxContent]);
     
@@ -32,4 +43,56 @@ export default function EntryInputTextbox() {
             </label>
         </form>
     );
+}
+
+function getNFLTeams() {
+    return getAFCTeams().concat(getNFCTeams());
+}
+
+function getAFCTeams() {
+    return [
+        'Chiefs',
+        'Chargers',
+        'Raiders',
+        'Broncos',
+
+        'Patriots',
+        'Bills',
+        'Jets',
+        'Dolphins',
+
+        'Steelers',
+        'Ravens',
+        'Browns',
+        'Bengals',
+
+        'Texans',
+        'Colts',
+        'Jaguars',
+        'Titans'
+    ];
+}
+
+function getNFCTeams() {
+    return [
+        'Seahawks',
+        'Cardinals',
+        '49ers',
+        'Rams',
+
+        'Cowboys',
+        'Eagles',
+        'Football Team',
+        'Giants',
+
+        'Packers',
+        'Vikings',
+        'Bears',
+        'Lions',
+
+        'Saints',
+        'Falcons',
+        'Panthers',
+        'Buccaneers'
+    ];
 }
