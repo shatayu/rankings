@@ -2,6 +2,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useRecoilValue } from "recoil";
 import { TierListAtom } from "../atoms";
 import { useState, useCallback } from 'react';
+import { ReactComponent as DragHandle } from '../assets/draghandle.svg';
 import styles from './TierFinalizer.module.css';
 import StartRankingButton from "./Buttons/StartRankingButton.react";
 
@@ -43,8 +44,19 @@ export default function TierFinalizer() {
         return localTierList[listIDToIndex(listID)];
     }, [localTierList]);
 
-  function onDragEnd(result) {
-    const { source, destination } = result;
+    function onDragUpdate(result) {
+        const { destination } = result;
+        console.log(destination)
+
+        /*
+         * on drag start make the outlines visible
+         * whenever you are hovering over a new tier change the
+         * background color
+         */ 
+    }
+
+    function onDragEnd(result) {
+        const { source, destination } = result;
 
         // dropped outside the list
         if (!destination) {
@@ -86,11 +98,11 @@ export default function TierFinalizer() {
         <div className={styles.tiersAndButtonWrapper}>
             <div className={styles.allTiersContainerWrapper}>
                 <div className={styles.allTiersContainer}>
-                    <DragDropContext onDragEnd={onDragEnd}>
+                    <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
                         {localTierList.map((tier, index) => (
                             <Droppable key={index} droppableId={`tier${index}`}>
-                                {provided => (
-                                    <div className={styles.oneTierContainer} {...provided.droppableProps} ref={provided.innerRef}>
+                                {(provided, snapshot) => (
+                                    <div className={styles.oneTierContainer + ' ' + (snapshot.isDraggingOver ? styles.oneTierContainerDraggedOver : '')} {...provided.droppableProps} ref={provided.innerRef}>
                                         <div className={styles.header}>{`Tier ${index + 1}`}</div>
                                         <div className={styles.listContainer}>
                                             {tier.map((item, index) => {
@@ -98,7 +110,7 @@ export default function TierFinalizer() {
                                                     <Draggable key={item} draggableId={item} index={index}>
                                                         {(provided) => (
                                                             <div className={styles.listItem} key={item} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                                {item}
+                                                                <DragHandle className={styles.dragHandleIcon} />{item}
                                                             </div>
                                                         )}
                                                     </Draggable>
