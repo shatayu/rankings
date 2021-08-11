@@ -78,7 +78,7 @@ export default function ProgressIndicator({
                     if (title === defaultTitle) {
                         setTitle('');
                     }
-                    setPageNumber(PageNumbers.INPUT);
+                    setPageNumber(PageNumbers.TIER_FINALIZER);
                 }
             }}/>
             <span className={styles.progressIndicator}>{questionNumber} out of up to {maxNumberOfQuestions}</span>

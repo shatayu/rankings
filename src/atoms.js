@@ -23,7 +23,7 @@ export const ResponsesGraphAtom = atom({
 
 export const PageNumberAtom = atom({
     key: 'PageNumberAtom',
-    default: PageNumbers.RANK_FINALIZER
+    default: PageNumbers.TIER_FINALIZER
 });
 
 export const TierListAtom = atom({

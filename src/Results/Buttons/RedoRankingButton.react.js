@@ -28,7 +28,7 @@ export default function RedoRankingsButton() {
             userQuestionsAsked.length === 0 &&
             JSON.stringify(responsesGraph) === JSON.stringify(emptyGraph)
         ) {
-            setPageNumber(PageNumbers.RANKER);
+            setPageNumber(PageNumbers.TIER_FINALIZER);
         }
     }, [emptyGraph, responsesGraph, setPageNumber, userQuestionsAsked.length, userSortedRankings.length])
 

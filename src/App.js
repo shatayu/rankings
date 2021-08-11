@@ -29,8 +29,8 @@ function RankingApp() {
       setEntries(entries);
       setCurrentPage(currentPage + 1);
     }}/>,
-    <Tiers key={PageNumbers.TIERS} />,
-    <TierFinalizer />,
+    <Tiers key={PageNumbers.TIER_INITIALIZER} />,
+    <TierFinalizer key={PageNumbers.TIER_FINALIZER} />,
     <Ranker key={PageNumbers.RANKER} entries={entries} onFinish={(responsesGraph, results, questionsAsked) => {
       setResponsesGraph(responsesGraph);
       setResults(results);
