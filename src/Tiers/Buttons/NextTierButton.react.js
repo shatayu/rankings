@@ -1,5 +1,5 @@
 import GenericButton from "../../Input/Buttons/GenericButton";
-import {  useSetRecoilState, useRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilState } from 'recoil';
 import { ReactComponent as NextIcon } from '../../assets/next_question_arrow.svg';
 import { TierListAtom, PageNumberAtom } from '../../atoms';
 import styles from '../../Input/Input.module.css'

@@ -5,6 +5,7 @@ import { useState, useCallback } from 'react';
 import { ReactComponent as DragHandle } from '../assets/draghandle.svg';
 import styles from './TierFinalizer.module.css';
 import StartRankingButton from "./Buttons/StartRankingButton.react";
+import AddTierButton from './Buttons/AddTierButton.react';
 
 export default function TierFinalizer() {
     const recoilTierList = useRecoilValue(TierListAtom);
@@ -127,7 +128,8 @@ export default function TierFinalizer() {
                     </DragDropContext>
                 </div>
             </div>
-            <div className={styles.startRankingButtonContainer}>
+            <div className={styles.buttonContainer}>
+                <AddTierButton localTierList={localTierList} setLocalTierList={setLocalTierList} />
                 <StartRankingButton localTierList={localTierList}/>
             </div>
         </div>
