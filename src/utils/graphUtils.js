@@ -79,7 +79,7 @@ export function shortestPath(graph, source, target) {
     return path;
 }
 
-export function getPathString(selections, results, responsesGraph, questionsAsked) {
+export function getPathString(selections, results, responsesGraph, tierList, questionsAsked) {
     selections.sort((a, b) => results.indexOf(a) - results.indexOf(b));
     const path = shortestPath(responsesGraph, selections[0], selections[1]);
 
@@ -88,18 +88,40 @@ export function getPathString(selections, results, responsesGraph, questionsAske
         for (let i = 0; i < path.length - 1; ++i) {
             const current = path[i];
             const next = path[i + 1];
-            const questionNumber = getQuestionNumber(questionsAsked, current, next);
-            
-            const pathString = ('(Q' + String(questionNumber) + ') You said ' + current + ' is better than ' + next);
 
-            const pathEntry = <div key={pathString}>{pathString}</div>
-            pathArray.push(pathEntry);
+            if (responsesGraph[current][next] === Constants.BETTER_BY_TIER) {
+                // find tier current is in
+                const currentTier = getTier(current, tierList);
+                const nextTier = getTier(next, tierList);
+                const pathString = `${current} is in Tier ${currentTier + 1} and ${next} is in Tier ${nextTier + 1}`;
+
+                const pathEntry = <div key={pathString}>{pathString}</div>
+                pathArray.push(pathEntry);
+            } else {
+                const questionNumber = getQuestionNumber(questionsAsked, current, next);
+            
+                const pathString = ('(Q' + String(questionNumber) + ') You said ' + current + ' is better than ' + next);
+    
+                const pathEntry = <div key={pathString}>{pathString}</div>
+                pathArray.push(pathEntry);
+            }
         }
 
         return pathArray;
     } else {
         return [];
     }
+}
+
+function getTier(term, tierList) {
+    let result = -1;
+    tierList.forEach((tier, index) => {
+        if (tier.includes(term)) {
+            result = index;
+        }
+    });
+
+    return result;
 }
 
 export function getQuestionNumber(questionsAsked, a, b) {

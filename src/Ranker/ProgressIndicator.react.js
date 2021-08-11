@@ -1,6 +1,6 @@
 import { PageNumberAtom, TitleAtom } from '../atoms';
 import { useSetRecoilState, useRecoilState } from 'recoil';
-import { iterativeMergeSort } from '../utils/sortUtils';
+import { getNextQuestion } from '../utils/sortUtils';
 import Constants from '../Constants';
 import PageNumbers from '../PageNumbers';
 import styles from './Ranker.module.css';
@@ -18,7 +18,8 @@ export default function ProgressIndicator({
     responsesGraph,
     setResponsesGraph,
     onForwardClick,
-    entries,
+    tierList,
+    currentTier,
     n,
     doneRanking
 }) {
@@ -31,15 +32,21 @@ export default function ProgressIndicator({
     }
     
     // https://stackoverflow.com/questions/12346054/number-of-comparisons-in-merge-sort
-    const log = Math.ceil(Math.log2(n));
-    const maxNumberOfQuestions = n * log - 2 ** log + 1;
+    // const log = Math.ceil(Math.log2(n));
+    // const maxNumberOfQuestions = n * log - 2 ** log + 1;
+
+    const maxNumberOfQuestions = tierList.reduce((numberOfQuestions, tier) => {
+        const n = tier.length;
+        const log = Math.ceil(Math.log2(n));
+        return numberOfQuestions + n * log - 2 ** log + 1;
+    }, 0);
     
     const arrowProps = {
         width: 18,
         height: 18,
         margintop: 10
     }
-    let {nextQuestion} = iterativeMergeSort(entries, responsesGraph);
+    let {nextQuestion} = getNextQuestion(tierList, responsesGraph);
     const nextQuestionNumber = nextQuestion != null ? getQuestionNumber(userQuestionsAsked, nextQuestion[0], nextQuestion[1]) : -1;
     const shouldForwardBeEnabled = nextQuestion != null && nextQuestionNumber !== -1;
     

@@ -1,8 +1,9 @@
 import {atom} from 'recoil';
+import PageNumbers from './PageNumbers';
 
 export const TitleAtom = atom({
     key: 'TitleAtom',
-    default: ''
+    default: 'pepe'
 })
 
 export const EntryInputTextboxAtom = atom({
@@ -22,7 +23,7 @@ export const ResponsesGraphAtom = atom({
 
 export const PageNumberAtom = atom({
     key: 'PageNumberAtom',
-    default: 2
+    default: PageNumbers.RANK_FINALIZER
 });
 
 export const TierListAtom = atom({

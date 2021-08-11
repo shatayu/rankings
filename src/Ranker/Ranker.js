@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { EntriesListAtom, ResponsesGraphAtom, UserSortedRankingsAtom, UserQuestionsAskedAtom, PageNumberAtom, TitleAtom } from '../atoms';
+import { EntriesListAtom, ResponsesGraphAtom, UserSortedRankingsAtom, UserQuestionsAskedAtom, PageNumberAtom, TitleAtom, TierListAtom } from '../atoms';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { iterativeMergeSort } from '../utils/sortUtils';
+import { getNextQuestion } from '../utils/sortUtils';
 import { getQuestionNumber } from '../utils/graphUtils';
 import React from 'react';
 import Constants from '../Constants';
@@ -11,6 +11,9 @@ import PageNumbers from '../PageNumbers';
 import ProgressIndicator from './ProgressIndicator.react';
 
 export default function Ranker() {
+    const tierList = useRecoilValue(TierListAtom);
+    const [currentTier, setCurrentTier] = useState(0);
+
     const [responsesGraph, setResponsesGraph] = useRecoilState(ResponsesGraphAtom);
     const [userQuestionsAsked, setUserQuestionsAsked] = useRecoilState(UserQuestionsAskedAtom);
 
@@ -45,18 +48,20 @@ export default function Ranker() {
 
     // ask questions
     useEffect(() => {
-        let {array, nextQuestion} = iterativeMergeSort(entries, responsesGraph);
+        let {array, nextQuestion} = getNextQuestion(tierList, responsesGraph);
         
         if (nextQuestion != null) {
             const askedQuestionNumber = getQuestionNumber(userQuestionsAsked, nextQuestion[0], nextQuestion[1]);
             const better = askedQuestionNumber !== -1 ? userQuestionsAsked[askedQuestionNumber - 1][0] : null;
             setCurrentQuestion(<Pair a={nextQuestion[0]} b={nextQuestion[1]} onSelection={onSelection} highlightedTerm={better}/>)
+        } else if (currentTier < tierList.length) {
+            setCurrentTier(currentTier + 1);
         } else {
             setDoneRanking(true);
             setUserSortedRankings(array);  
             setPageNumber(PageNumbers.RESULTS);          
         }
-    }, [responsesGraph, questionNumber, onSelection, entries, userQuestionsAsked, setUserSortedRankings, setPageNumber]);
+    }, [responsesGraph, questionNumber, onSelection, entries, userQuestionsAsked, setUserSortedRankings, setPageNumber, tierList, currentTier]);
 
     if (responsesGraph == null) {
         return null;
@@ -75,9 +80,9 @@ export default function Ranker() {
                     setUserQuestionsAsked={setUserQuestionsAsked}
                     responsesGraph={responsesGraph}
                     setResponsesGraph={setResponsesGraph}
-                    entries={entries}
+                    tierList={tierList}
+                    currentTier={currentTier}
                     onForwardClick={onSelection}
-                    n={entries.length}
                     doneRanking={doneRanking}
                 />
             </div>

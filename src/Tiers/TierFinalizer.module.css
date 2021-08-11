@@ -1,0 +1,91 @@
+.finalizerContainer {
+    height: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.tiersAndButtonWrapper {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    /* flex: 1 */
+}
+
+.allTiersContainerWrapper {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+    width: 100%;
+}
+
+.finalTitle {
+    font-size: 60px;
+    color: white;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.allTiersContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+
+    width: 100%;
+}
+
+.oneTierContainer {
+    color: white;
+
+    display: flex;
+    flex: 1;
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    min-height: 100%;
+}
+
+.listContainer {
+    font-size: 32px;
+}
+
+.header {
+    color: white;
+    font-size: 60px;
+}
+
+.startRankingButtonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.startRankingButton {
+    display: inline-block;
+    color: white;
+    font-size: 32px;
+    text-align: center;
+
+    border: 2px solid white;
+    align-self: center;
+
+    padding: 10px 30px;
+    border-radius: 25px;
+    margin-top: 40px;
+}

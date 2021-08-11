@@ -4,7 +4,6 @@ import { ReactComponent as Arrow } from '../../assets/arrow.svg';
 import { EntriesListAtom, EntryInputTextboxAtom, ResponsesGraphAtom, PageNumberAtom, TitleAtom } from '../../atoms';
 import { generateEmptyGraph } from '../../utils/graphUtils';
 import { canEntryBeAddedToEntriesList, addEntryToEntriesList, useGetDefaultTitle } from '../../utils/inputUtils';
-import PageNumber from '../../PageNumbers';
 import styles from '../Input.module.css';
 
 export default function StartRankingButton() {

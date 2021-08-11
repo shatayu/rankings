@@ -45,7 +45,7 @@ export default function Tiers() {
             <div className={styles.header}>Which of these belong in Tier {currentTier + 1}?</div>
             <div className={styles.skip} onClick={() => {
                 // start ranking
-            }}>Everyone, let's rank!</div>
+            }}>{currentTier === 0 ? "All of these, let's rank!" : `Put everything in Tier ${currentTier + 1} and start ranking!`}</div>
 
             <ul className={styles.unselectedTermsList}>
                 {unselectedTerms.map(term =>

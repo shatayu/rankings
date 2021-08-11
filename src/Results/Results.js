@@ -1,6 +1,6 @@
 import {useState, useCallback} from 'react';
 import {getPathString} from '../utils/graphUtils';
-import { UserSortedRankingsAtom, ResponsesGraphAtom, UserQuestionsAskedAtom, TitleAtom } from '../atoms';
+import { UserSortedRankingsAtom, ResponsesGraphAtom, UserQuestionsAskedAtom, TitleAtom, TierListAtom } from '../atoms';
 import styles from './Results.module.css';
 import { useRecoilValue } from 'recoil';
 import CopyResultsButton from './Buttons/CopyResultsButton.react';
@@ -13,6 +13,7 @@ export default function Results() {
     const graph = useRecoilValue(ResponsesGraphAtom);
     const questionsAsked = useRecoilValue(UserQuestionsAskedAtom);
     const title = useRecoilValue(TitleAtom);
+    const tierList = useRecoilValue(TierListAtom);
 
     const [selections, setSelections] = useState([]);
     const [pathBetweenSelections, setPathBetweenSelections] = useState([]);
@@ -28,7 +29,7 @@ export default function Results() {
             setSelections(tempSelections);
             
             if (tempSelections.length === 2) {
-                setPathBetweenSelections(getPathString(tempSelections, results, graph, questionsAsked));
+                setPathBetweenSelections(getPathString(tempSelections, results, graph, tierList, questionsAsked));
             }
         } else {
             if (tempSelections.length === 2) {
@@ -42,7 +43,7 @@ export default function Results() {
         }
         
 
-    }, [graph, questionsAsked, results, selections]);
+    }, [graph, questionsAsked, results, selections, tierList]);
 
     const fillerExplanation = <span className={styles.fillerJustification}>Click any pair of terms to learn why one's higher than the other</span>
 

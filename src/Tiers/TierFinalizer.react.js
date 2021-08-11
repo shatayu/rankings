@@ -1,16 +1,20 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { useRecoilState } from "recoil";
-import { TierListAtom } from "../atoms";
-import { useCallback } from 'react';
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { TierListAtom, PageNumberAtom, ResponsesGraphAtom } from "../atoms";
+import { useState, useCallback } from 'react';
+import styles from './TierFinalizer.module.css';
+import Constants from '../Constants';
+import { generateEmptyGraph } from '../utils/graphUtils';
 
 
 export default function TierFinalizer() {
-  const [tierList, setTierList] = useRecoilState(TierListAtom);
+    const [recoilTierList, setRecoilTierList] = useRecoilState(TierListAtom);
+    const [pageNumber, setPageNumber] = useRecoilState(PageNumberAtom);
+    const setResponsesGraph = useSetRecoilState(ResponsesGraphAtom);
+
+    const [localTierList, setLocalTierList] = useState(recoilTierList);
 
     const reorder = (list, startIndex, endIndex) => {
-        console.log(list);
-        console.log(startIndex)
-        console.log(endIndex);
         const result = Array.from(list);
         const [removed] = result.splice(startIndex, 1);
         result.splice(endIndex, 0, removed);
@@ -40,8 +44,8 @@ export default function TierFinalizer() {
     };
 
     const getList = useCallback((listID) => {
-        return tierList[listIDToIndex(listID)];
-    }, [tierList]);
+        return localTierList[listIDToIndex(listID)];
+    }, [localTierList]);
 
   function onDragEnd(result) {
     const { source, destination } = result;
@@ -61,10 +65,10 @@ export default function TierFinalizer() {
             );
             
             const index = listIDToIndex(source.droppableId);
-            let newTiers = tierList.slice();
+            let newTiers = localTierList.slice();
             newTiers[index] = items;
-
-            setTierList(newTiers);
+            
+            setLocalTierList(newTiers);
         } else {
             const result = move(
                 getList(source.droppableId),
@@ -73,41 +77,79 @@ export default function TierFinalizer() {
                 destination
             );
 
-            let newTiers = tierList.slice();
+            let newTiers = localTierList.slice();
             result.forEach(item => {
                 newTiers[item.index] = item.list;
             });
 
-            setTierList(newTiers);
+            setLocalTierList(newTiers);
         }
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-        {tierList.map((tier, index) => (
-            <Droppable key={index} droppableId={`tier${index}`}>
-                {provided => (
-                    <>
-                    <div style={{color: 'white'}}>{`Tier ${index + 1}`}</div>
-                    <ul style={{color: 'white'}} {...provided.droppableProps} ref={provided.innerRef}>
-                        {tier.map((item, index) => {
-                            return (
-                                <Draggable key={item} draggableId={item} index={index}>
-                                    {(provided) => (
-                                        <li key={item} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                            {item}
-                                        </li>
-                                    )}
-                                </Draggable>
-                            );
-                        })}
-                        {provided.placeholder}
-                    </ul>
-                    </>
-                )}
-            </Droppable>
-        ))}
-    </DragDropContext>
+    <div className={styles.finalizerContainer}>
+    <div className={styles.finalTitle}>Drag any drop anything that's in the wrong tier</div>
+        <div className={styles.tiersAndButtonWrapper}>
+            <div className={styles.allTiersContainerWrapper}>
+                <div className={styles.allTiersContainer}>
+                    <DragDropContext onDragEnd={onDragEnd}>
+                        {localTierList.map((tier, index) => (
+                            <Droppable key={index} droppableId={`tier${index}`}>
+                                {provided => (
+                                    <div className={styles.oneTierContainer} {...provided.droppableProps} ref={provided.innerRef}>
+                                        <div className={styles.header}>{`Tier ${index + 1}`}</div>
+                                        <div className={styles.listContainer}>
+                                            {tier.map((item, index) => {
+                                                return (
+                                                    <Draggable key={item} draggableId={item} index={index}>
+                                                        {(provided) => (
+                                                            <div className={styles.listItem} key={item} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                                {item}
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                                );
+                                            })}
+                                            {provided.placeholder}
+                                        </div>
+                                    </div>
+                                )}
+                            </Droppable>
+                        ))}
+                    </DragDropContext>
+                </div>
+            </div>
+            <div className={styles.startRankingButtonContainer}>
+                <div className={styles.startRankingButton} onClick={() => {
+                    setRecoilTierList(localTierList);
+
+                    const responsesGraphCopy = JSON.parse(JSON.stringify(generateEmptyGraph(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'])));
+
+                    // everything in tier i is better than everything in tier i + 1... i + n
+                    for (let i = 0; i < localTierList.length; ++i) {
+                        for (let j = 0; j < localTierList[i].length; ++j) {
+                            const better = localTierList[i][j];
+
+                            for (let k = i + 1; k < localTierList.length; ++k) {
+                                for (let l = 0; l < localTierList[k].length; ++l) {
+                                    const worse = localTierList[k][l];
+
+                                    responsesGraphCopy[better][worse] = Constants.BETTER_BY_TIER;
+                                    responsesGraphCopy[worse][better] = Constants.WORSE_BY_TIER;
+                                }
+                            }
+                        }
+                    }
+
+                    setResponsesGraph(responsesGraphCopy);
+                    
+                    setPageNumber(pageNumber + 1);
+                }}
+                
+                >Start ranking</div>
+            </div>
+        </div>
+    </div>
   );
 }
 
