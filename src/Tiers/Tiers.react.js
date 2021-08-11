@@ -106,24 +106,8 @@ export default function Tiers() {
                     </li>
                 )}
             </ul>
-            {/* <div
-                className={styles.continue}
-                onClick={() => {
-                    if (allTermsSelected) {
-                        // start ranking
-                        setFinalTierList(tierListState.tierList);
-                        setPageNumber(pageNumber + 1);
-                    } else {
-                        setTierListState({
-                            tierList: [...tierListState.tierList, []],
-                            currentTier: currentTier + 1
-                        });
-                    }
-                }}
-            >
-                {allTermsSelected ? 'Finalize tiers' : 'Pick Next Tier'}
-            </div> */}
-            {document.body.scrollHeight > window.innerHeight ? <div className={styles.bottomButtonRow}>{buttonRow}</div> : null}
+
+            {document.body.scrollHeight > window.innerHeight && <div className={styles.bottomButtonRow}>{buttonRow}</div>}
         </div>
     );
 }
