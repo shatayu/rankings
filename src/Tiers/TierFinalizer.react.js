@@ -97,7 +97,7 @@ export default function TierFinalizer() {
 
   return (
     <div className={styles.finalizerContainer}>
-    <div className={styles.finalTitle}>Drag any drop anything that's in the wrong tier</div>
+        <div className={styles.finalTitle}>Drag any drop anything that's in the wrong tier</div>
         <div className={styles.tiersAndButtonWrapper}>
             <div className={styles.allTiersContainerWrapper}>
                 <div className={styles.allTiersContainer}>
@@ -105,24 +105,26 @@ export default function TierFinalizer() {
                         {localTierList.map((tier, index) => (
                             <Droppable key={index} droppableId={`tier${index}`}>
                                 {(provided, snapshot) => (
-                                    <div className={styles.oneTierContainer + ' ' + (snapshot.isDraggingOver ? styles.oneTierContainerDraggedOver : '')} {...provided.droppableProps} ref={provided.innerRef}>
+                                    <div
+                                        className={styles.oneTierContainer + ' ' + (snapshot.isDraggingOver ? styles.oneTierContainerDraggedOver : '')}
+                                        {...provided.droppableProps}
+                                        ref={provided.innerRef}
+                                    >
                                         <div className={styles.header}>{`Tier ${index + 1}`}</div>
-                                        <div className={styles.listContainer}>
-                                            {tier.map((item, index) => (
-                                                    <Draggable key={item} draggableId={item} index={index}>
-                                                        {(provided) => (
-                                                            <div className={styles.listItem} key={item} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                                <DragHandle className={styles.dragHandleIcon} />
-                                                                <span className={styles.listItemText}>{item}</span>
-                                                            </div>
-                                                        )}
-                                                    </Draggable>
-                                                )
-                                            )}
-                                            {provided.placeholder}
-                                        </div>
+                                        {tier.map((item, index) => (
+                                                <Draggable key={item} draggableId={item} index={index}>
+                                                    {(provided) => (
+                                                        <div className={styles.listItem} key={item} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                            <DragHandle className={styles.dragHandleIcon} />
+                                                            <span className={styles.listItemText}>{item}</span>
+                                                        </div>
+                                                    )}
+                                                </Draggable>
+                                            )
+                                        )}
+                                        {provided.placeholder}
                                     </div>
-                                )}
+                                )} 
                             </Droppable>
                         ))}
                     </DragDropContext>

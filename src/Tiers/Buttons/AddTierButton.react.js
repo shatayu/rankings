@@ -10,7 +10,9 @@ export default function addTierButton({localTierList, setLocalTierList}) {
             icon={<Plus className={styles.buttonIcon} />}
             text={'ADD TIER'}
             isEnabled={!anyTierIsEmpty}
-            onClick={() => {}}
+            onClick={() => {
+                setLocalTierList([...localTierList, []]);
+            }}
             isDeleteButton={false}
        />
     );
