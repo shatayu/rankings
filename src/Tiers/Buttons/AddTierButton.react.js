@@ -4,12 +4,13 @@ import styles from '../../Input/Input.module.css'
 
 export default function addTierButton({localTierList, setLocalTierList}) {
     const anyTierIsEmpty = localTierList.some(tier => tier.length === 0);
-    
+    const oneTierHasMultipleItems = localTierList.some(tier => tier.length > 1);
+
     return (
        <GenericButton
             icon={<Plus className={styles.buttonIcon} />}
             text={'ADD TIER'}
-            isEnabled={!anyTierIsEmpty}
+            isEnabled={!anyTierIsEmpty && oneTierHasMultipleItems}
             onClick={() => {
                 setLocalTierList([...localTierList, []]);
             }}

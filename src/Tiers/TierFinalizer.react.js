@@ -1,7 +1,7 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useRecoilValue } from "recoil";
 import { TierListAtom } from "../atoms";
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { ReactComponent as DragHandle } from '../assets/draghandle.svg';
 import styles from './TierFinalizer.module.css';
 import StartRankingButton from "./Buttons/StartRankingButton.react";
@@ -12,132 +12,120 @@ export default function TierFinalizer() {
 
     const [localTierList, setLocalTierList] = useState(recoilTierList);
 
-    const reorder = (list, startIndex, endIndex) => {
-        const result = Array.from(list);
-        const [removed] = result.splice(startIndex, 1);
-        result.splice(endIndex, 0, removed);
+    return (
+        <>
+        <DragDropContext onDragEnd={result => onDragEnd(result, localTierList, setLocalTierList)}>
+            <div className={styles.allTiersContainer}>
+                {localTierList.map((tier, tierIndex) => (
+                    <div className={styles.oneTierContainer}>
+                        <div className={styles.header}>{`Tier ${tierIndex + 1}`}</div>
+                        <Droppable droppableId={`tier${tierIndex}`} key={`tier${tierIndex}`}>
+                            {(provided, snapshot) => (
+                                <div
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
+                                    className={styles.list + ' ' + (snapshot.isDraggingOver ? styles.listDraggedOver : '')}
+                                >
+                                    {tier.map((term, termIndex) => (
+                                        <Draggable key={term} draggableId={term} index={termIndex}>
+                                            {(provided, snapshot) => (
+                                                <div
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                    className={styles.listItem}
+                                                >
+                                                    <DragHandle className={styles.dragHandleIcon}/>
+                                                    <span className={styles.listItemText}>{term}</span>
+                                                </div>
+                                            )}
+                                        </Draggable>
+                                    ))}
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </div>
+                ))}
+            </div>
+        </DragDropContext>
+        <div className={styles.buttonContainer}>
+            <AddTierButton localTierList={localTierList} setLocalTierList={setLocalTierList} />
+            <StartRankingButton localTierList={localTierList}/>
+        </div>
+        </>
+    );
+}
 
-        return result;
-    };
+function onDragEnd(result, localTierList, setLocalTierList) {
+    const { source, destination } = result;
+    console.log(result);
 
-    const move = (source, destination, droppableSource, droppableDestination) => {
-        console.log(destination);
-        console.log(droppableDestination);
-        const sourceClone = Array.from(source);
-        const destClone = Array.from(destination);
-        const [removed] = sourceClone.splice(droppableSource.index, 1);
 
-        destClone.splice(droppableDestination.index, 0, removed);
-
-        const result = [
-            {
-                index: listIDToIndex(droppableSource.droppableId),
-                list: sourceClone
-            },
-            {
-                index: listIDToIndex(droppableDestination.droppableId),
-                list: destClone
-            }
-        ];
-
-        return result;
-    };
-
-    const getList = useCallback((listID) => {
-        return localTierList[listIDToIndex(listID)];
-    }, [localTierList]);
-
-    function onDragUpdate(result) {
-        const { destination } = result;
-        console.log(destination)
-
-        /*
-         * on drag start make the outlines visible
-         * whenever you are hovering over a new tier change the
-         * background color
-         */ 
+    // dropped outside the list
+    if (!destination) {
+        return;
     }
 
-    function onDragEnd(result) {
-        const { source, destination } = result;
+    if (source.droppableId === destination.droppableId) {
+        const index = listIDToIndex(source.droppableId);
+        const items = reorder(
+            localTierList[index],
+            source.index,
+            destination.index
+        );
+        
+        let newTiers = localTierList.slice();
+        newTiers[index] = items;
+        
+        setLocalTierList(newTiers);
+    } else {
+        const sourceIndex = listIDToIndex(source.droppableId);
+        const destIndex = listIDToIndex(destination.droppableId);
+        const result = move(
+            localTierList[sourceIndex],
+            localTierList[destIndex],
+            source,
+            destination
+        );
 
-        // dropped outside the list
-        if (!destination) {
-            return;
-        }
+        let newTiers = localTierList.slice();
+        result.forEach(item => {
+            newTiers[item.index] = item.list;
+        });
 
-        if (source.droppableId === destination.droppableId) {
-            const items = reorder(
-                getList(source.droppableId),
-                source.index,
-                destination.index
-            );
-            
-            const index = listIDToIndex(source.droppableId);
-            let newTiers = localTierList.slice();
-            newTiers[index] = items;
-            
-            setLocalTierList(newTiers);
-        } else {
-            const result = move(
-                getList(source.droppableId),
-                getList(destination.droppableId),
-                source,
-                destination
-            );
-
-            let newTiers = localTierList.slice();
-            result.forEach(item => {
-                newTiers[item.index] = item.list;
-            });
-
-            setLocalTierList(newTiers);
-        }
-  }
-
-  return (
-    <div className={styles.finalizerContainer}>
-        <div className={styles.finalTitle}>Drag any drop anything that's in the wrong tier</div>
-        <div className={styles.tiersAndButtonWrapper}>
-            <div className={styles.allTiersContainerWrapper}>
-                <div className={styles.allTiersContainer}>
-                    <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
-                        {localTierList.map((tier, index) => (
-                            <Droppable key={index} droppableId={`tier${index}`}>
-                                {(provided, snapshot) => (
-                                    <div
-                                        className={styles.oneTierContainer + ' ' + (snapshot.isDraggingOver ? styles.oneTierContainerDraggedOver : '')}
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}
-                                    >
-                                        <div className={styles.header}>{`Tier ${index + 1}`}</div>
-                                        {tier.map((item, index) => (
-                                                <Draggable key={item} draggableId={item} index={index}>
-                                                    {(provided) => (
-                                                        <div className={styles.listItem} key={item} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                            <DragHandle className={styles.dragHandleIcon} />
-                                                            <span className={styles.listItemText}>{item}</span>
-                                                        </div>
-                                                    )}
-                                                </Draggable>
-                                            )
-                                        )}
-                                        {provided.placeholder}
-                                    </div>
-                                )} 
-                            </Droppable>
-                        ))}
-                    </DragDropContext>
-                </div>
-            </div>
-            <div className={styles.buttonContainer}>
-                <AddTierButton localTierList={localTierList} setLocalTierList={setLocalTierList} />
-                <StartRankingButton localTierList={localTierList}/>
-            </div>
-        </div>
-    </div>
-  );
+        setLocalTierList(newTiers);
+    }
 }
+
+function move(source, destination, droppableSource, droppableDestination) {
+    const sourceClone = Array.from(source);
+    const destClone = Array.from(destination);
+    const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+    destClone.splice(droppableDestination.index, 0, removed);
+
+    const result = [
+        {
+            index: listIDToIndex(droppableSource.droppableId),
+            list: sourceClone
+        },
+        {
+            index: listIDToIndex(droppableDestination.droppableId),
+            list: destClone
+        }
+    ];
+
+    return result;
+};
+
+function reorder(list, startIndex, endIndex) {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+};
 
 function listIDToIndex(listID) {
     return parseInt(listID.replace('tier', ''));
