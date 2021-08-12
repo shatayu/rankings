@@ -12,8 +12,6 @@ export default function AddedEntriesList() {
     const [hasLoadedData, setHasLoadedData] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
 
-    console.log(entriesList);
-
     // if user came from shared link then fill in list
     useEffect(() => {
         if (isSharedLink() && entriesList.length === 0 && !hasLoadedData) {
