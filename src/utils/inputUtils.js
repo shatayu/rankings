@@ -7,10 +7,10 @@ export function useGetDefaultTitle() {
 }
 
 export function canEntryBeAddedToEntriesList(entry, entriesList) {
-    const spaceLessEntry = entry.replace(' ', '');
-    const isEntryUnique = !entriesList.map(term => term.replace(' ', ''))
+    const spaceLessEntry = entry.replaceAll(' ', '');
+    const isEntryUnique = !entriesList.map(term => term.replaceAll(' ', ''))
             .includes(spaceLessEntry);
-    
+
     return spaceLessEntry.length > 0 && isEntryUnique;
 }
 
