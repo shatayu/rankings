@@ -11,11 +11,13 @@ export default function StartRankingButton({localTierList}) {
     const setPageNumber = useSetRecoilState(PageNumberAtom);
     const [responsesGraph, setResponsesGraph] = useRecoilState(ResponsesGraphAtom);
 
+    const noTiersAreEmpty = localTierList.every(tier => tier.length > 0);
+
     return (
         <GenericButton
             icon={<Arrow className={styles.buttonIcon} />}
-            text={'START RANKING'}
-            isEnabled={true}
+            text={noTiersAreEmpty ? 'START RANKING' : 'NO EMPTY TIERS'}
+            isEnabled={noTiersAreEmpty}
             onClick={() => {
                 setFinalTierList(localTierList);
 
