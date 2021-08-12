@@ -16,6 +16,10 @@ export default function TierFinalizer() {
 
     return (
         <>
+        <div className={styles.titleContainer}>
+            <div className={styles.title}>Confirm Tier Selection</div>
+            <div className={styles.subtitle}>Drag any incorrectly placed item to the correct tier</div>
+        </div>
         <DragDropContext onDragEnd={result => onDragEnd(result, localTierList, setLocalTierList)}>
             <div className={styles.allTiersContainer}>
                 {localTierList.map((tier, tierIndex) => (
