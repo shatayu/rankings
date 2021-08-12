@@ -115,6 +115,10 @@
     height: 14px;
 }
 
+.reverseIcon {
+    transform: scaleX(-1);
+}
+
 .buttonText {
     width: 100%;
     text-align: center;

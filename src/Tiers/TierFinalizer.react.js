@@ -7,6 +7,7 @@ import { ReactComponent as Trash } from '../assets/trash.svg';
 import styles from './TierFinalizer.module.css';
 import StartRankingButton from "./Buttons/StartRankingButton.react";
 import AddTierButton from './Buttons/AddTierButton.react';
+import GoToInputButton from "./Buttons/GoToInputButton.react";
 
 export default function TierFinalizer() {
     const recoilTierList = useRecoilValue(TierListAtom);
@@ -43,7 +44,7 @@ export default function TierFinalizer() {
                                         </Draggable>
                                     ))}
                                     {tier.length === 0 && (
-                                        <DeleteTierButton {...{tierIndex, localTierList, setLocalTierList}} />
+                                        <DeleteTierButton key={`delete${tierIndex}`} {...{tierIndex, localTierList, setLocalTierList}} />
                                     )}
                                     {provided.placeholder}
                                 </div>
@@ -54,6 +55,7 @@ export default function TierFinalizer() {
             </div>
         </DragDropContext>
         <div className={styles.buttonContainer}>
+            <GoToInputButton />
             <AddTierButton localTierList={localTierList} setLocalTierList={setLocalTierList} />
             <StartRankingButton localTierList={localTierList}/>
         </div>

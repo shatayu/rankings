@@ -14,7 +14,7 @@
 
 import { useState } from 'react';
 import { useRecoilValue } from "recoil";
-import { EntriesListAtom } from "../atoms";
+import { EntriesListAtom, TierListAtom } from "../atoms";
 import NextTierButton from './Buttons/NextTierButton.react';
 import PreviousTierButton from './Buttons/PreviousTierButton.react';
 import SkipToRankingButton from './Buttons/SkipToRankingButton.react';
@@ -24,13 +24,16 @@ import styles from './Tiers.module.css';
 
 export default function Tiers() {
     const entriesList = useRecoilValue(EntriesListAtom);
+    const recoilTierList = useRecoilValue(TierListAtom);
+    console.log(recoilTierList);
 
     const [tierListState, setTierListState] = useState({
-        tierList: [[]],
+        tierList: recoilTierList,
         currentTier: 0
     });
 
     const {tierList, currentTier} = tierListState;
+    console.log(tierList);
 
     let selectedTermsPriorTiers = [];
     for (let i = 0; i < tierListState.currentTier; ++i) {
@@ -39,7 +42,7 @@ export default function Tiers() {
 
     const unselectedTerms = entriesList.filter(x => !selectedTermsPriorTiers.includes(x));
 
-    const allTermsSelected = [].concat.apply([], tierList).length === entriesList.length;
+    const allTermsSelected = selectedTermsPriorTiers.length + tierList[currentTier].length === entriesList.length;
 
     const buttonRow =  (
         <div className={styles.buttonContainer}>
@@ -93,10 +96,10 @@ export default function Tiers() {
                                 });
                             } else {          
                                 // add term to list                  
-                                let copy = tierList.slice();
+                                let copy = JSON.parse(JSON.stringify(tierList));
                                 copy[currentTier].push(term);
                                 setTierListState({
-                                    ...tierListState,
+                                    currentTier: currentTier,
                                     tierList: copy
                                 });
                             }

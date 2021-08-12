@@ -28,7 +28,7 @@ export const PageNumberAtom = atom({
 
 export const TierListAtom = atom({
     key: 'TierListAtom',
-    default: []
+    default: [[]]
 })
 
 export const UserQuestionsAskedAtom = atom({

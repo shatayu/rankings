@@ -1,12 +1,13 @@
 import styles from './Input.module.css';
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { EntriesListAtom } from '../atoms';
+import { EntriesListAtom, TierListAtom } from '../atoms';
 import Loader from 'react-loader-spinner';
 import { isSharedLink } from '../utils/APIUtils';
 
 export default function AddedEntriesList() {
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
+    const [tierList, setTierList] = useRecoilState(TierListAtom);
     const [showLoader, setShowLoader] = useState(false);
 
     // if user came from shared link then fill in list
@@ -28,7 +29,11 @@ export default function AddedEntriesList() {
                     width={100}
                 /> :
                 entriesList.map((value, i) => <InputElement key={value} value={value} onRemove={() => {
+                    // remove from entries list
                     setEntriesList(entriesList.filter(entry => entry !== value));
+
+                    // remove from tier list
+                    setTierList(tierList.map(tier => tier.filter(entry => entry !== value)));
                 }} />)
             }
         </div>

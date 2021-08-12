@@ -8,26 +8,35 @@ export default function NextTierButton({allTermsSelected, tierListState, setTier
     const [pageNumber, setPageNumber] = useRecoilState(PageNumberAtom);
     const setFinalTierList = useSetRecoilState(TierListAtom);
 
+    const onLatestTier = tierListState.currentTier === tierListState.tierList.length - 1;
+
     return (
         <GenericButton
             icon={<NextIcon className={styles.buttonIcon} />}
-            text={allTermsSelected ? 'FINALIZE' : 'NEXT'}
+            text={allTermsSelected && onLatestTier ? 'FINALIZE' : 'NEXT'}
             isEnabled={true}
             onClick={() => {
-                if (allTermsSelected) {
+                if (onLatestTier && allTermsSelected) {
                     // continue
                     setFinalTierList(tierListState.tierList);
                     setPageNumber(pageNumber + 1);
                 } else {
-                    let newTierList = tierListState.tierList;
-                    if (newTierList[tierListState.currentTier + 1] == null) {
-                        newTierList.push([]);
+                    if (onLatestTier) {
+                        let newTierList = tierListState.tierList;
+                        if (newTierList[tierListState.currentTier + 1] == null) {
+                            newTierList.push([]);
+                        }
+    
+                        setTierListState({
+                            tierList: newTierList,
+                            currentTier: tierListState.currentTier + 1
+                        });
+                    } else {
+                        setTierListState({
+                            tierList: tierListState.tierList,
+                            currentTier: tierListState.currentTier + 1
+                        });
                     }
-
-                    setTierListState({
-                        tierList: newTierList,
-                        currentTier: tierListState.currentTier + 1
-                    });
                 }
             }}
             isDeleteButton={false}
