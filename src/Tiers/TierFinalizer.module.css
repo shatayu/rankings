@@ -43,7 +43,7 @@
 
 .list {
     min-height: 400px;
-    width: max(400px, 15vw);
+    width: max(min(70vw, 400px), 15vw);
 
     font-size: 32px;
 
