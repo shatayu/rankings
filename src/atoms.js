@@ -26,6 +26,13 @@ export const PageNumberAtom = atom({
     default: PageNumbers.INPUT
 });
 
+export const SharedLinkAtom = atom({
+    key: 'SharedLinkAtom',
+    default: {
+        hasLoaded: false
+    }
+})
+
 export const TierListAtom = atom({
     key: 'TierListAtom',
     default: [[]]

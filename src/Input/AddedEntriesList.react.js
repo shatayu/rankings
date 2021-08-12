@@ -1,28 +1,25 @@
 import styles from './Input.module.css';
 import { useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import { EntriesListAtom, TierListAtom } from '../atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { EntriesListAtom, TierListAtom, SharedLinkAtom } from '../atoms';
 import Loader from 'react-loader-spinner';
 import { isSharedLink } from '../utils/APIUtils';
 
 export default function AddedEntriesList() {
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
     const [tierList, setTierList] = useRecoilState(TierListAtom);
-
-    const [hasLoadedData, setHasLoadedData] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
+
+    const sharedLinkInfo = useRecoilValue(SharedLinkAtom);
 
     // if user came from shared link then fill in list
     useEffect(() => {
-        if (isSharedLink() && entriesList.length === 0 && !hasLoadedData) {
+        if (isSharedLink() && entriesList.length === 0 && !sharedLinkInfo.hasLoaded) {
             setShowLoader(true);
-        } else if (isSharedLink() && entriesList.length > 0) {
-            setHasLoadedData(true);
-            setShowLoader(false);
         } else {
             setShowLoader(false);
         }
-    }, [entriesList.length, hasLoadedData, setEntriesList]);
+    }, [entriesList.length, setEntriesList, sharedLinkInfo.hasLoaded]);
 
     return (
         <div className={styles.entryContainer}>

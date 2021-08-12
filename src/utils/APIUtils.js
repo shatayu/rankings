@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { EntriesListAtom, TitleAtom } from '../atoms';
-import { useSetRecoilState } from 'recoil';
+import { EntriesListAtom, TitleAtom, SharedLinkAtom } from '../atoms';
+import { useSetRecoilState, useRecoilState } from 'recoil';
 
 export function isSharedLink() {
     return getListID().length > 0;
@@ -14,11 +14,16 @@ function getListID() {
 export async function useUpdateListInfoAtoms() {
     const setEntriesList = useSetRecoilState(EntriesListAtom);
     const setTitle = useSetRecoilState(TitleAtom);
+    const [sharedLinkInfo, setSharedLinkInfo] = useRecoilState(SharedLinkAtom);
 
-    if (isSharedLink()) {
+    if (isSharedLink() && !sharedLinkInfo.hasLoaded) {
         const listInfo = await getListInfo();
         setEntriesList(listInfo.list);
         setTitle(listInfo.title);
+        setSharedLinkInfo({
+            ...sharedLinkInfo,
+            hasLoaded: true
+        })
     }
 }
 
