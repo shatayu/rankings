@@ -8,16 +8,23 @@ import { isSharedLink } from '../utils/APIUtils';
 export default function AddedEntriesList() {
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
     const [tierList, setTierList] = useRecoilState(TierListAtom);
+
+    const [hasLoadedData, setHasLoadedData] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
+
+    console.log(entriesList);
 
     // if user came from shared link then fill in list
     useEffect(() => {
-        if (isSharedLink() && entriesList.length === 0) {
+        if (isSharedLink() && entriesList.length === 0 && !hasLoadedData) {
             setShowLoader(true);
+        } else if (isSharedLink() && entriesList.length > 0) {
+            setHasLoadedData(true);
+            setShowLoader(false);
         } else {
             setShowLoader(false);
         }
-    }, [entriesList.length, setEntriesList]);
+    }, [entriesList.length, hasLoadedData, setEntriesList]);
 
     return (
         <div className={styles.entryContainer}>
