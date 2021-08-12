@@ -25,7 +25,6 @@ import styles from './Tiers.module.css';
 export default function Tiers() {
     const entriesList = useRecoilValue(EntriesListAtom);
     const recoilTierList = useRecoilValue(TierListAtom);
-    console.log(recoilTierList);
 
     const [tierListState, setTierListState] = useState({
         tierList: recoilTierList,
@@ -97,7 +96,12 @@ export default function Tiers() {
                             } else {          
                                 // add term to list                  
                                 let copy = JSON.parse(JSON.stringify(tierList));
+
+                                console.log(copy);
+                                copy = copy.map(tier => tier.filter(existingTerm => existingTerm !== term));
+                                copy = copy.filter((tier, index) => index === currentTier || tier.length > 0);
                                 copy[currentTier].push(term);
+
                                 setTierListState({
                                     currentTier: currentTier,
                                     tierList: copy
