@@ -4,4 +4,6 @@ module.exports = {
     WORSE: 0,
     NOT_COMPARED: -1,
     WORSE_BY_TIER: -2,
+
+    SKIP_TO_RANKING_THRESHOLD: 10
 }

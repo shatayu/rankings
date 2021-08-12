@@ -1,5 +1,5 @@
-import { PageNumberAtom, TitleAtom } from '../atoms';
-import { useSetRecoilState, useRecoilState } from 'recoil';
+import { PageNumberAtom, TitleAtom, TierListAtom } from '../atoms';
+import { useSetRecoilState, useRecoilState, useResetRecoilState } from 'recoil';
 import { getNextQuestion } from '../utils/sortUtils';
 import Constants from '../Constants';
 import PageNumbers from '../PageNumbers';
@@ -24,6 +24,8 @@ export default function ProgressIndicator({
     doneRanking
 }) {
     const setPageNumber = useSetRecoilState(PageNumberAtom);
+    const resetTierList = useResetRecoilState(TierListAtom);
+
     const [title, setTitle] = useRecoilState(TitleAtom);
     const defaultTitle = useGetDefaultTitle();
 
@@ -78,7 +80,14 @@ export default function ProgressIndicator({
                     if (title === defaultTitle) {
                         setTitle('');
                     }
-                    setPageNumber(PageNumbers.TIER_FINALIZER);
+
+                    const numEntries = tierList.reduce((totalLength, tier) => totalLength + tier.length, 0);
+                    if (numEntries < Constants.SKIP_TO_RANKING_THRESHOLD) {
+                        resetTierList()
+                        setPageNumber(PageNumbers.INPUT);
+                    } else {
+                        setPageNumber(PageNumbers.TIER_FINALIZER);
+                    }
                 }
             }}/>
             <span className={styles.progressIndicator}>{questionNumber} out of up to {maxNumberOfQuestions}</span>
