@@ -24,10 +24,12 @@ export default function StartRankingButton() {
                 if (canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)) {
                     // TODO: refactor this into using a method from the textbox component
                     addEntryToEntriesList(entryInputTextboxContent, entriesList, setEntriesList);
+                    setResponsesGraph(generateEmptyGraph([...entriesList, entryInputTextboxContent]));
                     setEntryInputTextboxContent('');
+                } else {
+                    setResponsesGraph(generateEmptyGraph(entriesList));
                 }
 
-                setResponsesGraph(generateEmptyGraph(entriesList));
                 setPageNumber(pageNumber + 1);
 
                 if (title.length === 0) {

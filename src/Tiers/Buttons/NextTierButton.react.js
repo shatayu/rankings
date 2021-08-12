@@ -12,8 +12,6 @@ export default function NextTierButton({allTermsSelected, tierListState, setTier
 
     const onLatestTier = currentTier === tierList.length - 1;
 
-    console.log(tierListState.tierList[tierListState.currentTier]);
-
     return (
         <GenericButton
             icon={<NextIcon className={styles.buttonIcon} />}
