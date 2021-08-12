@@ -1,5 +1,5 @@
-import { PageNumberAtom, TitleAtom, TierListAtom } from '../atoms';
-import { useSetRecoilState, useRecoilState, useResetRecoilState } from 'recoil';
+import { PageNumberAtom, TierListAtom } from '../atoms';
+import { useSetRecoilState, useResetRecoilState } from 'recoil';
 import { getNextQuestion } from '../utils/sortUtils';
 import Constants from '../Constants';
 import PageNumbers from '../PageNumbers';
@@ -7,7 +7,6 @@ import styles from './Ranker.module.css';
 import { ReactComponent as PreviousQuestionArrow } from '../assets/previous_question_arrow.svg';
 import { ReactComponent as NextQuestionArrow } from '../assets/next_question_arrow.svg';
 import { getQuestionNumber } from '../utils/graphUtils';
-import { useGetDefaultTitle } from '../utils/inputUtils';
 
 export default function ProgressIndicator({
     questionNumber,
@@ -25,9 +24,6 @@ export default function ProgressIndicator({
 }) {
     const setPageNumber = useSetRecoilState(PageNumberAtom);
     const resetTierList = useResetRecoilState(TierListAtom);
-
-    const [title, setTitle] = useRecoilState(TitleAtom);
-    const defaultTitle = useGetDefaultTitle();
 
     if (doneRanking) {
         return null;
@@ -77,10 +73,6 @@ export default function ProgressIndicator({
                     setCurrentQuestion(previousQuestion);
                     setQuestionNumber(questionNumber - 1);
                 } else {
-                    if (title === defaultTitle) {
-                        setTitle('');
-                    }
-
                     const numEntries = tierList.reduce((totalLength, tier) => totalLength + tier.length, 0);
                     if (numEntries < Constants.SKIP_TO_RANKING_THRESHOLD) {
                         resetTierList()

@@ -7,6 +7,11 @@ export default function TitleTextbox() {
     const [title, setTitle] = useRecoilState(TitleAtom);
     const defaultTitle = useGetDefaultTitle();
     
+    // clear title
+    if (title === defaultTitle) {
+        setTitle('');
+    }
+    
     return (
         <input
             type="text"
