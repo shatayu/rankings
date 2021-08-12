@@ -32,7 +32,6 @@ export default function Tiers() {
     });
 
     const {tierList, currentTier} = tierListState;
-    console.log(tierList);
 
     let selectedTermsPriorTiers = [];
     for (let i = 0; i < tierListState.currentTier; ++i) {
@@ -97,7 +96,6 @@ export default function Tiers() {
                                 // add term to list                  
                                 let copy = JSON.parse(JSON.stringify(tierList));
 
-                                console.log(copy);
                                 copy = copy.map(tier => tier.filter(existingTerm => existingTerm !== term));
                                 copy = copy.filter((tier, index) => index === currentTier || tier.length > 0);
                                 copy[currentTier].push(term);

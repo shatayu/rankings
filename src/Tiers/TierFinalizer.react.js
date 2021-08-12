@@ -82,8 +82,6 @@ function DeleteTierButton({tierIndex, localTierList, setLocalTierList}) {
 
 function onDragEnd(result, localTierList, setLocalTierList) {
     const { source, destination } = result;
-    console.log(result);
-
 
     // dropped outside the list
     if (!destination) {
