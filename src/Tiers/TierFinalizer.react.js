@@ -3,6 +3,7 @@ import { useRecoilValue } from "recoil";
 import { TierListAtom } from "../atoms";
 import { useState } from 'react';
 import { ReactComponent as DragHandle } from '../assets/draghandle.svg';
+import { ReactComponent as Trash } from '../assets/trash.svg';
 import styles from './TierFinalizer.module.css';
 import StartRankingButton from "./Buttons/StartRankingButton.react";
 import AddTierButton from './Buttons/AddTierButton.react';
@@ -41,6 +42,9 @@ export default function TierFinalizer() {
                                             )}
                                         </Draggable>
                                     ))}
+                                    {tier.length === 0 && (
+                                        <DeleteTierButton {...{tierIndex, localTierList, setLocalTierList}} />
+                                    )}
                                     {provided.placeholder}
                                 </div>
                             )}
@@ -54,6 +58,19 @@ export default function TierFinalizer() {
             <StartRankingButton localTierList={localTierList}/>
         </div>
         </>
+    );
+}
+
+function DeleteTierButton({tierIndex, localTierList, setLocalTierList}) {
+    return (
+        <div className={styles.deleteIcon} onClick={() => {
+            const copy = localTierList.slice();
+            copy.splice(tierIndex, 1);
+            setLocalTierList(copy);
+        }}>
+            <Trash />
+            <div className={styles.deleteIconText}>DELETE TIER</div>
+        </div>
     );
 }
 

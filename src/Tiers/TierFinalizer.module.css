@@ -37,6 +37,8 @@
     transition-duration: 200ms;
 
     border: 4px dotted white;
+
+    position: relative;
 }
 
 .listDraggedOver {
@@ -85,4 +87,30 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+}
+
+.deleteIcon {
+    transition-duration: 200ms;
+
+    width: 100px;
+    text-align: center;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    color: #999999;
+
+    stroke-width: 0.1px;
+}
+
+.deleteIconText {
+    font-size: 24px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .deleteIcon:hover {
+        color: #C41449;
+    }
 }
