@@ -11,6 +11,7 @@ import { useUpdateListInfoAtoms } from '../utils/APIUtils';
 export default function Input({onFinalizeEntries}) {
     useUpdateListInfoAtoms();
     return (
+        <>
         <div className={styles.container}>
             <Toaster
                 toastOptions={{
@@ -40,5 +41,8 @@ export default function Input({onFinalizeEntries}) {
                 <StartRankingButton />
             </div>
         </div>
+        <br />
+        <br />
+        </>
     );
 }

@@ -1,7 +1,7 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useRecoilValue } from "recoil";
 import { TierListAtom } from "../atoms";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ReactComponent as DragHandle } from '../assets/draghandle.svg';
 import { ReactComponent as Trash } from '../assets/trash.svg';
 import styles from './TierFinalizer.module.css';
@@ -13,6 +13,10 @@ export default function TierFinalizer() {
     const recoilTierList = useRecoilValue(TierListAtom);
 
     const [localTierList, setLocalTierList] = useState(recoilTierList);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <>
@@ -63,6 +67,8 @@ export default function TierFinalizer() {
             <AddTierButton localTierList={localTierList} setLocalTierList={setLocalTierList} />
             <StartRankingButton localTierList={localTierList}/>
         </div>
+        <br />
+        <br />
         </>
     );
 }

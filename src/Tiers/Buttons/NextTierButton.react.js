@@ -23,6 +23,7 @@ export default function NextTierButton({allTermsSelected, tierListState, setTier
                     setFinalTierList(tierListState.tierList);
                     setPageNumber(pageNumber + 1);
                 } else {
+                    window.scrollTo(0, 0);
                     if (onLatestTier) {
                         let newTierList = tierListState.tierList;
                         if (newTierList[tierListState.currentTier + 1] == null) {

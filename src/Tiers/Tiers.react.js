@@ -12,7 +12,7 @@
  * They can drag and drop items around
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRecoilValue } from "recoil";
 import { EntriesListAtom, TierListAtom } from "../atoms";
 import NextTierButton from './Buttons/NextTierButton.react';
@@ -25,6 +25,10 @@ import styles from './Tiers.module.css';
 export default function Tiers() {
     const entriesList = useRecoilValue(EntriesListAtom);
     const recoilTierList = useRecoilValue(TierListAtom);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const [tierListState, setTierListState] = useState({
         tierList: recoilTierList,
@@ -112,7 +116,7 @@ export default function Tiers() {
                 )}
             </ul>
 
-            {document.body.scrollHeight > window.innerHeight && <div className={styles.bottomButtonRow}>{buttonRow}</div>}
+            {unselectedTerms.length > 20 && <div className={styles.bottomButtonRow}>{buttonRow}</div>}
         </div>
     );
 }
