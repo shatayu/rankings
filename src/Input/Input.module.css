@@ -12,7 +12,8 @@
 
 .title {
     margin-top: 10vh;
-    
+    width: 80vw;
+
     font-family: inherit;
     font-weight: 600;
     font-size: 60px;
