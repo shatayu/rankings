@@ -1,6 +1,6 @@
-import Ranker from './Ranker/Ranker';
-import Input from './Input/Input';
-import Results from './Results/Results';
+import Ranker from './Ranker/Ranker.react';
+import Input from './Input/Input.react';
+import Results from './Results/Results.react';
 import {useState} from 'react'
 import {RecoilRoot, useRecoilValue} from 'recoil';
 import { PageNumberAtom } from './atoms';
