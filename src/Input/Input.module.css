@@ -11,13 +11,18 @@
 .title {
     min-width: 60vw;
     margin-top: 10vh;
+    font-family: inherit;
+    font-weight: 600;
     font-size: 60px;
     text-align: center;
     background-color: #111111;
     outline: none;
     border-width: 0px;
     color: #BBBBBB;
+    resize: none;
+    overflow: hidden;
 
+    transition-property: color;
     transition-duration: 200ms;
 }
 

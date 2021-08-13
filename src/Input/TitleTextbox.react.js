@@ -2,6 +2,7 @@ import { useRecoilState } from "recoil"
 import { TitleAtom } from "../atoms"
 import styles from './Input.module.css';
 import { useGetDefaultTitle } from "../utils/inputUtils";
+import TextareaAutosize from 'react-textarea-autosize';
 
 export default function TitleTextbox() {
     const [title, setTitle] = useRecoilState(TitleAtom);
@@ -13,7 +14,7 @@ export default function TitleTextbox() {
     }
     
     return (
-        <input
+        <TextareaAutosize
             type="text"
             value={title}
             className={styles.title}
@@ -21,6 +22,7 @@ export default function TitleTextbox() {
             onChange={(event) => {
                 setTitle(event.target.value);
             }}
+            minRows={1}
         />
     );
 }
