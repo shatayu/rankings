@@ -24,6 +24,8 @@
 
     transition-property: color;
     transition-duration: 200ms;
+
+    margin-bottom: 79px;
 }
 
 .textboxAndHelperContainer {
@@ -83,6 +85,26 @@
     transition-duration: 200ms;
 
     overflow: hidden;
+}
+
+::placeholder {
+    color: #444444;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #444444;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+    color: #444444;
+}
+  
+::-ms-input-placeholder { /* IE 10+ */
+    color: #444444;
+}
+  
+::-moz-placeholder { /* Firefox 18- */
+    color: #444444;
 }
 
 @media (hover: hover) and (pointer: fine) {
