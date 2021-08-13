@@ -15,7 +15,7 @@ export default function SkipToRankingButton({unselectedTerms, tierListState}) {
             text={'SKIP TO RANKING'}
             isEnabled={true}
             onClick={() => {
-                let tierList = tierListState.tierList.slice()
+                let tierList = JSON.parse(JSON.stringify(tierListState.tierList));
                 if (tierList[tierList.length - 1].length === 0) {
                     tierList.pop();
                 }

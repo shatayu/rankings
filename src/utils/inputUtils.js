@@ -16,7 +16,7 @@ export function canEntryBeAddedToEntriesList(entry, entriesList) {
 
 export function addEntryToEntriesList(entry, entriesList, setEntriesList) {
     // insert at the beginning
-    let entriesListCopy = entriesList.slice();
+    let entriesListCopy = JSON.parse(JSON.serialize(entriesList));
 
     entriesListCopy.splice(0, 0, entry);
     setEntriesList(entriesListCopy);

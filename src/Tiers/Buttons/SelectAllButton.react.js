@@ -11,7 +11,7 @@ export default function SelectAllButton({unselectedTerms, allTermsSelected, tier
             isEnabled={true}
             onClick={() => {
                 const {tierList, currentTier} = tierListState;
-                let copy = tierList.slice();
+                let copy = JSON.parse(JSON.stringify(tierList));
                 
                 copy[currentTier] = allTermsSelected ? [] : [...new Set(copy[currentTier].concat(unselectedTerms))];
 

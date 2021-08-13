@@ -39,7 +39,7 @@ export default function Ranker() {
         if (questionNumber === userQuestionsAsked.length + 1) {
             setUserQuestionsAsked([...userQuestionsAsked, [better, worse]]);
         } else {
-            let copy = userQuestionsAsked.slice();
+            let copy = JSON.parse(JSON.stringify(userQuestionsAsked));
             copy[questionNumber - 1] = [better, worse];
             setUserQuestionsAsked(copy);
         }

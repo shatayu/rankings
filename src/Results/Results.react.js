@@ -19,7 +19,7 @@ export default function Results() {
     const [pathBetweenSelections, setPathBetweenSelections] = useState([]);
 
     const onSelection = useCallback(value => {
-        let tempSelections = selections.slice();
+        let tempSelections = JSON.parse(JSON.stringify(selections));
 
         if (!tempSelections.includes(value)) {
             if (tempSelections.length > 1) {

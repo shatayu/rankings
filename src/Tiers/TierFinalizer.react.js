@@ -76,7 +76,7 @@ export default function TierFinalizer() {
 function DeleteTierButton({tierIndex, localTierList, setLocalTierList}) {
     return (
         <div className={styles.deleteIcon} onClick={() => {
-            const copy = localTierList.slice();
+            const copy = JSON.parse(JSON.stringify(localTierList));
             copy.splice(tierIndex, 1);
             setLocalTierList(copy);
         }}>
@@ -102,7 +102,7 @@ function onDragEnd(result, localTierList, setLocalTierList) {
             destination.index
         );
         
-        let newTiers = localTierList.slice();
+        let newTiers = JSON.parse(JSON.stringify(localTierList));
         newTiers[index] = items;
         
         setLocalTierList(newTiers);
@@ -116,7 +116,7 @@ function onDragEnd(result, localTierList, setLocalTierList) {
             destination
         );
 
-        let newTiers = localTierList.slice();
+        let newTiers = JSON.parse(JSON.stringify(localTierList));
         result.forEach(item => {
             newTiers[item.index] = item.list;
         });

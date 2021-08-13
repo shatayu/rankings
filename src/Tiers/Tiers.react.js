@@ -90,7 +90,7 @@ export default function Tiers() {
                                 // remove term from list
                                 const index = tierList[currentTier].indexOf(term);
 
-                                let copy = tierList.slice();
+                                let copy = JSON.parse(JSON.stringify(tierList));
                                 copy[currentTier].splice(index, 1);
                                 setTierListState({
                                     ...tierListState,
