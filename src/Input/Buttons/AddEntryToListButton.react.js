@@ -1,4 +1,3 @@
-import GenericButton from './GenericButton';
 import { useRecoilState } from 'recoil';
 import { ReactComponent as Plus } from '../../assets/plus.svg';
 import { EntriesListAtom, EntryInputTextboxAtom } from '../../atoms';
