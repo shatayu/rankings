@@ -26,9 +26,26 @@
     transition-duration: 200ms;
 }
 
-.textboxAndButtonContainer {
+.textboxAndHelperContainer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+}
+
+.textboxHelper {
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 10px;
+
+    transition-duration: 200ms;
+}
+
+.enabledTextboxHelper {
+    color: #999999;
+}
+
+.disabledTextboxHelper {
+    color: #444444;
 }
 
 .textboxContainer {
@@ -127,22 +144,6 @@
     align-items: center;
 }
 
-.addItemIconContainer {
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
-    font-size: 20px;
-    text-align: center;
-
-    margin-top: 10px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    transition-duration: 200ms;
-}
-
 .buttonIcon {
     width: 14px;
     height: 14px;
@@ -166,14 +167,6 @@
     border: 2px solid #BBBBBB;
 }
 
-.addItemIconContainer.disabledButton {
-    color: #444444;
-}
-
-.addItemIconContainer.enabledButton {
-    color: #BBBBBB;
-}
-
 @media (hover: hover) and (pointer: fine) {
     .enabledButtonIconAndTextContainer:hover {
         color: #08BA6A;
@@ -190,11 +183,6 @@
 
     .enabledDeleteButtonIconAndTextContainer:hover .enabledButton {
         border: 2px solid #C41449;
-    }
-
-    .addItemIconContainer:hover {
-        color: #08BA6A;
-        border: 2px solid #08BA6A;
     }
 }
 

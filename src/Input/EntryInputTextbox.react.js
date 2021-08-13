@@ -4,7 +4,6 @@ import { EntriesListAtom, EntryInputTextboxAtom } from "../atoms"
 import styles from './Input.module.css';
 import { canEntryBeAddedToEntriesList, addEntryToEntriesList } from '../utils/inputUtils';
 import TextareaAutosize from 'react-textarea-autosize';
-import AddEntryToListButton from './Buttons/AddEntryToListButton.react';
 
 export default function EntryInputTextbox() {
     const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(EntryInputTextboxAtom);
@@ -28,9 +27,11 @@ export default function EntryInputTextbox() {
             }
         }
     }, [entriesList, entryInputTextboxContent, setEntriesList, setEntryInputTextboxContent]);
+
+    const canAddToText = canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList);
     
     return (
-        <div className={styles.textboxAndButtonContainer}>
+        <div className={styles.textboxAndHelperContainer}>
             <form onSubmit={e => onSubmit(e, entryInputTextboxContent)}>
                     <label>
                         <TextareaAutosize
@@ -50,7 +51,9 @@ export default function EntryInputTextbox() {
                         />
                     </label>
                 </form>
-                <AddEntryToListButton />
+                <div className={styles.textboxHelper + ' ' + (canAddToText ? styles.enabledTextboxHelper : styles.disabledTextboxHelper)}>
+                    {canAddToText ? 'PRESS ENTER TO ADD' : (entryInputTextboxContent.length > 0 ? 'CANNOT ADD ITEM' : '\u200B')}
+                </div>
         </div>
     );
 }
