@@ -1,5 +1,7 @@
+* { outline: 1px red solid !important; visibility: visible !important }
+
+
 .titleContainer {
-    margin-top: 30px;
     text-align: center;
 }
 

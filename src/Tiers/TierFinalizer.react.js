@@ -20,6 +20,8 @@ export default function TierFinalizer() {
 
     return (
         <>
+        <br />
+        <br />
         <div className={styles.titleContainer}>
             <div className={styles.title}>Confirm Tier Selection</div>
             <div className={styles.subtitle}>Drag any incorrectly placed item to the correct tier</div>
