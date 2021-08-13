@@ -78,6 +78,8 @@ export default function Results() {
                 <RedoRankingButton />
                 <NewRankingButton />
             </div>
+            <br />
+            <br />
         </div>
     )
 }
