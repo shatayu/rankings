@@ -6,11 +6,13 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+
+    overflow-x: hidden;
 }
 
 .title {
-    min-width: 60vw;
     margin-top: 10vh;
+    
     font-family: inherit;
     font-weight: 600;
     font-size: 60px;
