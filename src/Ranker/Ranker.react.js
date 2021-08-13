@@ -71,6 +71,7 @@ export default function Ranker() {
         <>
             <div className={styles.container}>
                 <div className={styles.title}>{title}</div>
+                <div className={styles.subtitle}>Which one belongs higher on the list?</div>
                 {currentQuestion}
                 <ProgressIndicator
                     questionNumber={questionNumber}

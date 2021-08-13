@@ -16,6 +16,11 @@
     font-size: 28px;
 }
 
+.subtitle {
+    color: #999999;
+    font-size: 14px;
+}
+
 .progressIndicator {
     margin: 0px 5px;
     color: #BBBBBB;

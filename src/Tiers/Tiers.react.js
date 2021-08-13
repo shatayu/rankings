@@ -58,11 +58,6 @@ export default function Tiers() {
             tierListState,
             setTierListState
         }} />
-        <SkipToRankingButton {...{
-            unselectedTerms,
-            tierListState,
-            setTierListState
-        }} />
         <NextTierButton {...{
             allTermsSelected,
             tierListState,
@@ -72,8 +67,10 @@ export default function Tiers() {
     );
     
     return (
+        <>
         <div className={styles.container}>
-            <div className={styles.header}>Which of these belong in Tier {currentTier + 1}?</div>
+            <div className={styles.header}>Add Items to Tier {currentTier + 1}</div>
+            <div className={styles.subheader}>Split items into tiers before sorting each tier.</div>
            {buttonRow}
             <ul className={styles.unselectedTermsList}>
                 {unselectedTerms.map(term =>
@@ -117,6 +114,14 @@ export default function Tiers() {
             </ul>
 
             {unselectedTerms.length > 20 && <div className={styles.bottomButtonRow}>{buttonRow}</div>}
+            <SkipToRankingButton {...{
+                unselectedTerms,
+                tierListState,
+                setTierListState
+        }} />
         </div>
+        <br />
+        <br />
+        </>
     );
 }
