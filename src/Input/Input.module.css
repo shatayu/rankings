@@ -11,7 +11,7 @@
 .title {
     min-width: 60vw;
     margin-top: 10vh;
-    font-size: min(6.5vh, 12vw);
+    font-size: 60px;
     text-align: center;
     background-color: #111111;
     outline: none;
@@ -21,10 +21,14 @@
     transition-duration: 200ms;
 }
 
+.textboxAndButtonContainer {
+    display: flex;
+    flex-direction: row;
+}
+
 .textboxContainer {
     width: 100%;
     min-height: calc(35vh - 60px - 10vh);
-    height: calc(35vh - 60px - 10vh);
     align-self: flex-start;
     display: flex;
     flex-direction: column;
@@ -32,25 +36,31 @@
     align-items: center;
     flex-shrink: 0;
 
-    /* this needs to be 15px more than the margin-bottom for buttonContainer since entries have 15px margin above them
-     * but textboxes don't
-     */
-
     margin-bottom: 10px;
 }
 
 .textbox {
-    height: 60px;
+    min-height: 60px;
+    height: auto;
     width: 60vw;
+    font-family: inherit;
     font-size: 28px;
     text-align: center;
     background-color: #111111;
     outline: none;
     border-width: 0px;
     border-bottom: 5px solid #BBBBBB;
+    
     color: #BBBBBB;
+    resize: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 
+    transition-property: color;
     transition-duration: 200ms;
+
+    overflow: hidden;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -71,6 +81,8 @@
     align-items: stretch;
     flex-wrap: wrap;
     justify-content: center;
+
+    margin-top: 15px;
 
     /* need to make margin-bottom 15px less than margin-top since entries have 15px margin above them */
     margin-bottom: 20px;
@@ -110,6 +122,22 @@
     align-items: center;
 }
 
+.addItemIconContainer {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    font-size: 20px;
+    text-align: center;
+
+    margin-top: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition-duration: 200ms;
+}
+
 .buttonIcon {
     width: 14px;
     height: 14px;
@@ -133,6 +161,14 @@
     border: 2px solid #BBBBBB;
 }
 
+.addItemIconContainer.disabledButton {
+    color: #444444;
+}
+
+.addItemIconContainer.enabledButton {
+    color: #BBBBBB;
+}
+
 @media (hover: hover) and (pointer: fine) {
     .enabledButtonIconAndTextContainer:hover {
         color: #08BA6A;
@@ -149,6 +185,11 @@
 
     .enabledDeleteButtonIconAndTextContainer:hover .enabledButton {
         border: 2px solid #C41449;
+    }
+
+    .addItemIconContainer:hover {
+        color: #08BA6A;
+        border: 2px solid #08BA6A;
     }
 }
 
@@ -195,7 +236,8 @@ svg {
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
-    margin-top: 40px;
+
+    margin-top: 20px;
 }
 
 .entry {

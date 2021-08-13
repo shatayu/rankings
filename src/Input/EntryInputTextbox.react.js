@@ -3,10 +3,22 @@ import { useRecoilState } from "recoil"
 import { EntriesListAtom, EntryInputTextboxAtom } from "../atoms"
 import styles from './Input.module.css';
 import { canEntryBeAddedToEntriesList, addEntryToEntriesList } from '../utils/inputUtils';
+import TextareaAutosize from 'react-textarea-autosize';
+import GenericButton from './Buttons/GenericButton';
+import { ReactComponent as Plus } from '../assets/plus.svg';
+import AddEntryToListButton from './Buttons/AddEntryToListButton.react';
 
 export default function EntryInputTextbox() {
     const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(EntryInputTextboxAtom);
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
+
+    const addToText = () => {
+        if (canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)) {
+            // TODO: refactor this into using a method from the textbox component
+            addEntryToEntriesList(entryInputTextboxContent, entriesList, setEntriesList);
+            setEntryInputTextboxContent('');
+        }
+    }
 
     // add term to entry
     const onSubmit = useCallback((e, value) => {  
@@ -28,19 +40,28 @@ export default function EntryInputTextbox() {
     }, [entriesList, entryInputTextboxContent, setEntriesList, setEntryInputTextboxContent]);
     
     return (
-        <form onSubmit={e => onSubmit(e, entryInputTextboxContent)}>
-            <label>
-                <input
-                    type="text"
-                    value={entryInputTextboxContent}
-                    className={styles.textbox}
-                    placeholder="Enter item here"
-                    onChange={(event) => {
-                        setEntryInputTextboxContent(event.target.value)
-                    }}
-                />
-            </label>
-        </form>
+        <div className={styles.textboxAndButtonContainer}>
+            <form onSubmit={e => onSubmit(e, entryInputTextboxContent)}>
+                    <label>
+                        <TextareaAutosize
+                            type="text"
+                            value={entryInputTextboxContent}
+                            className={styles.textbox}
+                            placeholder="Enter item here"
+                            onKeyPress={(event) => {
+                                if (event.key === 'Enter') {
+                                    onSubmit(event, entryInputTextboxContent);
+                                }
+                            }}
+                            onChange={(event) => {
+                                setEntryInputTextboxContent(event.target.value)
+                            }}
+                            minRows={1}
+                        />
+                    </label>
+                </form>
+                <AddEntryToListButton />
+        </div>
     );
 }
 

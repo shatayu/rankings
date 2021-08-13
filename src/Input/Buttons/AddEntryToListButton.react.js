@@ -9,19 +9,26 @@ export default function AddEntryToListButton() {
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
     const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(EntryInputTextboxAtom);
 
+    const isEnabled = canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList);
+
+    const addToText = () => {
+        if (canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)) {
+            // TODO: refactor this into using a method from the textbox component
+            addEntryToEntriesList(entryInputTextboxContent, entriesList, setEntriesList);
+            setEntryInputTextboxContent('');
+        }
+    }
+
     return (
-        <GenericButton
-            icon={<Plus className={styles.buttonIcon} />}
-            text='ADD ITEM'
-            isEnabled={canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)}
-            onClick={() => {
-                if (canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)) {
-                    // TODO: refactor this into using a method from the textbox component
-                    addEntryToEntriesList(entryInputTextboxContent, entriesList, setEntriesList);
-                    setEntryInputTextboxContent('');
-                }
-            }}
-            isDeleteButton={false}
-        />
+        <div
+        className={styles.addItemIconContainer + ' ' + (isEnabled ?  styles.enabledButton : styles.disabledButton)}
+        onClick={() => {
+            if (isEnabled) {
+                addToText()
+            }
+        }}
+    >
+        <Plus className={styles.buttonIcon} />
+    </div>
     )
 }

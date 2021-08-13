@@ -2,7 +2,7 @@ import styles from './Input.module.css';
 import { Toaster } from 'react-hot-toast';
 import DeleteAllEntriesButton from './Buttons/DeleteAllEntriesButton.react';
 import ShareLinkButton from './Buttons/ShareLinkButton.react';
-import AddEntryToListButton from './Buttons/AddEntryToListButton.react';
+// import AddEntryToListButton from './Buttons/AddEntryToListButton.react';
 import StartRankingButton from './Buttons/StartRankingButton.react';
 import EntryInputTextbox from './EntryInputTextbox.react';
 import AddedEntriesList from './AddedEntriesList.react';
@@ -34,13 +34,12 @@ export default function Input({onFinalizeEntries}) {
             <div className={styles.textboxContainer}>
                 <EntryInputTextbox />
             </div>
+            <AddedEntriesList />
             <div className={styles.buttonContainer}>
                 <DeleteAllEntriesButton />
                 <ShareLinkButton />
-                <AddEntryToListButton />
                 <StartRankingButton />
             </div>
-            <AddedEntriesList />
         </div>
     );
 }
