@@ -65,18 +65,37 @@ export default function TierFinalizer() {
             // dropped in different lists, move to new list
             const sourceIndex = listIDToIndex(source.droppableId);
             const destIndex = listIDToIndex(destination.droppableId);
-            const result = move(
-                localTierList[sourceIndex],
-                localTierList[destIndex],
-                source,
-                destination
-            );
-    
             let newTiers = JSON.parse(JSON.stringify(localTierList));
-            result.forEach(item => {
-                newTiers[item.index] = item.list;
-            });
-    
+
+            if (selectedItems.items.length === 0) {
+                const result = move(
+                    localTierList[sourceIndex],
+                    localTierList[destIndex],
+                    source,
+                    destination
+                );
+        
+                result.forEach(item => {
+                    newTiers[item.index] = item.list;
+                });
+            } else {
+                const result = moveMultiple(
+                    localTierList[sourceIndex],
+                    localTierList[destIndex],
+                    selectedItems.items.map((item, selectedItemIndex) => ({
+                        ...source,
+                        index: localTierList[sourceIndex].indexOf(item.name)
+                    })),
+                    selectedItems.items.map((item, selectedItemIndex) => ({
+                        ...destination,
+                        index: selectedItemIndex + destination.index
+                    }))
+                );
+
+                result.forEach(item => {
+                    newTiers[item.index] = item.list;
+                });
+            }
             setLocalTierList(newTiers);
         }
     }, [localTierList, selectedItems.items]);
@@ -139,7 +158,7 @@ export default function TierFinalizer() {
                                                                 // filter out any selection that isn't in this item's tier
                                                                 copy = copy.filter(term => tier.includes(term.name));
                                                             } else {
-                                                                const index = selectedItems.items.indexOf(term);
+                                                                const index = selectedItems.items.map(item => item.name).indexOf(term);
                                                                 copy.splice(index, 1);
                                                             }
                                                             setSelectedItems({
@@ -195,6 +214,33 @@ function DeleteTierButton({tierIndex, localTierList, setLocalTierList}) {
         </div>
     );
 }
+
+function moveMultiple(sourceArray, destinationArray, droppableSources, droppableDestinations) {
+    const sourceClone = JSON.parse(JSON.stringify(sourceArray));
+    const destClone = JSON.parse(JSON.stringify(destinationArray));
+
+    droppableSources.forEach((droppableSource, index) => {
+        const removed = sourceClone[droppableSource.index];
+        const droppableDestination = droppableDestinations[index];
+
+        destClone.splice(droppableDestination.index, 0, removed);
+    });
+    
+    const bannedIndices = new Set(droppableSources.map(item => item.index));
+
+    const result = [
+        {
+            index: listIDToIndex(droppableSources[0].droppableId),
+            list: sourceClone.filter((term, index) => !bannedIndices.has(index))
+        },
+        {
+            index: listIDToIndex(droppableDestinations[0].droppableId),
+            list: destClone
+        }
+    ];
+
+    return result;
+};
 
 function move(source, destination, droppableSource, droppableDestination) {
     const sourceClone = Array.from(source);
