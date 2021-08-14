@@ -14,6 +14,8 @@ export default function TierFinalizer() {
 
     const [localTierList, setLocalTierList] = useState(recoilTierList);
 
+    const [selectedItems, setSelectedItems] = useState([]);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -40,17 +42,35 @@ export default function TierFinalizer() {
                                 >
                                     {tier.map((term, termIndex) => (
                                         <Draggable key={term} draggableId={term} index={termIndex}>
-                                            {(provided, snapshot) => (
-                                                <div
-                                                    ref={provided.innerRef}
-                                                    {...provided.draggableProps}
-                                                    {...provided.dragHandleProps}
-                                                    className={styles.listItem}
-                                                >
-                                                    <DragHandle className={styles.dragHandleIcon}/>
-                                                    <span className={styles.listItemText}>{term}</span>
-                                                </div>
-                                            )}
+                                            {(provided, snapshot) => {
+                                                return (
+                                                    <div
+                                                        key={term}
+                                                        ref={provided.innerRef}
+                                                        {...provided.draggableProps}
+                                                        {...provided.dragHandleProps}
+                                                        className={styles.listItem}
+                                                        onMouseDown={() => {
+                                                            let copy = selectedItems.slice();
+                                                            if (!selectedItems.includes(term)) {
+                                                                copy.push(term);
+
+                                                                // filter out any selection that isn't in this item's tier
+                                                                copy = copy.filter(term => tier.includes(term));
+                                                            } else {
+                                                                const index = selectedItems.indexOf(term);
+                                                                copy.splice(index, 1);
+                                                            }
+                                                            setSelectedItems(copy);
+                                                        }}
+                                                    >
+                                                        <DragHandle className={styles.dragHandleIcon}/>
+                                                        <span className={styles.listItemText + ' ' + (selectedItems.includes(term) ? styles.selectedListItemText : '')}>
+                                                            {term}
+                                                        </span>
+                                                    </div>
+                                                );
+                                            }}
                                         </Draggable>
                                     ))}
                                     {tier.length === 0 && (
@@ -86,6 +106,10 @@ function DeleteTierButton({tierIndex, localTierList, setLocalTierList}) {
             <div className={styles.deleteIconText}>DELETE TIER</div>
         </div>
     );
+}
+
+function onDragStart(result, selection, setSelection, localTierList, setLocalTierList) {
+    
 }
 
 function onDragEnd(result, localTierList, setLocalTierList) {

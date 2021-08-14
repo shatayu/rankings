@@ -79,6 +79,14 @@
     color:#08BA6A;
 }
 
+.selectedListItemText {
+    color: #08BA6A;
+}
+
+.selectedListItemButOtherItemBeingDragged {
+    color: #444444;
+}
+
 .header {
     font-size: 40px;
     color: white;
