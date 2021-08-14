@@ -19,6 +19,16 @@ export default function TierFinalizer() {
         currentlyDraggedItem: null
     });
 
+    // clear selection
+    useEffect(() => {
+        window.addEventListener('mousedown', event => {
+            setSelectedItems({
+                items: [],
+                currentlyDraggedItem: null
+            });
+        });
+    }, []);
+
     const isItemSelected = useCallback(itemName => {
         return selectedItems.items.filter(item => item.name === itemName).length > 0;
     }, [selectedItems]);
@@ -146,29 +156,34 @@ export default function TierFinalizer() {
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
                                                         className={styles.listItem}
-                                                        onClick={() => {
-                                                            let copy = selectedItems.items.slice();
-                                                            if (!isItemSelected(term)) {
-                                                                copy.push({
-                                                                    name: term,
-                                                                    index: termIndex,
-                                                                    tier: tierIndex
-                                                                });
-
-                                                                // filter out any selection that isn't in this item's tier
-                                                                copy = copy.filter(term => tier.includes(term.name));
-                                                            } else {
-                                                                const index = selectedItems.items.map(item => item.name).indexOf(term);
-                                                                copy.splice(index, 1);
-                                                            }
-                                                            setSelectedItems({
-                                                                currentlyDraggedItem: selectedItems.currentlyDraggedItem,
-                                                                items: copy
-                                                            });
-                                                        }}
                                                     >
                                                         <DragHandle className={styles.dragHandleIcon}/>
-                                                        <span className={styles.listItemText + ' ' + getSelectedItemStyle(term)}
+                                                        <span
+                                                            className={styles.listItemText + ' ' + getSelectedItemStyle(term)}
+                                                            onMouseDown={e => {
+                                                                // prevent deselect from triggering
+                                                                e.stopPropagation();
+                                                            }}
+                                                            onClick={() => {
+                                                                let copy = selectedItems.items.slice();
+                                                                if (!isItemSelected(term)) {
+                                                                    copy.push({
+                                                                        name: term,
+                                                                        index: termIndex,
+                                                                        tier: tierIndex
+                                                                    });
+    
+                                                                    // filter out any selection that isn't in this item's tier
+                                                                    copy = copy.filter(term => tier.includes(term.name));
+                                                                } else {
+                                                                    const index = selectedItems.items.map(item => item.name).indexOf(term);
+                                                                    copy.splice(index, 1);
+                                                                }
+                                                                setSelectedItems({
+                                                                    currentlyDraggedItem: selectedItems.currentlyDraggedItem,
+                                                                    items: copy
+                                                                });
+                                                            }}
                                                         >
                                                             {term}
                                                         </span>
@@ -181,7 +196,10 @@ export default function TierFinalizer() {
                                         </Draggable>
                                     ))}
                                     {tier.length === 0 && (
-                                        <DeleteTierButton key={`delete${tierIndex}`} {...{tierIndex, localTierList, setLocalTierList}} />
+                                        <DeleteTierButton
+                                            key={`delete${tierIndex}`}
+                                            {...{tierIndex, localTierList, setLocalTierList}}
+                                        />
                                     )}
                                     {provided.placeholder}
                                 </div>
@@ -191,7 +209,7 @@ export default function TierFinalizer() {
                 ))}
             </div>
         </DragDropContext>
-        <div className={styles.buttonContainer}>
+        <div className={styles.buttonContainer} onMouseDown={e => e.stopPropagation()}>
             <GoToInputButton />
             <AddTierButton localTierList={localTierList} setLocalTierList={setLocalTierList} />
             <StartRankingButton localTierList={localTierList}/>
@@ -204,7 +222,7 @@ export default function TierFinalizer() {
 
 function DeleteTierButton({tierIndex, localTierList, setLocalTierList}) {
     return (
-        <div className={styles.deleteIcon} onClick={() => {
+        <div className={styles.deleteIcon} onMouseDown={e => e.stopPropagation()} onClick={() => {
             const copy = JSON.parse(JSON.stringify(localTierList));
             copy.splice(tierIndex, 1);
             setLocalTierList(copy);
