@@ -1,7 +1,7 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useRecoilValue } from "recoil";
 import { TierListAtom } from "../atoms";
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { ReactComponent as DragHandle } from '../assets/draghandle.svg';
 import { ReactComponent as Trash } from '../assets/trash.svg';
 import styles from './TierFinalizer.module.css';
@@ -14,7 +14,86 @@ export default function TierFinalizer() {
 
     const [localTierList, setLocalTierList] = useState(recoilTierList);
 
-    const [selectedItems, setSelectedItems] = useState([]);
+    const [selectedItems, setSelectedItems] = useState({
+        items: [],
+        currentlyDraggedItem: null
+    });
+
+    const isItemSelected = useCallback(itemName => {
+        return selectedItems.items.filter(item => item.name === itemName).length > 0;
+    }, [selectedItems]);
+
+    const onDragStart = useCallback((result) => {
+        console.log(result);
+    
+        // set every element which is not being dragged to dimmed
+        setSelectedItems({
+            items: selectedItems.items,
+            currentlyDraggedItem: result.draggableId
+        });
+
+        // add a count of how many total items are being dragged
+
+    }, [selectedItems.items]);
+
+    const onDragEnd = useCallback((result) => {
+        const { source, destination } = result;
+    
+        // dropped outside the list
+        if (!destination) {
+            return;
+        }
+
+        // clear currently dragged item
+        setSelectedItems({
+            items: selectedItems.items,
+            currentlyDraggedItem: null
+        });
+        
+        if (source.droppableId === destination.droppableId) {
+            // dropped in same list, just rearrange
+            const index = listIDToIndex(source.droppableId);
+            const items = reorder(
+                localTierList[index],
+                source.index,
+                destination.index
+            );
+            
+            let newTiers = JSON.parse(JSON.stringify(localTierList));
+            newTiers[index] = items;
+            
+            setLocalTierList(newTiers);
+        } else {
+            // dropped in different lists, move to new list
+            const sourceIndex = listIDToIndex(source.droppableId);
+            const destIndex = listIDToIndex(destination.droppableId);
+            const result = move(
+                localTierList[sourceIndex],
+                localTierList[destIndex],
+                source,
+                destination
+            );
+    
+            let newTiers = JSON.parse(JSON.stringify(localTierList));
+            result.forEach(item => {
+                newTiers[item.index] = item.list;
+            });
+    
+            setLocalTierList(newTiers);
+        }
+    }, [localTierList, selectedItems.items]);
+
+    const getSelectedItemStyle = useCallback(term => {
+        const {currentlyDraggedItem} = selectedItems;
+        if (isItemSelected(term)) {
+            return currentlyDraggedItem === term || currentlyDraggedItem == null ?
+                styles.selectedListItemText :
+                styles.selectedListItemButOtherItemBeingDragged;
+        } else {
+            return '';
+        }
+    }, [isItemSelected, selectedItems]);
+    
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -28,7 +107,7 @@ export default function TierFinalizer() {
             <div className={styles.title}>Confirm Tier Selection</div>
             <div className={styles.subtitle}>Drag any incorrectly placed item to the correct tier</div>
         </div>
-        <DragDropContext onDragEnd={result => onDragEnd(result, localTierList, setLocalTierList)}>
+        <DragDropContext onDragStart={onDragStart} onDragEnd={result => onDragEnd(result, localTierList, setLocalTierList)}>
             <div className={styles.allTiersContainer}>
                 {localTierList.map((tier, tierIndex) => (
                     <div className={styles.oneTierContainer}>
@@ -50,23 +129,34 @@ export default function TierFinalizer() {
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
                                                         className={styles.listItem}
-                                                        onMouseDown={() => {
-                                                            let copy = selectedItems.slice();
-                                                            if (!selectedItems.includes(term)) {
-                                                                copy.push(term);
+                                                        onClick={() => {
+                                                            let copy = selectedItems.items.slice();
+                                                            if (!isItemSelected(term)) {
+                                                                copy.push({
+                                                                    name: term,
+                                                                    index: termIndex,
+                                                                    tier: tierIndex
+                                                                });
 
                                                                 // filter out any selection that isn't in this item's tier
-                                                                copy = copy.filter(term => tier.includes(term));
+                                                                copy = copy.filter(term => tier.includes(term.name));
                                                             } else {
-                                                                const index = selectedItems.indexOf(term);
+                                                                const index = selectedItems.items.indexOf(term);
                                                                 copy.splice(index, 1);
                                                             }
-                                                            setSelectedItems(copy);
+                                                            setSelectedItems({
+                                                                currentlyDraggedItem: selectedItems.currentlyDraggedItem,
+                                                                items: copy
+                                                            });
                                                         }}
                                                     >
                                                         <DragHandle className={styles.dragHandleIcon}/>
-                                                        <span className={styles.listItemText + ' ' + (selectedItems.includes(term) ? styles.selectedListItemText : '')}>
+                                                        <span className={styles.listItemText + ' ' + getSelectedItemStyle(term)}
+                                                        >
                                                             {term}
+                                                            {term === selectedItems.currentlyDraggedItem && selectedItems.items.length > 1 &&
+                                                            <span className={styles.draggedItemCount}>{selectedItems.items.length}</span>
+                                                            }
                                                         </span>
                                                     </div>
                                                 );
@@ -106,49 +196,6 @@ function DeleteTierButton({tierIndex, localTierList, setLocalTierList}) {
             <div className={styles.deleteIconText}>DELETE TIER</div>
         </div>
     );
-}
-
-function onDragStart(result, selection, setSelection, localTierList, setLocalTierList) {
-    
-}
-
-function onDragEnd(result, localTierList, setLocalTierList) {
-    const { source, destination } = result;
-
-    // dropped outside the list
-    if (!destination) {
-        return;
-    }
-
-    if (source.droppableId === destination.droppableId) {
-        const index = listIDToIndex(source.droppableId);
-        const items = reorder(
-            localTierList[index],
-            source.index,
-            destination.index
-        );
-        
-        let newTiers = JSON.parse(JSON.stringify(localTierList));
-        newTiers[index] = items;
-        
-        setLocalTierList(newTiers);
-    } else {
-        const sourceIndex = listIDToIndex(source.droppableId);
-        const destIndex = listIDToIndex(destination.droppableId);
-        const result = move(
-            localTierList[sourceIndex],
-            localTierList[destIndex],
-            source,
-            destination
-        );
-
-        let newTiers = JSON.parse(JSON.stringify(localTierList));
-        result.forEach(item => {
-            newTiers[item.index] = item.list;
-        });
-
-        setLocalTierList(newTiers);
-    }
 }
 
 function move(source, destination, droppableSource, droppableDestination) {
