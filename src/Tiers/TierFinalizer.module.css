@@ -63,6 +63,10 @@
     width: max(min(70vw, 400px), 15vw);
     overflow-wrap: break-word;
     word-break: break-word;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .listItemText {
@@ -85,6 +89,16 @@
 
 .selectedListItemButOtherItemBeingDragged {
     color: #444444;
+}
+
+.draggedItemCount {
+    margin-left: 20px;
+    color: #999999;
+
+    font-weight: 600;
+
+    font-size: 16px;
+    border-bottom: 2px solid #999999;
 }
 
 .header {

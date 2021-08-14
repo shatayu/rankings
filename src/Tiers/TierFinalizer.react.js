@@ -23,9 +23,7 @@ export default function TierFinalizer() {
         return selectedItems.items.filter(item => item.name === itemName).length > 0;
     }, [selectedItems]);
 
-    const onDragStart = useCallback((result) => {
-        console.log(result);
-    
+    const onDragStart = useCallback((result) => {    
         // set every element which is not being dragged to dimmed
         setSelectedItems({
             items: selectedItems.items,
@@ -154,10 +152,10 @@ export default function TierFinalizer() {
                                                         <span className={styles.listItemText + ' ' + getSelectedItemStyle(term)}
                                                         >
                                                             {term}
-                                                            {term === selectedItems.currentlyDraggedItem && selectedItems.items.length > 1 &&
-                                                            <span className={styles.draggedItemCount}>{selectedItems.items.length}</span>
-                                                            }
                                                         </span>
+                                                        {term === selectedItems.currentlyDraggedItem && selectedItems.items.length > 1 &&
+                                                            <span className={styles.draggedItemCount}>{selectedItems.items.length}</span>
+                                                        }
                                                     </div>
                                                 );
                                             }}
