@@ -75,6 +75,10 @@
     }
 }
 
+.listItemText:active {
+    color:#08BA6A;
+}
+
 .header {
     font-size: 40px;
     color: white;
