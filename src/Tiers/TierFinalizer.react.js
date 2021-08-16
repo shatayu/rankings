@@ -61,18 +61,26 @@ export default function TierFinalizer() {
         if (source.droppableId === destination.droppableId) {
             // dropped in same list, just rearrange
             const index = listIDToIndex(source.droppableId);
-            const items = (selectedItems.items.length === 0) ?
-                reorder(
-                    localTierList[index],
-                    source.index,
-                    destination.index
-                ) :
-                reorderMultiple(
-                    localTierList[index],
-                    selectedItems.items,
-                    source.index,
-                    destination.index
-                );
+                let items = null;
+                if (selectedItems.items.length === 0) {
+                    items = reorder(
+                        localTierList[index],
+                        source.index,
+                        destination.index
+                    );
+                } else {
+                    const result = reorderMultiple(
+                        localTierList[index],
+                        selectedItems.items,
+                        source.index,
+                        destination.index
+                    );
+                    items = result.items;
+                    setSelectedItems({
+                        items: result.newSelectedItems,
+                        currentlyDraggedItem: null
+                    });
+                }
                           
                 let newTiers = JSON.parse(JSON.stringify(localTierList));
                 newTiers[index] = items;
@@ -99,6 +107,7 @@ export default function TierFinalizer() {
                 const result = moveMultiple(
                     localTierList[sourceIndex],
                     localTierList[destIndex],
+                    selectedItems.items,
                     selectedItems.items.map((item, selectedItemIndex) => ({
                         ...source,
                         index: localTierList[sourceIndex].indexOf(item.name)
@@ -109,8 +118,13 @@ export default function TierFinalizer() {
                     }))
                 );
 
-                result.forEach(item => {
+                result.items.forEach(item => {
                     newTiers[item.index] = item.list;
+                });
+
+                setSelectedItems({
+                    items: result.newSelectedItems,
+                    currentlyDraggedItem: null
                 });
             }
             setLocalTierList(newTiers);
@@ -238,7 +252,7 @@ function DeleteTierButton({tierIndex, localTierList, setLocalTierList}) {
     );
 }
 
-function moveMultiple(sourceArray, destinationArray, droppableSources, droppableDestinations) {
+function moveMultiple(sourceArray, destinationArray, selectedItems, droppableSources, droppableDestinations) {
     const sourceClone = JSON.parse(JSON.stringify(sourceArray));
     const destClone = JSON.parse(JSON.stringify(destinationArray));
 
@@ -251,7 +265,7 @@ function moveMultiple(sourceArray, destinationArray, droppableSources, droppable
     
     const bannedIndices = new Set(droppableSources.map(item => item.index));
 
-    const result = [
+    const items = [
         {
             index: listIDToIndex(droppableSources[0].droppableId),
             list: sourceClone.filter((term, index) => !bannedIndices.has(index))
@@ -262,7 +276,13 @@ function moveMultiple(sourceArray, destinationArray, droppableSources, droppable
         }
     ];
 
-    return result;
+    return {
+        items,
+        newSelectedItems: selectedItems.map(item => ({
+            ...item,
+            index: destClone.indexOf(item.name)
+        }))
+    };
 };
 
 function move(source, destination, droppableSource, droppableDestination) {
@@ -296,18 +316,42 @@ function reorder(list, startIndex, endIndex) {
 
 function reorderMultiple(list, selectedItems, draggedItemStartIndex, draggedItemEndIndex) {
     if (draggedItemStartIndex === draggedItemEndIndex) {
-        return list;
+        return {
+            items: list,
+            newSelectedItems: selectedItems
+        };
     }
 
-    const newList = JSON.parse(JSON.stringify(list));
-    const inSelectedItemRange = n => draggedItemEndIndex <= n && n <= selectedItems.length + draggedItemEndIndex;
-
-    // add in new items
+    const insertionIndex = draggedItemEndIndex + (draggedItemStartIndex < draggedItemEndIndex ? 1 : 0);
     const selectedItemNames = selectedItems.map(item => item.name);
-    const insertionIndex = draggedItemStartIndex < draggedItemEndIndex ? draggedItemEndIndex + 1 : draggedItemEndIndex;
-    newList.splice(insertionIndex, 0, ...selectedItemNames);
+    let newList = [];
 
-    return newList.filter((item, index) => !selectedItemNames.includes(item) || inSelectedItemRange(index));    
+    // add in everything before the list
+    for (let i = 0; i < insertionIndex; ++i) {
+        if (!selectedItemNames.includes(list[i])) {
+            newList.push(list[i]);
+        }
+    }
+
+    // add in all of the selected items
+    for (let i = 0; i < selectedItemNames.length; ++i) {
+        newList.push(selectedItemNames[i]);
+    }
+
+    // add in everything after
+    for (let i = insertionIndex; i < list.length; ++i) {
+        if (!selectedItemNames.includes(list[i])) {
+            newList.push(list[i]);
+        }
+    }
+
+    return {
+        items: newList,
+        newSelectedItems: selectedItems.map((item, i) => ({
+            ...item,
+            index: newList.indexOf(item.name)
+        }))
+    }
 }
 
 function listIDToIndex(listID) {
