@@ -49,6 +49,10 @@ export default function TierFinalizer() {
     
         // dropped outside the list
         if (!destination) {
+            setSelectedItems({
+                ...selectedItems,
+                currentlyDraggedItem: null
+            })
             return;
         }
 
