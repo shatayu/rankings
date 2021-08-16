@@ -133,7 +133,7 @@ export default function TierFinalizer() {
             }
             setLocalTierList(newTiers);
         }
-    }, [localTierList, selectedItems.items]);
+    }, [localTierList, selectedItems]);
 
     const getSelectedItemStyle = useCallback(term => {
         const {currentlyDraggedItem} = selectedItems;
