@@ -61,16 +61,23 @@ export default function TierFinalizer() {
         if (source.droppableId === destination.droppableId) {
             // dropped in same list, just rearrange
             const index = listIDToIndex(source.droppableId);
-            const items = reorder(
-                localTierList[index],
-                source.index,
-                destination.index
-            );
-            
-            let newTiers = JSON.parse(JSON.stringify(localTierList));
-            newTiers[index] = items;
-            
-            setLocalTierList(newTiers);
+            const items = (selectedItems.items.length === 0) ?
+                reorder(
+                    localTierList[index],
+                    source.index,
+                    destination.index
+                ) :
+                reorderMultiple(
+                    localTierList[index],
+                    selectedItems.items,
+                    source.index,
+                    destination.index
+                );
+                          
+                let newTiers = JSON.parse(JSON.stringify(localTierList));
+                newTiers[index] = items;
+                
+                setLocalTierList(newTiers);
         } else {
             // dropped in different lists, move to new list
             const sourceIndex = listIDToIndex(source.droppableId);
@@ -185,11 +192,9 @@ export default function TierFinalizer() {
                                                                 });
                                                             }}
                                                         >
-                                                            {term}
+                                                            {term === selectedItems.currentlyDraggedItem && selectedItems.items.length > 1 && snapshot.isDragging
+                                                            ? `${term} and ${selectedItems.items.length - 1} others` : term}
                                                         </span>
-                                                        {term === selectedItems.currentlyDraggedItem && selectedItems.items.length > 1 &&
-                                                            <span className={styles.draggedItemCount}>{selectedItems.items.length}</span>
-                                                        }
                                                     </div>
                                                 );
                                             }}
@@ -288,6 +293,22 @@ function reorder(list, startIndex, endIndex) {
 
     return result;
 };
+
+function reorderMultiple(list, selectedItems, draggedItemStartIndex, draggedItemEndIndex) {
+    if (draggedItemStartIndex === draggedItemEndIndex) {
+        return list;
+    }
+
+    const newList = JSON.parse(JSON.stringify(list));
+    const inSelectedItemRange = n => draggedItemEndIndex <= n && n <= selectedItems.length + draggedItemEndIndex;
+
+    // add in new items
+    const selectedItemNames = selectedItems.map(item => item.name);
+    const insertionIndex = draggedItemStartIndex < draggedItemEndIndex ? draggedItemEndIndex + 1 : draggedItemEndIndex;
+    newList.splice(insertionIndex, 0, ...selectedItemNames);
+
+    return newList.filter((item, index) => !selectedItemNames.includes(item) || inSelectedItemRange(index));    
+}
 
 function listIDToIndex(listID) {
     return parseInt(listID.replace('tier', ''));
