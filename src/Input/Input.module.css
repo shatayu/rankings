@@ -208,6 +208,10 @@
     border: 2px solid #BBBBBB;
 }
 
+.enabledDeleteButtonIconAndTextContainer {
+    color: #BBBBBB;
+}
+
 @media (hover: hover) and (pointer: fine) {
     .enabledButtonIconAndTextContainer:hover {
         color: #08BA6A;
