@@ -2,9 +2,9 @@
     position: relative;
     font-weight: 400;
     font-size: 16px;
-  }
+}
   
-  .Dropdown-control {
+.Dropdown-control {
     position: relative;
     overflow: hidden;
     background-color: #111111;
@@ -20,17 +20,17 @@
 
     border-bottom: 3px solid #08BA6A;
     transform: translateY(1.5px);
-  }
+}
 
 .Dropdown-control:hover {
     background-color: #444444;
 }
   
-  .Dropdown-control:hover {
+.Dropdown-control:hover {
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
-  }
+}
   
-  .Dropdown-arrow {
+.Dropdown-arrow {
     border-color: #999 transparent transparent;
     border-style: solid;
     border-width: 5px 5px 0;
@@ -42,14 +42,14 @@
     right: 10px;
     top: 18px;
     width: 0
-  }
+}
   
-  .is-open .Dropdown-arrow {
+.is-open .Dropdown-arrow {
     border-color: transparent transparent #999;
     border-width: 0 5px 5px;
-  }
+}
   
-  .Dropdown-menu {
+.Dropdown-menu {
     background-color: #111111;
     border: 1px solid #111111;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
@@ -64,43 +64,43 @@
     -webkit-overflow-scrolling: touch;
 
     transform: translateX(1px);
-  }
+}
 
   
-  .Dropdown-menu .Dropdown-group > .Dropdown-title{
+.Dropdown-menu .Dropdown-group > .Dropdown-title {
     padding: 8px 10px;
     color: #999999;
     font-weight: bold;
     text-transform: capitalize;
-  }
+}
   
-  .Dropdown-option {
+.Dropdown-option {
     box-sizing: border-box;
     color: #999999;
     cursor: pointer;
     display: block;
     padding: 8px 10px 8px 0.125em;
-  }
+}
   
-  .Dropdown-option:last-child {
+.Dropdown-option:last-child {
     border-bottom-right-radius: 2px;
-     border-bottom-left-radius: 2px;
-  }
+    border-bottom-left-radius: 2px;
+}
   
-  .Dropdown-option:hover {
+.Dropdown-option:hover {
     background-color: #444444;
-  }
+}
   
-  .Dropdown-option.is-selected {
+.Dropdown-option.is-selected {
     color: #999999;
     background-color: #444444;
-  }
+}
   
-  .Dropdown-noresults {
+.Dropdown-noresults {
     box-sizing: border-box;
     color: #999999;
     cursor: default;
     display: block;
     padding: 8px 10px;
-  }
+}
   
