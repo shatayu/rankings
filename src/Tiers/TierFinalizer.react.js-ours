@@ -151,7 +151,7 @@ export default function TierFinalizer({localTierList, setLocalTierList}) {
             <AddTierButton localTierList={localTierList} setLocalTierList={setLocalTierList} />
         </div>
         <div className={styles.titleContainer}>
-            <div className={styles.subtitle}>{localTierList.length > 1 ? 'Drag items to move them between tiers' : '\u0020'}</div>
+            <div className={styles.subtitle}>Drag items to move them between tiers</div>
         </div>
         <DragDropContext onDragStart={onDragStart} onDragEnd={result => onDragEnd(result, localTierList, setLocalTierList)}>
             <div className={styles.allTiersContainer}>

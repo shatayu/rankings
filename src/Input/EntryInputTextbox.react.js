@@ -61,7 +61,7 @@ export default function EntryInputTextbox({localTierList, setLocalTierList}) {
         }
     }, [localTierList]);
 
-    const addingMessage = `ADDING ITEM #${localTierList[currentTier]?.length + 1 ?? '1'} INTO`;
+    const addingMessage = `ADDING ITEM #${localTierList[currentTier]?.length + 1 ?? '1'}${localTierList.length > 1 ? ' INTO' : ''}`;
     
     return (
         <div className={styles.textboxAndHelperContainer}>
@@ -86,7 +86,7 @@ export default function EntryInputTextbox({localTierList, setLocalTierList}) {
                 </form>
                 <div className={styles.textboxHelper + ' ' + (canAddToText ? styles.enabledTextboxHelper : styles.disabledTextboxHelper)}>
                     {canAddToText || entryInputTextboxContent.length === 0 ? addingMessage : 'CANNOT ADD ITEM TO'}
-                    <span class={styles.dropdownContainer}>
+                    {localTierList.length > 1 && <span class={styles.dropdownContainer}>
                         <Dropdown
                             options={options}
                             onChange={option => {
@@ -100,7 +100,7 @@ export default function EntryInputTextbox({localTierList, setLocalTierList}) {
                             value={options[currentTier]}
                             placeholder={'SELECT TIER'}
                         />
-                    </span>
+                    </span>}
                 </div>
         </div>
     );
