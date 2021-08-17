@@ -7,9 +7,18 @@ import EntryInputTextbox from './EntryInputTextbox.react';
 import TitleTextbox from './TitleTextbox.react';
 import { useUpdateListInfoAtoms } from '../utils/APIUtils';
 import TierFinalizer from '../Tiers/TierFinalizer.react';
+import { useRecoilValue } from 'recoil';
+import { TierListAtom } from '../atoms';
+import { useEffect } from 'react';
 
 export default function Input({onFinalizeEntries}) {
     useUpdateListInfoAtoms();
+    const recoilTierList = useRecoilValue(TierListAtom);
+
+    // if recoil list updates externally (e.g. via link share) update
+    useEffect(() => {
+        setLocalTierList(recoilTierList);
+    }, [recoilTierList]);
 
     const [localTierList, setLocalTierList] = useState([[]]);
     return (
