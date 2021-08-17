@@ -83,7 +83,9 @@ export default function EntryInputTextbox({localTierList, setLocalTierList}) {
                     </label>
                 </form>
                 <div className={styles.textboxHelper + ' ' + (canAddToText ? styles.enabledTextboxHelper : styles.disabledTextboxHelper)}>
-                    {canAddToText ? `ADDING ITEM #${localTierList[currentTier]?.length + 1 ?? '1'} INTO` : (entryInputTextboxContent.length > 0 ? 'CANNOT ADD ITEM TO' : 'INSERTING INTO')}
+                    {canAddToText ? `ADDING ITEM #${localTierList[currentTier]?.length + 1 ?? '1'} INTO` :
+                        (entryInputTextboxContent.length > 0 ?
+                        'CANNOT ADD ITEM TO' : `ADDING ITEM #${localTierList[currentTier]?.length + 1 ?? '1'}`)}
                     <span class={styles.dropdownContainer}>
                         <Dropdown
                             options={options}
