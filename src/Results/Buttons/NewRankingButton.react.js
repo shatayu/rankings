@@ -20,6 +20,7 @@ export default function RedoRankingsButton() {
     const userQuestionsAsked = useRecoilValue(UserQuestionsAskedAtom);
     const responsesGraph = useRecoilValue(ResponsesGraphAtom);
     const entriesList = useRecoilValue(EntriesListAtom);
+    const tierList = useRecoilValue(TierListAtom);
     const entryInputTextboxContents = useRecoilValue(EntryInputTextboxAtom);
     const title = useRecoilValue(TitleAtom);
 
@@ -32,19 +33,21 @@ export default function RedoRankingsButton() {
             responsesGraph == null &&
             entriesList.length === 0 &&
             entryInputTextboxContents.length === 0 &&
-            title.length === 0
+            title.length === 0 &&
+            tierList.length === 1 &&
+            tierList[0].length === 0
         ) {
             resetPageNumber();
         }
-    }, [
-        emptyGraph,
+    }, [emptyGraph,
         responsesGraph,
         resetPageNumber,
         userQuestionsAsked.length,
         userSortedRankings.length,
         entriesList.length,
         entryInputTextboxContents.length,
-        title.length
+        title.length,
+        tierList
     ]);
 
     return (
