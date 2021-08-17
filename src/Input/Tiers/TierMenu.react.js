@@ -126,7 +126,7 @@ export default function TierMenu({localTierList, setLocalTierList}) {
     return (
         <>
         <div className={styles.buttonContainer} onMouseDown={e => e.stopPropagation()}>
-            <DeleteAllEntriesButton {...{localTierList, setLocalTierList}} />
+            <DeleteAllEntriesButton {...{localTierList, setLocalTierList, selectedItems, setSelectedItems}} />
             <AddTierButton {...{localTierList, setLocalTierList}} />
             <ShareLinkButton {...{localTierList}}/>
         </div>
