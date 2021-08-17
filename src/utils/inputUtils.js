@@ -3,6 +3,10 @@ import { useRecoilValue } from 'recoil';
 
 export function useGetDefaultTitle() {
     const tierList = useRecoilValue(TierListAtom);
+   return getDefaultTitle(tierList);
+}
+
+export function getDefaultTitle(tierList) {
     const entriesList = tierList.slice().flat();
     return entriesList.length === 0 ? `New Title` : `My Top ${entriesList.length}`;
 }
