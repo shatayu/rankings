@@ -11,7 +11,6 @@ import { useEffect } from 'react';
 export default function EntryInputTextbox({localTierList, setLocalTierList}) {
     const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(EntryInputTextboxAtom);
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
-    // eslint-disable-next-line no-unused-vars
     const [currentTier, setCurrentTier] = useState(0);
 
     // add term to entry
@@ -86,7 +85,7 @@ export default function EntryInputTextbox({localTierList, setLocalTierList}) {
                 </form>
                 <div className={styles.textboxHelper + ' ' + (canAddToText ? styles.enabledTextboxHelper : styles.disabledTextboxHelper)}>
                     {canAddToText || entryInputTextboxContent.length === 0 ? addingMessage : 'CANNOT ADD ITEM TO'}
-                    {localTierList.length > 1 && <span class={styles.dropdownContainer}>
+                    {localTierList.length > 1 && <span>
                         <Dropdown
                             options={options}
                             onChange={option => {
