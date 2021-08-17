@@ -6,8 +6,6 @@ import { generateEmptyGraph } from '../../utils/graphUtils.js';
 import styles from '../../Input/Input.module.css';
 import { useEffect } from 'react';
 import PageNumbers from '../../PageNumbers';
-import Constants from '../../Constants';
-
 
 export default function RedoRankingsButton() {
     const entriesList = useRecoilValue(EntriesListAtom);
@@ -29,11 +27,7 @@ export default function RedoRankingsButton() {
             userQuestionsAsked.length === 0 &&
             JSON.stringify(responsesGraph) === JSON.stringify(emptyGraph)
         ) {
-            if (entriesList.length < Constants.SKIP_TO_RANKING_THRESHOLD) {
-                setPageNumber(PageNumbers.RANKER);
-            } else {
-                setPageNumber(PageNumbers.TIER_FINALIZER);
-            }
+            setPageNumber(PageNumbers.RANKER);
         }
     }, [emptyGraph, entriesList.length, responsesGraph, setPageNumber, userQuestionsAsked.length, userSortedRankings.length]);
 
