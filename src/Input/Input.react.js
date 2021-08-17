@@ -12,14 +12,17 @@ import { useEffect } from 'react';
 
 export default function Input({onFinalizeEntries}) {
     useUpdateListInfoAtoms();
+
+    // recoil states are too slow for drag and drop, so we use a local list
+    // and sync it in StartRankingButton
     const recoilTierList = useRecoilValue(TierListAtom);
+    const [localTierList, setLocalTierList] = useState([[]]);
 
     // if recoil list updates externally (e.g. via link share) update
     useEffect(() => {
         setLocalTierList(recoilTierList);
     }, [recoilTierList]);
 
-    const [localTierList, setLocalTierList] = useState([[]]);
     return (
         <>
         <div className={styles.container}>
@@ -40,7 +43,7 @@ export default function Input({onFinalizeEntries}) {
                     },
                 }}
             />
-            <TitleTextbox />
+            <TitleTextbox localTierList={localTierList}/>
             <div className={styles.textboxContainer}>
                 <EntryInputTextbox  {...{localTierList, setLocalTierList}} />
             </div>

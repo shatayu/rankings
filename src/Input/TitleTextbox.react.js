@@ -1,27 +1,27 @@
 import { useRecoilState, useRecoilValue } from "recoil"
-import { TitleAtom, SharedLinkAtom, TierListAtom } from "../atoms"
+import { TitleAtom, SharedLinkAtom } from "../atoms"
 import styles from './Input.module.css';
 import { useGetDefaultTitle } from "../utils/inputUtils";
 import TextareaAutosize from 'react-textarea-autosize';
 import { isSharedLink } from '../utils/APIUtils';
 import { useEffect, useState } from 'react';
 
-export default function TitleTextbox() {
+export default function TitleTextbox({localTierList}) {
+    console.log(localTierList);
     const [title, setTitle] = useRecoilState(TitleAtom);
 
     const defaultTitle = useGetDefaultTitle();
     const [placeholder, setPlaceholder] = useState(defaultTitle);
-    const tierList = useRecoilValue(TierListAtom);
 
     const sharedLinkInfo = useRecoilValue(SharedLinkAtom);
     // if user came from shared link then fill in list
     useEffect(() => {
-        if (isSharedLink() && tierList.length === 1 && tierList[0].length === 0 && !sharedLinkInfo.hasLoaded) {
+        if ((isSharedLink() && localTierList.length === 1 && localTierList[0].length === 0 && !sharedLinkInfo.hasLoaded)) {
             setPlaceholder('Loading...');
         } else {
             setPlaceholder(defaultTitle);
         }
-    }, [defaultTitle, sharedLinkInfo.hasLoaded, tierList]);
+    }, [defaultTitle, localTierList, sharedLinkInfo.hasLoaded]);
     
     // clear title
     if (title === defaultTitle) {

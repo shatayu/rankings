@@ -16,17 +16,6 @@ export const ResponsesGraphAtom = atom({
     default: null
 });
 
-export const PageNumberAtom = atom({
-    key: 'PageNumberAtom',
-    default: PageNumbers.INPUT
-});
-
-export const SharedLinkAtom = atom({
-    key: 'SharedLinkAtom',
-    default: {
-        hasLoaded: false
-    }
-})
 
 export const TierListAtom = atom({
     key: 'TierListAtom',
@@ -41,4 +30,16 @@ export const UserQuestionsAskedAtom = atom({
 export const UserSortedRankingsAtom = atom({
     key: 'UserSortedRankings',
     default: []
+});
+
+export const PageNumberAtom = atom({
+    key: 'PageNumberAtom',
+    default: PageNumbers.INPUT
+});
+
+export const SharedLinkAtom = atom({
+    key: 'SharedLinkAtom',
+    default: {
+        hasLoaded: false
+    }
 });
