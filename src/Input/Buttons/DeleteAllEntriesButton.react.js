@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { EntriesListAtom, TitleAtom } from '../../atoms';
 import styles from '../Input.module.css';
 
-export default function DeleteAllEntriesButton({setLocalTierList}) {
+export default function DeleteAllEntriesButton({setLocalTierList, setCurrentTier}) {
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
     const [title, setTitle] = useRecoilState(TitleAtom);
     return (

@@ -51,6 +51,11 @@
     margin-top: 10px;
 
     transition-duration: 200ms;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
 }
 
 .enabledTextboxHelper {

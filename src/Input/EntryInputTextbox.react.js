@@ -6,12 +6,13 @@ import { canEntryBeAddedToEntriesList, addEntryToEntriesList } from '../utils/in
 import TextareaAutosize from 'react-textarea-autosize';
 import Dropdown from 'react-dropdown';
 import './Dropdown.css';
+import { useEffect } from 'react';
 
 export default function EntryInputTextbox({localTierList, setLocalTierList}) {
     const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(EntryInputTextboxAtom);
     const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
     // eslint-disable-next-line no-unused-vars
-    const [currentTier, _] = useState(0);
+    const [currentTier, setCurrentTier] = useState(0);
 
     // add term to entry
     const onSubmit = useCallback((e, value) => {  
@@ -38,6 +39,27 @@ export default function EntryInputTextbox({localTierList, setLocalTierList}) {
     }, [currentTier, entriesList, entryInputTextboxContent, localTierList, setEntriesList, setEntryInputTextboxContent, setLocalTierList]);
 
     const canAddToText = canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList);
+
+    const options = localTierList.map((_, index) => ({
+        label: `TIER ${index + 1}`,
+        value: index
+    }));
+
+    const anyTierIsEmpty = localTierList.some(tier => tier.length === 0);
+
+    if (!anyTierIsEmpty) {
+        options.push({
+            label: `TIER ${localTierList.length + 1} (NEW)`,
+            value: localTierList.length
+        });
+    }
+
+    // auto-detect "clear all" and reset the current tier accordingly
+    useEffect(() => {
+        if (localTierList.length === 1 && localTierList[0].length === 0) {
+            setCurrentTier(0);
+        }
+    }, [localTierList]);
     
     return (
         <div className={styles.textboxAndHelperContainer}>
@@ -61,14 +83,23 @@ export default function EntryInputTextbox({localTierList, setLocalTierList}) {
                     </label>
                 </form>
                 <div className={styles.textboxHelper + ' ' + (canAddToText ? styles.enabledTextboxHelper : styles.disabledTextboxHelper)}>
-                    {canAddToText ? 'PRESS ENTER TO ADD' : (entryInputTextboxContent.length > 0 ? 'CANNOT ADD ITEM' : '\u200B')}
+                    {canAddToText ? `ADDING ITEM #${localTierList[currentTier]?.length + 1 ?? '1'} INTO` : (entryInputTextboxContent.length > 0 ? 'CANNOT ADD ITEM TO' : 'INSERTING INTO')}
+                    <span class={styles.dropdownContainer}>
+                        <Dropdown
+                            options={options}
+                            onChange={option => {
+                                const {value} = option;
+
+                                if (value === localTierList.length) {
+                                    localTierList.push([]);
+                                }
+                                setCurrentTier(value);
+                            }}
+                            value={options[currentTier]}
+                            placeholder={'SELECT TIER'}
+                        />
+                    </span>
                 </div>
-                <Dropdown
-                    options={['1', '2', '3']}
-                    onChange={() => {}}
-                    value={'1'}                    
-                    placeholder={'Which tier are you adding to?'}
-                />
         </div>
     );
 }
