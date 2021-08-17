@@ -1,5 +1,5 @@
-import { PageNumberAtom, TierListAtom } from '../atoms';
-import { useSetRecoilState, useResetRecoilState } from 'recoil';
+import { PageNumberAtom } from '../atoms';
+import { useSetRecoilState } from 'recoil';
 import { getNextQuestion } from '../utils/sortUtils';
 import Constants from '../Constants';
 import PageNumbers from '../PageNumbers';
@@ -23,7 +23,6 @@ export default function ProgressIndicator({
     doneRanking
 }) {
     const setPageNumber = useSetRecoilState(PageNumberAtom);
-    const resetTierList = useResetRecoilState(TierListAtom);
 
     if (doneRanking) {
         return null;
@@ -70,7 +69,6 @@ export default function ProgressIndicator({
                     setCurrentQuestion(previousQuestion);
                     setQuestionNumber(questionNumber - 1);
                 } else {
-                    resetTierList()
                     setPageNumber(PageNumbers.INPUT);
                 }
             }}/>
