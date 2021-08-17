@@ -314,7 +314,7 @@ function reorderMultiple(list, selectedItems, draggedItemStartIndex, draggedItem
     }
 
     const insertionIndex = draggedItemEndIndex + (draggedItemStartIndex < draggedItemEndIndex ? 1 : 0);
-    const selectedItemNames = selectedItems.map(item => item.name);
+    const selectedItemNames = selectedItems.sort((a, b) => a.index - b.index).map(item => item.name);
     let newList = [];
 
     // add in everything before the list
