@@ -1,7 +1,6 @@
 import styles from './Input.module.css';
 import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
-import ShareLinkButton from './Buttons/ShareLinkButton.react';
 import StartRankingButton from './Buttons/StartRankingButton.react';
 import EntryInputTextbox from './EntryInputTextbox.react';
 import TitleTextbox from './TitleTextbox.react';
@@ -47,7 +46,6 @@ export default function Input({onFinalizeEntries}) {
             </div>
             <TierFinalizer {...{localTierList, setLocalTierList}} />
             <div className={styles.buttonContainer}>
-                <ShareLinkButton />
                 <StartRankingButton {...{localTierList, setLocalTierList}} />
             </div>
         </div>

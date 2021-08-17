@@ -2,18 +2,17 @@ import GenericButton from './GenericButton';
 import toast from 'react-hot-toast';
 import { useRecoilValue } from 'recoil';
 import { ReactComponent as Share } from '../../assets/link.svg';
-import { TitleAtom, TierListAtom } from '../../atoms';
+import { TitleAtom } from '../../atoms';
 import axios from 'axios';
 import copy from 'copy-to-clipboard';
 import { useToasterStore } from 'react-hot-toast';
 import styles from '../Input.module.css';
 
-export default function ShareLinkButton() {
-    const tierList = useRecoilValue(TierListAtom);
+export default function ShareLinkButton({localTierList}) {
     const title = useRecoilValue(TitleAtom);
     const {toasts} = useToasterStore();
 
-    const entriesList = tierList.slice().flat();
+    const entriesList = localTierList.slice().flat();
 
     return (
         <GenericButton

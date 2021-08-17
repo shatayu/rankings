@@ -5,6 +5,8 @@ import { ReactComponent as Trash } from '../assets/trash.svg';
 import styles from './TierFinalizer.module.css';
 import AddTierButton from './Buttons/AddTierButton.react';
 import DeleteAllEntriesButton from '../Input/Buttons/DeleteAllEntriesButton.react';
+import ShareLinkButton from '../Input/Buttons/ShareLinkButton.react';
+
 
 export default function TierFinalizer({localTierList, setLocalTierList}) {
     const [selectedItems, setSelectedItems] = useState({
@@ -147,8 +149,9 @@ export default function TierFinalizer({localTierList, setLocalTierList}) {
     return (
         <>
         <div className={styles.buttonContainer} onMouseDown={e => e.stopPropagation()}>
-            <DeleteAllEntriesButton {...{setLocalTierList}}/>
-            <AddTierButton localTierList={localTierList} setLocalTierList={setLocalTierList} />
+            <DeleteAllEntriesButton {...{localTierList, setLocalTierList}} />
+            <AddTierButton {...{localTierList, setLocalTierList}} />
+            <ShareLinkButton {...{localTierList}}/>
         </div>
         <div className={styles.titleContainer}>
             <div className={styles.subtitle}>{localTierList.length > 1 ? 'Drag items to move them between tiers' : '\u0020'}</div>
