@@ -5,7 +5,7 @@ import { getNextQuestion } from '../utils/sortUtils';
 import { getQuestionNumber } from '../utils/graphUtils';
 import React from 'react';
 import Constants from '../Constants';
-import Pair from '../Pair/Pair';
+import Pair from './Pair/Pair';
 import styles from './Ranker.module.css';
 import PageNumbers from '../PageNumbers';
 import ProgressIndicator from './ProgressIndicator.react';
