@@ -212,7 +212,7 @@ export default function TierFinalizer({localTierList, setLocalTierList}) {
                                             }}
                                         </Draggable>
                                     ))}
-                                    {tier.length === 0 && (
+                                    {tier.length === 0 && localTierList.length > 1 && (
                                         <DeleteTierButton
                                             key={`delete${tierIndex}`}
                                             {...{tierIndex, localTierList, setLocalTierList}}
