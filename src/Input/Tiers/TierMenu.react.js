@@ -29,11 +29,15 @@ export default function TierMenu({localTierList, setLocalTierList}) {
     }, []);
 
     const onDragStart = useCallback((result) => {    
+        const draggedItemTier = listIDToIndex(result.source.droppableId);
         // set every element which is not being dragged to dimmed
         setSelectedItems({
-            items: selectedItems.items,
+            items: selectedItems.items.some(item => item.tier !== draggedItemTier) ? [] : selectedItems.items,
             currentlyDraggedItem: result.draggableId
         });
+
+        // if currently dragged item isn't in the same tier as other selected items
+        // clear selected items
     }, [selectedItems.items]);
 
     const onDragEnd = useCallback((result) => {
