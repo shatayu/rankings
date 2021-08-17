@@ -10,6 +10,14 @@
     overflow-x: hidden;
 }
 
+.menu {
+    background-color: #444444;
+    color: #BBBBBB;
+    min-width: 80px;
+    padding: 5px;
+    font-size: 21px;
+}
+
 .title {
     margin-top: 10vh;
     width: 80vw;

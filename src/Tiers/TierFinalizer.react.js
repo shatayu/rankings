@@ -1,19 +1,12 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { useRecoilValue } from "recoil";
-import { TierListAtom } from "../atoms";
 import { useCallback, useState, useEffect } from 'react';
 import { ReactComponent as DragHandle } from '../assets/draghandle.svg';
 import { ReactComponent as Trash } from '../assets/trash.svg';
 import styles from './TierFinalizer.module.css';
-import StartRankingButton from "./Buttons/StartRankingButton.react";
 import AddTierButton from './Buttons/AddTierButton.react';
-import GoToInputButton from "./Buttons/GoToInputButton.react";
+import DeleteAllEntriesButton from '../Input/Buttons/DeleteAllEntriesButton.react';
 
-export default function TierFinalizer() {
-    const recoilTierList = useRecoilValue(TierListAtom);
-
-    const [localTierList, setLocalTierList] = useState(recoilTierList);
-
+export default function TierFinalizer({localTierList, setLocalTierList}) {
     const [selectedItems, setSelectedItems] = useState({
         items: [],
         currentlyDraggedItem: null
@@ -133,7 +126,7 @@ export default function TierFinalizer() {
             }
             setLocalTierList(newTiers);
         }
-    }, [localTierList, selectedItems]);
+    }, [localTierList, selectedItems, setLocalTierList]);
 
     const getSelectedItemStyle = useCallback(term => {
         const {currentlyDraggedItem} = selectedItems;
@@ -153,11 +146,12 @@ export default function TierFinalizer() {
 
     return (
         <>
-        <br />
-        <br />
+        <div className={styles.buttonContainer} onMouseDown={e => e.stopPropagation()}>
+            <DeleteAllEntriesButton {...{setLocalTierList}}/>
+            <AddTierButton localTierList={localTierList} setLocalTierList={setLocalTierList} />
+        </div>
         <div className={styles.titleContainer}>
-            <div className={styles.title}>Confirm Tier Selection</div>
-            <div className={styles.subtitle}>Drag any incorrectly placed item to the correct tier</div>
+            <div className={styles.subtitle}>Drag items to move them between tiers</div>
         </div>
         <DragDropContext onDragStart={onDragStart} onDragEnd={result => onDragEnd(result, localTierList, setLocalTierList)}>
             <div className={styles.allTiersContainer}>
@@ -232,13 +226,6 @@ export default function TierFinalizer() {
                 ))}
             </div>
         </DragDropContext>
-        <div className={styles.buttonContainer} onMouseDown={e => e.stopPropagation()}>
-            <GoToInputButton />
-            <AddTierButton localTierList={localTierList} setLocalTierList={setLocalTierList} />
-            <StartRankingButton localTierList={localTierList}/>
-        </div>
-        <br />
-        <br />
         </>
     );
 }

@@ -15,6 +15,7 @@
     "react-bulleted-textarea": "^1.1.2",
     "react-confirm-alert": "^2.7.0",
     "react-dom": "^17.0.2",
+    "react-dropdown": "^1.9.2",
     "react-hot-toast": "^2.0.0",
     "react-loader-spinner": "^4.0.0",
     "react-scripts": "4.0.3",

@@ -7,6 +7,7 @@ export function useGetDefaultTitle() {
 }
 
 export function canEntryBeAddedToEntriesList(entry, entriesList) {
+    console.log(entriesList);
     const spaceLessEntry = entry.replaceAll(' ', '');
     const isEntryUnique = !entriesList.map(term => term.replaceAll(' ', ''))
             .includes(spaceLessEntry);
