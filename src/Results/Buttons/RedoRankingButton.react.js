@@ -1,14 +1,14 @@
 import GenericButton from '../../Input/Buttons/GenericButton';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { ReactComponent as Redo } from '../../assets/redo.svg';
-import { UserSortedRankingsAtom, UserQuestionsAskedAtom, ResponsesGraphAtom, EntriesListAtom, PageNumberAtom } from '../../atoms';
+import { UserSortedRankingsAtom, UserQuestionsAskedAtom, ResponsesGraphAtom, PageNumberAtom, TierListAtom } from '../../atoms';
 import { generateEmptyGraph } from '../../utils/graphUtils.js';
 import styles from '../../Input/Input.module.css';
 import { useEffect } from 'react';
 import PageNumbers from '../../PageNumbers';
 
 export default function RedoRankingsButton() {
-    const entriesList = useRecoilValue(EntriesListAtom);
+    const tierList = useRecoilValue(TierListAtom);
 
     const resetUserSortedRankings = useResetRecoilState(UserSortedRankingsAtom);
     const resetUserQuestionsAsked = useResetRecoilState(UserQuestionsAskedAtom);
@@ -19,7 +19,7 @@ export default function RedoRankingsButton() {
     const userQuestionsAsked = useRecoilValue(UserQuestionsAskedAtom);
     const responsesGraph = useRecoilValue(ResponsesGraphAtom);
 
-    const emptyGraph = generateEmptyGraph(entriesList);
+    const emptyGraph = generateEmptyGraph(tierList.slice().flat());
 
     useEffect(() => {
         if (
@@ -29,7 +29,7 @@ export default function RedoRankingsButton() {
         ) {
             setPageNumber(PageNumbers.RANKER);
         }
-    }, [emptyGraph, entriesList.length, responsesGraph, setPageNumber, userQuestionsAsked.length, userSortedRankings.length]);
+    }, [emptyGraph, responsesGraph, setPageNumber, userQuestionsAsked.length, userSortedRankings.length]);
 
     return (
         <GenericButton

@@ -1,8 +1,9 @@
-import { EntriesListAtom } from '../atoms';
+import { TierListAtom } from '../atoms';
 import { useRecoilValue } from 'recoil';
 
 export function useGetDefaultTitle() {
-    const entriesList = useRecoilValue(EntriesListAtom);
+    const tierList = useRecoilValue(TierListAtom);
+    const entriesList = tierList.slice().flat();
     return entriesList.length === 0 ? `New Title` : `My Top ${entriesList.length}`;
 }
 

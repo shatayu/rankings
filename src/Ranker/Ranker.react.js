@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { EntriesListAtom, ResponsesGraphAtom, UserSortedRankingsAtom, UserQuestionsAskedAtom, PageNumberAtom, TitleAtom, TierListAtom } from '../atoms';
+import { ResponsesGraphAtom, UserSortedRankingsAtom, UserQuestionsAskedAtom, PageNumberAtom, TitleAtom, TierListAtom } from '../atoms';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { getNextQuestion } from '../utils/sortUtils';
 import { getQuestionNumber } from '../utils/graphUtils';
@@ -21,8 +21,6 @@ export default function Ranker() {
 
     const setUserSortedRankings = useSetRecoilState(UserSortedRankingsAtom);
     const setPageNumber = useSetRecoilState(PageNumberAtom);
-
-    const entries = useRecoilValue(EntriesListAtom);
 
     let [currentQuestion, setCurrentQuestion] = useState(null);
     let [questionNumber, setQuestionNumber] = useState(1);
@@ -61,7 +59,7 @@ export default function Ranker() {
             setUserSortedRankings(array);  
             setPageNumber(PageNumbers.RESULTS);          
         }
-    }, [responsesGraph, questionNumber, onSelection, entries, userQuestionsAsked, setUserSortedRankings, setPageNumber, tierList, currentTier]);
+    }, [responsesGraph, questionNumber, onSelection, userQuestionsAsked, setUserSortedRankings, setPageNumber, tierList, currentTier]);
 
     if (responsesGraph == null) {
         return null;

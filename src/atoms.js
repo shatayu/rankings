@@ -11,11 +11,6 @@ export const EntryInputTextboxAtom = atom({
     default: ''
 });
 
-export const EntriesListAtom = atom({
-    key: 'EntriesListAtom',
-    default: []
-});
-
 export const ResponsesGraphAtom = atom({
     key: 'ResponsesGraphAtom',
     default: null

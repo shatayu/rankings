@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
 import { useRecoilState } from "recoil"
-import { EntriesListAtom, EntryInputTextboxAtom } from "../atoms"
+import { EntryInputTextboxAtom } from "../atoms"
 import styles from './Input.module.css';
-import { canEntryBeAddedToEntriesList, addEntryToEntriesList } from '../utils/inputUtils';
+import { canEntryBeAddedToEntriesList } from '../utils/inputUtils';
 import TextareaAutosize from 'react-textarea-autosize';
 import Dropdown from 'react-dropdown';
 import './Dropdown.css';
@@ -10,32 +10,30 @@ import { useEffect } from 'react';
 
 export default function EntryInputTextbox({localTierList, setLocalTierList}) {
     const [entryInputTextboxContent, setEntryInputTextboxContent] = useRecoilState(EntryInputTextboxAtom);
-    const [entriesList, setEntriesList] = useRecoilState(EntriesListAtom);
     const [currentTier, setCurrentTier] = useState(0);
+
+    const entriesList = localTierList.slice().flat();
 
     // add term to entry
     const onSubmit = useCallback((e, value) => {  
         e.preventDefault();
         if (value === 'nflteams') {
             const NFLTeams = getNFLTeams().sort();
-            setEntriesList(NFLTeams);
             setLocalTierList([NFLTeams]);
             setEntryInputTextboxContent('');
         } else if (value === 'colors') {
             const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'black', 'gray', 'white'].sort();
             setLocalTierList([colors]);
-            setEntriesList(colors);
             setEntryInputTextboxContent('');
         } else {
             if (canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList)) {
                 const copy = localTierList.slice();
                 copy[currentTier].push(entryInputTextboxContent);
                 setLocalTierList(copy);
-                addEntryToEntriesList(value, entriesList, setEntriesList);
                 setEntryInputTextboxContent('');
             }
         }
-    }, [currentTier, entriesList, entryInputTextboxContent, localTierList, setEntriesList, setEntryInputTextboxContent, setLocalTierList]);
+    }, [currentTier, entriesList, entryInputTextboxContent, localTierList, setEntryInputTextboxContent, setLocalTierList]);
 
     const canAddToText = canEntryBeAddedToEntriesList(entryInputTextboxContent, entriesList);
 
