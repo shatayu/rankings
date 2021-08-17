@@ -30,9 +30,6 @@ export default function ProgressIndicator({
     }
     
     // https://stackoverflow.com/questions/12346054/number-of-comparisons-in-merge-sort
-    // const log = Math.ceil(Math.log2(n));
-    // const maxNumberOfQuestions = n * log - 2 ** log + 1;
-
     const maxNumberOfQuestions = tierList.reduce((numberOfQuestions, tier) => {
         const n = tier.length;
         const log = Math.ceil(Math.log2(n));
@@ -73,13 +70,8 @@ export default function ProgressIndicator({
                     setCurrentQuestion(previousQuestion);
                     setQuestionNumber(questionNumber - 1);
                 } else {
-                    const numEntries = tierList.reduce((totalLength, tier) => totalLength + tier.length, 0);
-                    if (numEntries < Constants.SKIP_TO_RANKING_THRESHOLD) {
-                        resetTierList()
-                        setPageNumber(PageNumbers.INPUT);
-                    } else {
-                        setPageNumber(PageNumbers.TIER_FINALIZER);
-                    }
+                    resetTierList()
+                    setPageNumber(PageNumbers.INPUT);
                 }
             }}/>
             <span className={styles.progressIndicator}>{questionNumber} out of up to {maxNumberOfQuestions}</span>

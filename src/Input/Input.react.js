@@ -5,7 +5,7 @@ import StartRankingButton from './Buttons/StartRankingButton.react';
 import EntryInputTextbox from './EntryInputTextbox.react';
 import TitleTextbox from './TitleTextbox.react';
 import { useUpdateListInfoAtoms } from '../utils/APIUtils';
-import TierFinalizer from '../Tiers/TierFinalizer.react';
+import TierMenu from './Tiers/TierMenu.react';
 import { useRecoilValue } from 'recoil';
 import { TierListAtom } from '../atoms';
 import { useEffect } from 'react';
@@ -44,7 +44,7 @@ export default function Input({onFinalizeEntries}) {
             <div className={styles.textboxContainer}>
                 <EntryInputTextbox  {...{localTierList, setLocalTierList}} />
             </div>
-            <TierFinalizer {...{localTierList, setLocalTierList}} />
+            <TierMenu {...{localTierList, setLocalTierList}} />
             <div className={styles.buttonContainer}>
                 <StartRankingButton {...{localTierList, setLocalTierList}} />
             </div>

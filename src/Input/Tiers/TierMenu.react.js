@@ -1,7 +1,7 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useCallback, useState, useEffect } from 'react';
-import { ReactComponent as DragHandle } from '../assets/draghandle.svg';
-import { ReactComponent as Trash } from '../assets/trash.svg';
+import { ReactComponent as DragHandle } from '../../assets/draghandle.svg';
+import { ReactComponent as Trash } from '../../assets/trash.svg';
 import styles from './TierMenu.module.css';
 import AddTierButton from '../Buttons/AddTierButton.react';
 import DeleteAllEntriesButton from '../Buttons/DeleteAllEntriesButton.react';
