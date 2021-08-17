@@ -160,7 +160,7 @@ export default function TierFinalizer({localTierList, setLocalTierList}) {
             <div className={styles.allTiersContainer}>
                 {localTierList.map((tier, tierIndex) => (
                     <div className={styles.oneTierContainer} key={`tierContainer${tierIndex}`}>
-                        <div className={styles.header}>{`Tier ${tierIndex + 1}`}</div>
+                        <div className={styles.header} key={`header${tierIndex}`}>{localTierList.length > 1 ? `Tier ${tierIndex + 1}` : '\u0020'}</div>
                         <Droppable droppableId={`tier${tierIndex}`} key={`tier${tierIndex}`}>
                             {(provided, snapshot) => (
                                 <div
