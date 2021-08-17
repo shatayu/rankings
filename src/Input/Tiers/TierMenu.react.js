@@ -136,7 +136,7 @@ export default function TierMenu({localTierList, setLocalTierList}) {
         <DragDropContext onDragStart={onDragStart} onDragEnd={result => onDragEnd(result, localTierList, setLocalTierList)}>
             <div className={styles.allTiersContainer}>
                 {localTierList.map((tier, tierIndex) => (
-                    <Tier  key={`tierContainer${tierIndex}`} {...{
+                    <Tier key={`tierContainer${tierIndex}`} {...{
                         tier,
                         tierIndex,
                         localTierList,
