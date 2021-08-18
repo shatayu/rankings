@@ -27,8 +27,8 @@
  */
 
 .element {
-    height: min(400px, min(calc(100vw - 40px), calc((100vh - 40px - 84px) / 2 - 80px)));
-    width: min(400px, min(calc(100vw - 40px), calc((100vh - 40px - 84px) / 2 - 80px)));
+    height: max(200px, min(400px, min(calc(100vw - 40px), calc((100vh - 40px - 84px) / 2 - 80px))));
+    width: max(200px, min(400px, min(calc(100vw - 40px), calc((100vh - 40px - 84px) / 2 - 80px))));
     border: 8px solid #BBBBBB;
     color: #BBBBBB;
     display: flex;
@@ -37,7 +37,7 @@
     flex-wrap: wrap;
     margin: 20px;
     transition-duration: 200ms;
-    font-size: min(3vh, 10vw);
+    font-size: 20px;
     padding: 10px;
     
     -webkit-box-sizing: border-box; 
