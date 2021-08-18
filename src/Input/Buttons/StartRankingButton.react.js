@@ -1,20 +1,18 @@
 import GenericButton from './GenericButton';
-import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { ReactComponent as Arrow } from '../../assets/arrow.svg';
-import { EntryInputTextboxAtom, ResponsesGraphAtom, PageNumberAtom, TitleAtom, TierListAtom } from '../../atoms';
+import { EntryInputTextboxAtom, ResponsesGraphAtom, PageNumberAtom, TierListAtom } from '../../atoms';
 import { generateEmptyGraph } from '../../utils/graphUtils';
-import { canEntryBeAddedToEntriesList, getDefaultTitle } from '../../utils/inputUtils';
+import { canEntryBeAddedToEntriesList } from '../../utils/inputUtils';
 import styles from '../Input.module.css';
 import PageNumbers from '../../PageNumbers';
 
 export default function StartRankingButton({localTierList, setLocalTierList}) {
     const entryInputTextboxContent = useRecoilValue(EntryInputTextboxAtom);
     const setPageNumber = useSetRecoilState(PageNumberAtom);
-    const [title, setTitle] = useRecoilState(TitleAtom);
 
     const setResponsesGraph = useSetRecoilState(ResponsesGraphAtom);
     const setTierList = useSetRecoilState(TierListAtom);
-    const defaultTitle = getDefaultTitle(localTierList);
 
     const entriesList = localTierList.slice().flat();
 
@@ -28,10 +26,6 @@ export default function StartRankingButton({localTierList, setLocalTierList}) {
             isEnabled={canStartRanking(entryInputTextboxContent, localTierList)}
             onClick={() => {
                 setResponsesGraph(generateEmptyGraph(entriesList));
-
-                if (title.length === 0) {
-                    setTitle(defaultTitle)
-                }
 
                 setTierList(localTierList);
                 setPageNumber(PageNumbers.RANKER);

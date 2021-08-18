@@ -18,7 +18,7 @@ export default function TitleTextbox({localTierList}) {
         if ((isSharedLink() && localTierList.length === 1 && localTierList[0].length === 0 && !sharedLinkInfo.hasLoaded)) {
             setPlaceholder('Loading...');
         } else {
-            setPlaceholder(defaultTitle);
+            // setPlaceholder(defaultTitle);
         }
     }, [defaultTitle, localTierList, sharedLinkInfo.hasLoaded]);
     

@@ -9,6 +9,7 @@ import Pair from './Pair/Pair';
 import styles from './Ranker.module.css';
 import PageNumbers from '../PageNumbers';
 import ProgressIndicator from './ProgressIndicator.react';
+import { getDefaultTitle } from '../utils/inputUtils';
 
 export default function Ranker() {
     const tierList = useRecoilValue(TierListAtom);
@@ -69,7 +70,7 @@ export default function Ranker() {
         <>
             <div className={styles.container}>
                 <div className={styles.headerContainer}>
-                    <div className={styles.title}>{title}</div>
+                    <div className={styles.title}>{title.length > 0 ? title : getDefaultTitle(tierList)}</div>
                     <div className={styles.subtitle}>Which one belongs higher on the list?</div>
                 </div>
                 {currentQuestion}

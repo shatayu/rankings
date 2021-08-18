@@ -1,6 +1,7 @@
 import {useState, useCallback} from 'react';
 import {getPathString} from '../utils/graphUtils';
 import { UserSortedRankingsAtom, ResponsesGraphAtom, UserQuestionsAskedAtom, TitleAtom, TierListAtom } from '../atoms';
+import { getDefaultTitle } from '../utils/inputUtils';
 import styles from './Results.module.css';
 import { useRecoilValue } from 'recoil';
 import CopyResultsButton from './Buttons/CopyResultsButton.react';
@@ -67,7 +68,7 @@ export default function Results() {
                     },
                 }}
             />
-            <div className={styles.title}>{title}</div>
+            <div className={styles.title}>{title.length > 0 ? title : getDefaultTitle(tierList)}</div>
             <div className={styles.resultsList}>
                 {results.map((term, i) => 
                     <ResultElement key={term} value={term} index={i} onSelection={onSelection} isSelected={selections.includes(term)} />)}

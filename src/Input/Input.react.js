@@ -16,7 +16,7 @@ export default function Input({onFinalizeEntries}) {
     // recoil states are too slow for drag and drop, so we use a local list
     // and sync it in StartRankingButton
     const recoilTierList = useRecoilValue(TierListAtom);
-    const [localTierList, setLocalTierList] = useState([[]]);
+    const [localTierList, setLocalTierList] = useState(recoilTierList);
 
     // if recoil list updates externally (e.g. via link share) update
     useEffect(() => {
