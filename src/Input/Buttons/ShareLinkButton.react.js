@@ -1,5 +1,5 @@
 import GenericButton from './GenericButton';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { useRecoilValue } from 'recoil';
 import { ReactComponent as Share } from '../../assets/link.svg';
 import { ReactComponent as Copy } from '../../assets/copy.svg';
@@ -20,19 +20,7 @@ export default function ShareLinkButton({localTierList}) {
 
     const submit = () => {
         confirmAlert({
-          title: '',
           customUI: ({ onClose }) => <CopyLinkAlert onClose={onClose} />,
-          message: 'Are you sure to do this.',
-          buttons: [
-            {
-              label: 'Yes',
-              onClick: () => alert('Click Yes')
-            },
-            {
-              label: 'No',
-              onClick: () => alert('Click No')
-            }
-          ]
         });
       };
 
@@ -75,7 +63,13 @@ export default function ShareLinkButton({localTierList}) {
 
 function CopyLinkAlert({onClose, title, entriesList}) {
     const loadingValue = 'Loading...';
-    const [shareURL, setShareURL] = useState('beans');
+    const [shareURL, setShareURL] = useState(loadingValue);
+
+    const successComponent = (
+        <span className={styles.toastSuccessComponentContainer} onClick={() => toast.dismiss()}>
+            Copied to clipboard
+        </span>
+    );
 
     // generate link on startup
     useEffect(() => {
@@ -87,11 +81,11 @@ function CopyLinkAlert({onClose, title, entriesList}) {
                 list: entriesList
             };
     
-            // const result = await axios.put(AWS_URL, body);
-            // const baseURL = window.location.host;
-            // const newShareURL = `${baseURL.includes('localhost') || baseURL.includes('.') ? '' : 'https://'}` +
-            //     baseURL + '/' + result.data.new_id + '/';
-            // setShareURL(newShareURL);
+            const result = await axios.put(AWS_URL, body);
+            const baseURL = window.location.host;
+            const newShareURL = `${baseURL.includes('localhost') || baseURL.includes('.') ? '' : 'https://'}` +
+                baseURL + '/' + result.data.new_id + '/';
+            setShareURL(newShareURL);
         }
         
         genLink();
@@ -102,7 +96,8 @@ function CopyLinkAlert({onClose, title, entriesList}) {
     function copyToClipboard(e) {
         textAreaRef.current.select();
         document.execCommand('copy');
-        document.body.focus();
+        window.getSelection().removeAllRanges()
+        toast(successComponent);
     };
 
     const isLoading = shareURL === loadingValue;

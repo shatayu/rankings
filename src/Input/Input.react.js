@@ -45,7 +45,6 @@ export default function Input({onFinalizeEntries}) {
                     style: {
                         background: 'white',
                         color: '#111111',
-                        minWidth: 205
                     },
                     success: {
                         iconTheme: {
