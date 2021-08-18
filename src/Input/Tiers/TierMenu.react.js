@@ -1,5 +1,5 @@
 import { DragDropContext } from "react-beautiful-dnd";
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import styles from './TierMenu.module.css';
 import AddTierButton from '../Buttons/AddTierButton.react';
 import DeleteAllEntriesButton from '../Buttons/DeleteAllEntriesButton.react';
@@ -7,22 +7,7 @@ import ShareLinkButton from '../Buttons/ShareLinkButton.react';
 import Tier from './Tier.react';
 import { move, moveMultiple, reorder, reorderMultiple, listIDToIndex } from './tierMenuUtils';
 
-export default function TierMenu({localTierList, setLocalTierList}) {
-    const [selectedItems, setSelectedItems] = useState({
-        items: [],
-        currentlyDraggedItem: null
-    });
-
-    // clear selection
-    useEffect(() => {
-        window.addEventListener('mousedown', event => {
-            setSelectedItems({
-                items: [],
-                currentlyDraggedItem: null
-            });
-        });
-    }, []);
-
+export default function TierMenu({localTierList, setLocalTierList, selectedItems, setSelectedItems}) {
     // auto-scroll to top
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -38,7 +23,7 @@ export default function TierMenu({localTierList, setLocalTierList}) {
 
         // if currently dragged item isn't in the same tier as other selected items
         // clear selected items
-    }, [selectedItems.items]);
+    }, [selectedItems.items, setSelectedItems]);
 
     const onDragEnd = useCallback((result) => {
         const { source, destination } = result;
@@ -125,7 +110,7 @@ export default function TierMenu({localTierList, setLocalTierList}) {
             }
             setLocalTierList(newTiers);
         }
-    }, [localTierList, selectedItems, setLocalTierList]);
+    }, [localTierList, setLocalTierList, selectedItems, setSelectedItems]);
 
     return (
         <>

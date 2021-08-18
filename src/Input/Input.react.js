@@ -18,6 +18,11 @@ export default function Input({onFinalizeEntries}) {
     const recoilTierList = useRecoilValue(TierListAtom);
     const [localTierList, setLocalTierList] = useState(recoilTierList);
 
+    const [selectedItems, setSelectedItems] = useState({
+        items: [],
+        currentlyDraggedItem: null
+    });
+
     // if recoil list updates externally via link share update
     useEffect(() => {
         if (isSharedLink()) {
@@ -27,7 +32,12 @@ export default function Input({onFinalizeEntries}) {
 
     return (
         <>
-        <div className={styles.container}>
+        <div className={styles.container} onMouseDown={() => {
+            setSelectedItems({
+                items: [],
+                currentlyDraggedItem: null
+            });
+        }}>
             <Toaster
                 toastOptions={{
                     // Define default options
@@ -49,7 +59,7 @@ export default function Input({onFinalizeEntries}) {
             <div className={styles.textboxContainer}>
                 <EntryInputTextbox  {...{localTierList, setLocalTierList}} />
             </div>
-            <TierMenu {...{localTierList, setLocalTierList}} />
+            <TierMenu {...{localTierList, setLocalTierList, selectedItems, setSelectedItems}} />
             <div className={styles.buttonContainer}>
                 <StartRankingButton {...{localTierList, setLocalTierList}} />
             </div>
