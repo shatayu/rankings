@@ -162,7 +162,7 @@ export default function TierFinalizer() {
         <DragDropContext onDragStart={onDragStart} onDragEnd={result => onDragEnd(result, localTierList, setLocalTierList)}>
             <div className={styles.allTiersContainer}>
                 {localTierList.map((tier, tierIndex) => (
-                    <div className={styles.oneTierContainer}>
+                    <div className={styles.oneTierContainer} key={`tierContainer${tierIndex}`}>
                         <div className={styles.header}>{`Tier ${tierIndex + 1}`}</div>
                         <Droppable droppableId={`tier${tierIndex}`} key={`tier${tierIndex}`}>
                             {(provided, snapshot) => (
