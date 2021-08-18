@@ -4,7 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import StartRankingButton from './Buttons/StartRankingButton.react';
 import EntryInputTextbox from './EntryInputTextbox.react';
 import TitleTextbox from './TitleTextbox.react';
-import { useUpdateListInfoAtoms } from '../utils/APIUtils';
+import { useUpdateListInfoAtoms, isSharedLink } from '../utils/APIUtils';
 import TierMenu from './Tiers/TierMenu.react';
 import { useRecoilValue } from 'recoil';
 import { TierListAtom } from '../atoms';
@@ -18,9 +18,11 @@ export default function Input({onFinalizeEntries}) {
     const recoilTierList = useRecoilValue(TierListAtom);
     const [localTierList, setLocalTierList] = useState(recoilTierList);
 
-    // if recoil list updates externally (e.g. via link share) update
+    // if recoil list updates externally via link share update
     useEffect(() => {
-        setLocalTierList(recoilTierList);
+        if (isSharedLink()) {
+            setLocalTierList(recoilTierList);
+        }
     }, [recoilTierList]);
 
     return (
