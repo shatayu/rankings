@@ -68,8 +68,10 @@ export default function Ranker() {
     return (
         <>
             <div className={styles.container}>
-                <div className={styles.title}>{title}</div>
-                <div className={styles.subtitle}>Which one belongs higher on the list?</div>
+                <div className={styles.headerContainer}>
+                    <div className={styles.title}>{title}</div>
+                    <div className={styles.subtitle}>Which one belongs higher on the list?</div>
+                </div>
                 {currentQuestion}
                 <ProgressIndicator
                     questionNumber={questionNumber}
