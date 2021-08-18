@@ -3,7 +3,7 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { ReactComponent as Arrow } from '../../assets/arrow.svg';
 import { EntryInputTextboxAtom, ResponsesGraphAtom, PageNumberAtom, TitleAtom, TierListAtom } from '../../atoms';
 import { generateEmptyGraph } from '../../utils/graphUtils';
-import { canEntryBeAddedToEntriesList, useGetDefaultTitle } from '../../utils/inputUtils';
+import { canEntryBeAddedToEntriesList, getDefaultTitle } from '../../utils/inputUtils';
 import styles from '../Input.module.css';
 import PageNumbers from '../../PageNumbers';
 
@@ -14,7 +14,7 @@ export default function StartRankingButton({localTierList, setLocalTierList}) {
 
     const setResponsesGraph = useSetRecoilState(ResponsesGraphAtom);
     const setTierList = useSetRecoilState(TierListAtom);
-    const defaultTitle = useGetDefaultTitle();
+    const defaultTitle = getDefaultTitle(localTierList);
 
     const entriesList = localTierList.slice().flat();
 
