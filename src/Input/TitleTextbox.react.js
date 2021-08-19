@@ -17,10 +17,15 @@ export default function TitleTextbox({localTierList}) {
     useEffect(() => {
         if ((isSharedLink() && localTierList.length === 1 && localTierList[0].length === 0 && !sharedLinkInfo.hasLoaded)) {
             setPlaceholder('Loading...');
-        } else {
-            // setPlaceholder(defaultTitle);
+        } else if (
+            sharedLinkInfo.hasLoaded && (
+                (localTierList.length === 1 && localTierList[0].length === 0) ||
+                (title.length === 0)
+            )
+        ) {
+            setPlaceholder(defaultTitle);
         }
-    }, [defaultTitle, localTierList, sharedLinkInfo.hasLoaded]);
+    }, [defaultTitle, localTierList, sharedLinkInfo.hasLoaded, title.length]);
     
     // clear title
     if (title === defaultTitle) {

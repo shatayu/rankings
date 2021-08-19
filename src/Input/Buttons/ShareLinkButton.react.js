@@ -20,7 +20,7 @@ export default function ShareLinkButton({localTierList}) {
 
     const submit = () => {
         confirmAlert({
-          customUI: ({ onClose }) => <CopyLinkAlert onClose={onClose} />,
+          customUI: ({ onClose }) => <CopyLinkAlert {...{onClose, title, entriesList}}/>,
         });
       };
 
@@ -31,30 +31,6 @@ export default function ShareLinkButton({localTierList}) {
             isEnabled={entriesList.length > 1 && toasts.length === 0}
             onClick={async () => {
                 submit();
-                // send URL up to DB
-                // const url = 'https://3ocshrauf1.execute-api.us-west-1.amazonaws.com/lists';
-        
-                // const body = {
-                //     title,
-                //     list: entriesList
-                // };
-
-                // const successComponent = (
-                //     <span className={styles.toastSuccessComponentContainer} onClick={() => toast.dismiss()}>
-                //         Copied to clipboard
-                //     </span>
-                // );
-                
-                // const promise = axios.put(url, body);
-                // toast.promise(promise, {
-                //     loading: 'Making link...',
-                //     success: successComponent,
-                //     error: 'There was an error making your link'
-                // });
-
-                // const result = await promise;
-                // const baseURL = window.location.host;
-                // copy(`${baseURL.includes('localhost') ? '' : 'https://'}` + baseURL + '/' + result.data.new_id + '/');
             }}
             isDeleteButton={false}
         />
