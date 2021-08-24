@@ -1,5 +1,5 @@
 import GenericButton from './GenericButton';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useRecoilValue } from 'recoil';
 import { ReactComponent as Share } from '../../assets/link.svg';
 import { ReactComponent as Copy } from '../../assets/copy.svg';
