@@ -7,17 +7,34 @@ import styles from '../Input.module.css';
 import { confirmAlert } from 'react-confirm-alert';
 import '../Alert.css';
 import CopyLinkAlert from '../../Alert/CopyLinkAlert.react';
+import { ResponsesGraphAtom, UserQuestionsAskedAtom, PageNumberAtom } from '../../atoms';
 
-export default function ShareLinkButton({localTierList}) {
+export default function ShareLinkButton({tierList}) {
     const title = useRecoilValue(TitleAtom);
     const sortedRankings = useRecoilValue(UserSortedRankingsAtom);
     const {toasts} = useToasterStore();
 
-    const entriesList = localTierList.slice().flat();
+    const responsesGraph = useRecoilValue(ResponsesGraphAtom);
+    const userQuestionsAsked = useRecoilValue(UserQuestionsAskedAtom);
+    const userSortedRankings = useRecoilValue(UserSortedRankingsAtom);
+    const pageNumber = useRecoilValue(PageNumberAtom);
+
+    const entriesList = tierList.slice().flat();
 
     const submit = () => {
         confirmAlert({
-          customUI: ({ onClose }) => <CopyLinkAlert {...{onClose, title, entriesList, sortedRankings}}/>,
+          customUI: ({ onClose }) => <CopyLinkAlert {...{
+              onClose,
+              title,
+              entriesList,
+              sortedRankings,
+              tierList,
+              responsesGraph,
+              userQuestionsAsked,
+              userSortedRankings,
+              pageNumber
+            }
+            }/>,
         });
       };
 

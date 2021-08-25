@@ -6,7 +6,17 @@ import toast from 'react-hot-toast';
 import { ReactComponent as Copy } from '../assets/copy.svg';
 import { getDefaultTitle } from '../utils/inputUtils';
 
-export default function CopyLinkAlert({onClose, title, entriesList, sortedRankings}) {
+export default function CopyLinkAlert({
+    onClose,
+    title,
+    entriesList,
+    sortedRankings,
+    tierList,
+    responsesGraph,
+    userQuestionsAsked,
+    userSortedRankings,
+    pageNumber
+  }) {
     const loadingValue = 'Loading...';
     const [shareURL, setShareURL] = useState(loadingValue);
 
@@ -23,7 +33,11 @@ export default function CopyLinkAlert({onClose, title, entriesList, sortedRankin
 
             const body = {
                 title,
-                list: entriesList
+                responsesGraph,
+                tierList,
+                userQuestionsAsked,
+                userSortedRankings,
+                pageNumber
             };
     
             const result = await axios.put(AWS_URL, body);
@@ -34,7 +48,7 @@ export default function CopyLinkAlert({onClose, title, entriesList, sortedRankin
         }
         
         genLink();
-    }, [entriesList, title]);
+    }, [entriesList, pageNumber, responsesGraph, tierList, title, userQuestionsAsked, userSortedRankings]);
 
     const textAreaRef = useRef(null);
   
@@ -90,7 +104,7 @@ function generateCopyText(title, entriesList, sortedRankings, link) {
             sortedRankings.reduce(
                 (accumulator, currentValue, currentIndex) => accumulator + `${currentIndex + 1}. ${currentValue}\n`,
                 `${displayTitle}:\n\n`
-            ) + `\nRank this list at ${link}`
+            ) + `\nView this ranking's explanation at ${link}`
         );
     }
 }

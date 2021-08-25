@@ -28,6 +28,13 @@ export default function Results() {
             }
             tempSelections.push(value);
             setSelections(tempSelections);
+
+            console.log({
+                results,
+                graph,
+                tierList,
+                questionsAsked
+            });
             
             if (tempSelections.length === 2) {
                 setPathBetweenSelections(getPathString(tempSelections, results, graph, tierList, questionsAsked));
@@ -75,7 +82,7 @@ export default function Results() {
             </div>
             <div className={styles.justification}>{pathBetweenSelections.length > 0 ? pathBetweenSelections : fillerExplanation}</div>
             <div className={styles.buttonRow}>
-                <ShareLinkButton localTierList={tierList} />
+                <ShareLinkButton {...{tierList}} />
                 <RedoRankingButton />
                 <NewRankingButton />
             </div>

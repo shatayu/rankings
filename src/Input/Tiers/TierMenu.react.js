@@ -117,7 +117,7 @@ export default function TierMenu({localTierList, setLocalTierList, selectedItems
         <div className={styles.buttonContainer} onMouseDown={e => e.stopPropagation()}>
             <DeleteAllEntriesButton {...{localTierList, setLocalTierList, selectedItems, setSelectedItems}} />
             <AddTierButton {...{localTierList, setLocalTierList, selectedItems, setSelectedItems}} />
-            <ShareLinkButton {...{localTierList}}/>
+            <ShareLinkButton tierList={localTierList} />
         </div>
         <div className={styles.titleContainer}>
             <div className={styles.subtitle}>{localTierList.length > 1 ? 'Drag items to move them between tiers' : '\u0020'}</div>
