@@ -1,6 +1,6 @@
 import GenericButton from './GenericButton';
 import { useRecoilValue } from 'recoil';
-import { ReactComponent as Share } from '../../assets/link.svg';
+import { ReactComponent as Share } from '../../assets/share.svg';
 import { TitleAtom, UserSortedRankingsAtom } from '../../atoms';
 import { useToasterStore } from 'react-hot-toast';
 import styles from '../Input.module.css';
