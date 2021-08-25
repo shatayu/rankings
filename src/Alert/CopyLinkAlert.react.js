@@ -28,7 +28,7 @@ export default function CopyLinkAlert({onClose, title, entriesList, sortedRankin
     
             const result = await axios.put(AWS_URL, body);
             const baseURL = window.location.host;
-            const newShareURL = `${baseURL.includes('localhost') || baseURL.includes('.') ? '' : 'https://'}` +
+            const newShareURL = `${baseURL.includes('localhost') ? 'http://' : 'https://'}` +
                 baseURL + '/' + result.data.new_id + '/';
             setShareURL(newShareURL);
         }
