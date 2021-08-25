@@ -4,9 +4,10 @@ import axios from 'axios';
 import styles from './CopyLinkAlert.module.css';
 import toast from 'react-hot-toast';
 import { ReactComponent as Copy } from '../assets/copy.svg';
+import { getDefaultTitle } from '../utils/inputUtils';
 
-export default function CopyLinkAlert({onClose, title, entriesList, sortedRanking}) {
-        const loadingValue = 'Loading...';
+export default function CopyLinkAlert({onClose, title, entriesList, sortedRankings}) {
+    const loadingValue = 'Loading...';
     const [shareURL, setShareURL] = useState(loadingValue);
 
     const successComponent = (
@@ -45,18 +46,21 @@ export default function CopyLinkAlert({onClose, title, entriesList, sortedRankin
     };
 
     const isLoading = shareURL === loadingValue;
+    const isResults = sortedRankings.length > 0;
 
     return (
         <div className={styles.copyLinkContainer}>
-            <div className={styles.copyLinkHeader}>Copy Link</div>
+            <div className={styles.copyLinkHeader}>Copy {isResults ? 'Results' : 'Link'}</div>
             <div className={styles.copyLinkTextAndBarContainer}>
                 <form>
                     <TextareaAutosize
                     ref={textAreaRef}
                     cols={32}
-                    value={shareURL}
+                    value={generateCopyText(title, entriesList, sortedRankings, shareURL)}
                     className={styles.copyLinkBar + ' ' +
-                        (isLoading ? styles.loadingCopyLinkBar : '')}
+                        (isLoading ? styles.loadingCopyLinkBar : '') + ' ' +
+                        (isResults ? styles.copyLinkBarResults : styles.copyLinkBarInput)
+                    }
                     readOnly={true}
                     />
                 </form>
@@ -75,4 +79,18 @@ export default function CopyLinkAlert({onClose, title, entriesList, sortedRankin
             </div>
         </div>
     )
+}
+
+function generateCopyText(title, entriesList, sortedRankings, link) {
+    const displayTitle = title.length > 0 ? title : getDefaultTitle([entriesList]);
+    if (sortedRankings.length === 0) {
+        return link;
+    } else {
+        return (
+            sortedRankings.reduce(
+                (accumulator, currentValue, currentIndex) => accumulator + `${currentIndex + 1}. ${currentValue}\n`,
+                `${displayTitle}:\n\n`
+            ) + `\nRank this list at ${link}`
+        );
+    }
 }

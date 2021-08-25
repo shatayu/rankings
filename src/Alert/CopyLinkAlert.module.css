@@ -29,21 +29,30 @@
 .copyLinkBar {
     overflow: hidden;
     font-size: 21px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
 
     color: #999999;
-    border-bottom: 3px solid #08BA6A;
     background-color: #111111;
     outline: none;
+
+    padding-top: 10px;
 
     /* max-height: 25px; */
 
     max-width: calc(50vw - 35px);
 
     resize: none;
+    border: none;
+}
+
+.copyLinkBarInput {
     border-top: none;
-    border-left: none;
-    border-right: none;
+    border-bottom: 3px solid #08BA6A;
+}
+
+.copyLinkBarResults {
+    border-bottom: none;
+    border-top: 3px solid #08BA6A;;
 }
 
 .loadingCopyLinkBar {
