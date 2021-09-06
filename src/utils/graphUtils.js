@@ -57,15 +57,7 @@ export function shortestPath(graph, source, target) {
             if (!visited[team] && isBetterThan(current, team, graph)) {
                 teamsCurrentIsBetterThan.push(team);
             }
-
-            if (team === 'gray') {
-                console.log(current);
-                console.log(`${team}, isBetterThan = ${isBetterThan(current, team, graph)}`);
-                console.log(graph[current]);
-            }
         }
-
-        console.log(teamsCurrentIsBetterThan);
 
         teamsCurrentIsBetterThan.forEach(team => {
             parent[team] = current;

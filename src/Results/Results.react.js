@@ -28,13 +28,6 @@ export default function Results() {
             }
             tempSelections.push(value);
             setSelections(tempSelections);
-
-            console.log({
-                results,
-                graph,
-                tierList,
-                questionsAsked
-            });
             
             if (tempSelections.length === 2) {
                 setPathBetweenSelections(getPathString(tempSelections, results, graph, tierList, questionsAsked));
