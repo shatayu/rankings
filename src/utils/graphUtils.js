@@ -57,7 +57,15 @@ export function shortestPath(graph, source, target) {
             if (!visited[team] && isBetterThan(current, team, graph)) {
                 teamsCurrentIsBetterThan.push(team);
             }
+
+            if (team === 'gray') {
+                console.log(current);
+                console.log(`${team}, isBetterThan = ${isBetterThan(current, team, graph)}`);
+                console.log(graph[current]);
+            }
         }
+
+        console.log(teamsCurrentIsBetterThan);
 
         teamsCurrentIsBetterThan.forEach(team => {
             parent[team] = current;
@@ -81,6 +89,16 @@ export function shortestPath(graph, source, target) {
 
 export function getPathString(selections, results, responsesGraph, tierList, questionsAsked) {
     selections.sort((a, b) => results.indexOf(a) - results.indexOf(b));
+
+    // handle different tier case
+    const upperSelectionTier = getTier(selections[0], tierList);
+    const lowerSelectionTier = getTier(selections[1], tierList);
+    if (upperSelectionTier !== lowerSelectionTier) {
+        const pathString = `${selections[0]} is in Tier ${upperSelectionTier + 1} and ${selections[1]} is in Tier ${lowerSelectionTier + 1}`;
+        const pathEntry = <div key={pathString}>{pathString}</div>;
+        return [pathEntry];
+    }
+
     const path = shortestPath(responsesGraph, selections[0], selections[1]);
 
     if (path.length > 1) {
@@ -89,22 +107,12 @@ export function getPathString(selections, results, responsesGraph, tierList, que
             const current = path[i];
             const next = path[i + 1];
 
-            if (responsesGraph[current][next] === Constants.BETTER_BY_TIER) {
-                // find tier current is in
-                const currentTier = getTier(current, tierList);
-                const nextTier = getTier(next, tierList);
-                const pathString = `${current} is in Tier ${currentTier + 1} and ${next} is in Tier ${nextTier + 1}`;
+            const questionNumber = getQuestionNumber(questionsAsked, current, next);
+        
+            const pathString = ('(Q' + String(questionNumber) + ') You said ' + current + ' is better than ' + next);
 
-                const pathEntry = <div key={pathString}>{pathString}</div>
-                pathArray.push(pathEntry);
-            } else {
-                const questionNumber = getQuestionNumber(questionsAsked, current, next);
-            
-                const pathString = ('(Q' + String(questionNumber) + ') You said ' + current + ' is better than ' + next);
-    
-                const pathEntry = <div key={pathString}>{pathString}</div>
-                pathArray.push(pathEntry);
-            }
+            const pathEntry = <div key={pathString}>{pathString}</div>
+            pathArray.push(pathEntry);
         }
 
         return pathArray;
