@@ -1,7 +1,6 @@
 import styles from './Input.module.css';
 import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
-import StartRankingButton from './Buttons/StartRankingButton.react';
 import EntryInputTextbox from './EntryInputTextbox.react';
 import TitleTextbox from './TitleTextbox.react';
 import { useUpdateListInfoAtoms, isSharedLink } from '../utils/APIUtils';
@@ -59,9 +58,6 @@ export default function Input({onFinalizeEntries}) {
                 <EntryInputTextbox  {...{localTierList, setLocalTierList}} />
             </div>
             <TierMenu {...{localTierList, setLocalTierList, selectedItems, setSelectedItems}} />
-            <div className={styles.buttonContainer}>
-                <StartRankingButton {...{localTierList, setLocalTierList}} />
-            </div>
         </div>
         <br />
         <br />

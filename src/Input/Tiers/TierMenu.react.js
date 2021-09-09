@@ -4,6 +4,7 @@ import styles from './TierMenu.module.css';
 import AddTierButton from '../Buttons/AddTierButton.react';
 import DeleteAllEntriesButton from '../Buttons/DeleteAllEntriesButton.react';
 import ShareLinkButton from '../Buttons/ShareLinkButton.react';
+import StartRankingButton from '../Buttons/StartRankingButton.react';
 import Tier from './Tier.react';
 import { move, moveMultiple, reorder, reorderMultiple, listIDToIndex } from './tierMenuUtils';
 
@@ -118,6 +119,7 @@ export default function TierMenu({localTierList, setLocalTierList, selectedItems
             <DeleteAllEntriesButton {...{localTierList, setLocalTierList, selectedItems, setSelectedItems}} />
             <AddTierButton {...{localTierList, setLocalTierList, selectedItems, setSelectedItems}} />
             <ShareLinkButton tierList={localTierList} />
+            <StartRankingButton {...{localTierList, setLocalTierList}} />
         </div>
         <div className={styles.titleContainer}>
             <div className={styles.subtitle}>{localTierList.length > 1 ? 'Drag items to move them between tiers' : '\u0020'}</div>
